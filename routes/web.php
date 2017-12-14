@@ -30,8 +30,5 @@ Route::get('/removeCourse','CoursesController@Remove');
 
 Route::get('/register/','UsersController@Index');
 
-Route::post('/register/','UsersController@role');
-
-Route::get('/register/student/','StudentsController@Index');
-
-Route::post('/register/student/','StudentsController@Add');
+Route::post('/register/','UsersController@verifyRole');
+?>

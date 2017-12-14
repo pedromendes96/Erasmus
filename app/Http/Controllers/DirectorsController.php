@@ -10,7 +10,7 @@ class DirectorsController extends Controller
     //
     public function Add(Request $request){
         $director = new Director;
-        $director->user_id = app('App\Http\Controllers\UsersController')->Add();
+        $director->user_id = app('App\Http\Controllers\UsersController')->Add($request);
         $director->program_id = $request->program_id;
         $director->save();
         return $director->id;

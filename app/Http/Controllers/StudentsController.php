@@ -28,7 +28,7 @@ class StudentsController extends Controller
     public function Index(Request $request){
         $countries = Country::all();
         $universities = University::all();
-        return view('registerstudent', compact('countries'),compact('universities'));//,compact('universities'));
+        return view('register.registerStudent', compact('countries'),compact('universities'));//,compact('universities'));
     }
 
 }

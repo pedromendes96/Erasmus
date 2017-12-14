@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\User;
 use App\Country;
+use App\University;
+use App\Program;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -28,22 +30,30 @@ class UsersController extends Controller
     }
 
     public function Index(Request $request){
-
-        return view('selectrole');
-
+        $countries = Country::all();
+        $universities = University::all();
+        $programs = Program::all();
+        return view('register.register',compact('programs','countries','universities'));
     }
-    public function role(Request $request){
-        #$countries = Country::all();
+
+    public function verifyRole(Request $request){
         $role = $request->role;
         if ($role == "student") {
-            return redirect('/register/student/');
-            //return view('registerstudent', compact('countries'));
+            app('App\Http\Controllers\StudentsController')->Add($request);
         }
-
+        else if ($role =="manager") {
+            app('App\Http\Controllers\ManagersController')->Add($request);
+        }
+        else if ($role =="director"){
+            app('App\Http\Controllers\DirectorsController')->Add($request);
+        }
+        return view ('home');
+        #return vista
     }
+
     public function ChangeProperty(Request $request){
         $property = $request->change;
-        $user = User::where('id',$request->id).get();
+        $user = User::where('id',$request->id)->get();
         if($property == "name"){
             $user->name=$request->name;
         }else if($property == "password"){

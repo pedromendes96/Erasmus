@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDirectorTable extends Migration
+class CreateNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateDirectorTable extends Migration
      */
     public function up()
     {
-        Schema::create('directors', function (Blueprint $table) {
+        Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('user_id')->unsigned()->index();
-            $table->integer('program_id')->unsigned()->index();
         });
     }
 
@@ -28,7 +26,6 @@ class CreateDirectorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('directors');
+        Schema::dropIfExists('news');
     }
 }
-

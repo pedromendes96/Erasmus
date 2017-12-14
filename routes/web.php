@@ -12,13 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return "Ola David";
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Auth::routes();
+Route::get('/insertCountry', 'CountriesController@Add');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/insertCity','CitiesController@Add');
+
+Route::get('/insertCourse','CoursesController@Add');
+
+Route::get('/removeCourse','CoursesController@Remove');
+
+Route::get('/register/','UsersController@Index');
+
+Route::post('/register/','UsersController@role');
+
+Route::get('/register/student/','StudentsController@Index');
+
+Route::post('/register/student/','StudentsController@Add');

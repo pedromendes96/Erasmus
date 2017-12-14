@@ -2,28 +2,31 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use Notifiable;
+    public function Address(){
+        return $this->hasOne('App\Address');
+    }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    public function Manager(){
+        return $this->belongsTo('App\Manager');
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function Student(){
+        return $this->belongsTo('App\Student');
+    }
+
+    public function Director(){
+        return $this->belongsTo('App\Director');
+    }
+
+//    public static function GetById($id){
+//        return \DB::table('users')->where('id', '=', $id)->get();
+//    }
+//
+//    public static function RemoveById($id){
+//        \DB::table('users')->where('id','=',$id)->delete();
+//    }
 }

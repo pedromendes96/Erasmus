@@ -48,6 +48,11 @@ class CreateForeignKeys extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
         });
+
+        Schema::table('directors', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('program_id')->references('id')->on('programs');
+        });
     }
 
     /**

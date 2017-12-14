@@ -10,7 +10,7 @@ class CitiesController extends Controller
 {
     public function Add(Request $request){
         $city = new City;
-        $city->name = $request->name;
+        $city->name = $request->city;
         $city->description = "unknown desc";#$request->description;
         //Se nao existir n pais , inserir
         $city->country_id = $this->GetCountryId($request);
@@ -40,7 +40,7 @@ class CitiesController extends Controller
     }
 
     public function GetCountryId(Request $request){
-        $country_result = Country::where('name',$request->country)->get();
+        $country_result = Country::where('id',$request->country)->get();
         if($country_result->count()>0){
             return $country_result[0]->id;
         }else{

@@ -31,7 +31,7 @@
         <input type="text" placeholder="Enter Email" name="email" required>
         <br>
         <label><b>Country</b></label>
-        <select required>
+        <select name="country"required>
             <option disabled selected value>--select a country--</option>
             @foreach($countries as $country)
                 <option value ="{{$country->id}}">{{$country->name}}</option>

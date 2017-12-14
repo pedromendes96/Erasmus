@@ -11,7 +11,7 @@ class AddressesController extends Controller
 {
     public function Add(Request $request){
         $address = new Address;
-        $address->name = $request->name;
+        $address->name = $request->address;
         $address->city_id = $this->GetCityId($request);
         //$address->city_id = $request->city_id;
         $address->save();

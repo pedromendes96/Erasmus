@@ -11,7 +11,7 @@ class CountriesController extends Controller
     //
     public function Add(Request $request){
         $country = new Country;
-        $country->name = $request->name;
+        $country->name = $request->country;
         $country->description = "unknown desc"; #$request->description;
         $country->save();
         return $country->id;

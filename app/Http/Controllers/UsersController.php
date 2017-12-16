@@ -36,8 +36,39 @@ class UsersController extends Controller
         $programs = Program::all();
         return view('register.register',compact('programs','countries','universities'));
     }
+    public function Login(Request $request){
+        $user = User::where('email',$request->email)->first();
+        if($user == null){
+            return 'Nao existe esse sacana neste sistema.';
+        }
+        $student = Student::where('user_id',$user->id)->get();
+        if($student->count()){
+            if($user->password == $request->password){
+                return 'Student';
+            }else{
+                return 'O email ou a password inserida nao e correta';
+            }
+        }
+        $manager = Manager::where('user_id',$request->id)->get();
+        if($manager->count()){
+            if($user->password == $request->password){
+                return 'Manager';
+            }else{
+                return 'O email ou a password inserida nao e correta';
+            }
+        }
+        $director = Director::where('user_id',$request->id)->get();
+        if($director->count()){
+            if($user->password == $request->password){
+                return 'Diretor';
+            }else{
+                return 'O email ou a password inserida nao e correta';
+            }
+        }
+        return 'Nao existe esse sacana neste sistema.';
+    }
 
-    public function verifyRole(Request $request){
+    public function Register(Request $request){
         $password = $request->password;
         $confpassword = $request->confirmpassword;
         $emailExists=User::where('email', $request->email)->first();

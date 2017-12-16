@@ -35,4 +35,10 @@ Route::post('/register/','UsersController@Register');
 Route::get('/login/','UsersController@IndexLogin');
 
 Route::post('/login/','UsersController@Login');
+
+//Route::get('/dashboard/','UsersController@IndexDashboard');
+
+Route::post('/dashboard/','UsersController@Login');
+
+Route::get('/dashboard/{id}','UsersController@IndexDashboard');
 ?>

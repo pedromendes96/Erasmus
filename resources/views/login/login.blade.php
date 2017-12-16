@@ -16,8 +16,9 @@
         <input type="password" placeholder="Enter Password" name="password" required>
         <br>
         <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <button type="submit" >Login</button>
+       <button type="submit" >Login</button>
     </form>
+
 </body>
 
 </html>

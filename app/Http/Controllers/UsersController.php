@@ -52,7 +52,9 @@ class UsersController extends Controller
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
                 if (Hash::check($request->password, $user->password)) {
-                    return 'Student';
+                    $user->role = 'student';
+                    //return view('dashboard',compact('user'));
+                    return redirect('/dashboard/'.$user->id);
                 } else {
 
                     return 'O email ou a password inserida nao e correta';
@@ -61,7 +63,8 @@ class UsersController extends Controller
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
-                    return 'Manager';
+                    $user->role = 'manager';
+                    return redirect('/dashboard/'.$user->id);
                 } else {
                     return 'O email ou a password inserida nao e correta';
                 }
@@ -69,7 +72,10 @@ class UsersController extends Controller
             $director = Director::where('user_id', $user->id)->first();
             if ($director) {
                 if (Hash::check($request->password, $user->password)) {
-                    return 'Diretor';
+                    $user->role = 'director';
+
+                    return redirect('/dashboard/'.$user->id);
+                   // return view('dashboard',compact('user'));
                 } else {
                     return 'O email ou a password inserida nao e correta';
                 }
@@ -78,6 +84,12 @@ class UsersController extends Controller
         } else {
             return 'Nao existe esse sacana neste sistema.';
         }
+    }
+
+
+    public function IndexDashboard($id){
+        $user=User::where('id',$id)->first();
+        return view('dashboard',compact('user'));
     }
 
     public function Register(Request $request){

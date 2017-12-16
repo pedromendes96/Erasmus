@@ -10,6 +10,7 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
 //    return view('welcome');
@@ -36,9 +37,9 @@ Route::get('/login/','UsersController@IndexLogin');
 
 Route::post('/login/','UsersController@Login');
 
-//Route::get('/dashboard/','UsersController@IndexDashboard');
+Route::get('/dashboard/','UsersController@IndexDashboard');
 
 Route::post('/dashboard/','UsersController@Login');
 
-Route::get('/dashboard/{id}','UsersController@IndexDashboard');
+
 ?>

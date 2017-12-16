@@ -54,7 +54,7 @@ class UsersController extends Controller
                 if (Hash::check($request->password, $user->password)) {
                     $user->role = 'student';
                     //return view('dashboard',compact('user'));
-                    return redirect('/dashboard/'.$user->id);
+                    return redirect('/dashboard/')->with('user',$user);
                 } else {
 
                     return 'O email ou a password inserida nao e correta';
@@ -64,7 +64,7 @@ class UsersController extends Controller
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
                     $user->role = 'manager';
-                    return redirect('/dashboard/'.$user->id);
+                    return redirect('/dashboard/')->with('user',$user);
                 } else {
                     return 'O email ou a password inserida nao e correta';
                 }
@@ -74,7 +74,7 @@ class UsersController extends Controller
                 if (Hash::check($request->password, $user->password)) {
                     $user->role = 'director';
 
-                    return redirect('/dashboard/'.$user->id);
+                    return redirect('/dashboard/')->with('user',$user);
                    // return view('dashboard',compact('user'));
                 } else {
                     return 'O email ou a password inserida nao e correta';
@@ -87,8 +87,10 @@ class UsersController extends Controller
     }
 
 
-    public function IndexDashboard($id){
-        $user=User::where('id',$id)->first();
+
+    public function IndexDashboard(){
+        $user=session('user');
+        //$user=User::where('id',session('id'))->first();
         return view('dashboard',compact('user'));
     }
 

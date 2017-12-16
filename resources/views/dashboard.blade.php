@@ -8,7 +8,7 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Olá {{$user->name}}</h1>
+    <h1>Olá {{$user->role}} {{$user->name}}</h1>
 
 </body>
 </html>

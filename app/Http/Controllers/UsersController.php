@@ -7,6 +7,10 @@ use App\User;
 use App\Country;
 use App\University;
 use App\Program;
+use App\Student;
+use App\Manager;
+use App\Director;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -30,42 +34,50 @@ class UsersController extends Controller
 
     }
 
-    public function Index(Request $request){
+    public function IndexRegister(Request $request){
         $countries = Country::all();
         $universities = University::all();
         $programs = Program::all();
         return view('register.register',compact('programs','countries','universities'));
     }
+
+    public function IndexLogin(Request $request){
+        return view ('login.login');
+    }
+
     public function Login(Request $request){
         $user = User::where('email',$request->email)->first();
-        if($user == null){
+
+        if($user) {
+            $student = Student::where('user_id', $user->id)->first();
+            if ($student) {
+                if (Hash::check($request->password, $user->password)) {
+                    return 'Student';
+                } else {
+
+                    return 'O email ou a password inserida nao e correta';
+                }
+            }
+            $manager = Manager::where('user_id', $user->id)->first();
+            if ($manager) {
+                if (Hash::check($request->password, $user->password)) {
+                    return 'Manager';
+                } else {
+                    return 'O email ou a password inserida nao e correta';
+                }
+            }
+            $director = Director::where('user_id', $user->id)->first();
+            if ($director) {
+                if (Hash::check($request->password, $user->password)) {
+                    return 'Diretor';
+                } else {
+                    return 'O email ou a password inserida nao e correta';
+                }
+            }
+            return 'Nao existe esse sacana neste sistema.';
+        } else {
             return 'Nao existe esse sacana neste sistema.';
         }
-        $student = Student::where('user_id',$user->id)->get();
-        if($student->count()){
-            if($user->password == $request->password){
-                return 'Student';
-            }else{
-                return 'O email ou a password inserida nao e correta';
-            }
-        }
-        $manager = Manager::where('user_id',$request->id)->get();
-        if($manager->count()){
-            if($user->password == $request->password){
-                return 'Manager';
-            }else{
-                return 'O email ou a password inserida nao e correta';
-            }
-        }
-        $director = Director::where('user_id',$request->id)->get();
-        if($director->count()){
-            if($user->password == $request->password){
-                return 'Diretor';
-            }else{
-                return 'O email ou a password inserida nao e correta';
-            }
-        }
-        return 'Nao existe esse sacana neste sistema.';
     }
 
     public function Register(Request $request){

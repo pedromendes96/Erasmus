@@ -17,7 +17,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->remember_token = $request->remember_token;
+        $user->phone = $request->phone;
         //Temos de verificar se N endereco existe se nao criar , caso contrario usar esse
         $user->address_id = $this->GetAddressId($request);
         $user->save();
@@ -26,7 +26,8 @@ class UsersController extends Controller
 
 
     public function Remove(Request $request){
-        User::where('id',$request->id).delete();
+        User::where('id',$request->id)->delete();
+
     }
 
     public function Index(Request $request){

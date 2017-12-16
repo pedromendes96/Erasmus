@@ -11,24 +11,16 @@
         $('#role').change(function(){
             selection = $(this).val();
             switch (selection){
-                case 'student':
-                    $('#student').show();
-                    $('#manager').hide();
-                    $('#director').hide();
-                    break;
-                case 'manager':
-                    $('#manager').show();
-                    $('#student').hide();
+                case 'studentmanager':
+                    $('#studentmanager').show();
                     $('#director').hide();
                     break;
                 case 'director':
                     $('#director').show();
-                    $('#student').hide();
-                    $('#manager').hide();
+                    $('#studentmanager').hide();
                     break;
                 default:
-                    $('#student').show();
-                    $('#manager').hide();
+                    $('#studentmanager').show();
                     $('#director').hide();
                     break;
             }
@@ -47,14 +39,17 @@
             <option value="director">Course Director</option>
         </select>
         <br>
-    <label><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="name" required>
+    <label><b>Name</b></label>
+    <input type="text" placeholder="Enter Name" name="name" required>
     <br>
     <label><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
     <br>
     <label><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
+    <br>
+    <label><b>Phone</b></label>
+    <input type="text" placeholder="Enter Phone" name="phone" required>
     <br>
     <label><b>Country</b></label>
     <select name="country"required>
@@ -70,7 +65,7 @@
     <label><b>Address</b></label>
     <input type="text" placeholder="Enter address" name="address" required>
     <br>
-    <div id = "student">
+    <div id = "studentmanager">
         <label><b>University</b></label>
             <select name="university_id">
                 <option disabled selected value>--select an option--</option>
@@ -79,7 +74,9 @@
                     @endforeach
             </select>
     </div>
+
         <div id="director" style="display:none">
+            <label><b>Program</b></label>
             <select name="program_id">
                 <option disabled selected value>--select an option--</option>
                     @foreach($programs as $program)

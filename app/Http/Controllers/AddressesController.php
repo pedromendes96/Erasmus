@@ -37,9 +37,9 @@ class AddressesController extends Controller
     }
 
     private function GetCityId(Request $request){
-        $city_result = City::where('name',$request->city)->get();
-        if($city_result->count()>0){
-            return $city_result[0]->id;
+        $city_result = City::where('name',$request->city)->first();
+        if($city_result){
+            return $city_result->id;
         }else{
             return app('App\Http\Controllers\CitiesController')->Add($request);
         }

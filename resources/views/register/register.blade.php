@@ -45,6 +45,9 @@
     <label><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
     <br>
+    <label><b>Confirm Password</b></label>
+    <input type="password" placeholder="Enter Password" name="confirmpassword" required>
+    <br>
     <label><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
     <br>

@@ -38,18 +38,28 @@ class UsersController extends Controller
     }
 
     public function verifyRole(Request $request){
-        $role = $request->role;
-        if ($role == "student") {
-            app('App\Http\Controllers\StudentsController')->Add($request);
+        $password = $request->password;
+        $confpassword = $request->confirmpassword;
+        $emailExists=User::where('email', $request->email)->first();
+        $phoneExists=User::where('phone',$request->phone)->first();
+
+        if ($password == $confpassword) {
+            if($emailExists or $phoneExists){
+                return $this->Index($request);// fazer validação
+            }
+            $role = $request->role;
+            if ($role == "student") {
+               return app('App\Http\Controllers\StudentsController')->Add($request);
+            } else if ($role == "manager") {
+                app('App\Http\Controllers\ManagersController')->Add($request);
+            } else if ($role == "director") {
+                app('App\Http\Controllers\DirectorsController')->Add($request);
+            }
+            //return view ('home');
+        } else {
+            return $this->Index($request);
+
         }
-        else if ($role =="manager") {
-            app('App\Http\Controllers\ManagersController')->Add($request);
-        }
-        else if ($role =="director"){
-            app('App\Http\Controllers\DirectorsController')->Add($request);
-        }
-        return view ('home');
-        #return vista
     }
 
     public function ChangeProperty(Request $request){
@@ -68,9 +78,9 @@ class UsersController extends Controller
 
     public function GetAddressId(Request $request){
 
-        $address_result = Address::where('name',$request->address)->get();
-        if($address_result-> count() > 0){
-            return $address_result[0]->id;
+        $address_result = Address::where('name',$request->address)->first();
+        if($address_result){
+            return $address_result->id;
         }else{
             return app('App\Http\Controllers\AddressesController')->Add($request);
         }

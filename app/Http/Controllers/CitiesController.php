@@ -40,9 +40,9 @@ class CitiesController extends Controller
     }
 
     public function GetCountryId(Request $request){
-        $country_result = Country::where('id',$request->country)->get();
-        if($country_result->count()>0){
-            return $country_result[0]->id;
+        $country_result = Country::where('id',$request->country)->first();
+        if($country_result){
+            return $country_result->id;
         }else{
             return app('App\Http\Controllers\CountriesController')->Add($request);
         }

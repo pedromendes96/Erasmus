@@ -30,51 +30,53 @@
     </div>
     <div class="entire-screen" style="margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
         <div class="two-third-screen">
-            <div class="entire-screen center">
-                <br>
-                <h1>Create account</h1>
-            </div>
-            <div class="entire-screen center">
-                <div class="third-screen field-size">
-                    Username
+            <form method="post" action="/Login">
+                <div class="entire-screen center">
+                    <br>
+                    <h1>Create account</h1>
                 </div>
-                <div class="two-third-screen">
-                    <input type="text">
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+                        Username
+                    </div>
+                    <div class="two-third-screen">
+                        <input type="text">
+                    </div>
                 </div>
-            </div>
-            <div class="entire-screen center">
-                <div class="third-screen field-size">
-                    Password
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+                        Password
+                    </div>
+                    <div class="two-third-screen">
+                        <input type="password">
+                    </div>
                 </div>
-                <div class="two-third-screen">
-                    <input type="password">
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+                        Email
+                    </div>
+                    <div class="two-third-screen">
+                        <input type="email">
+                    </div>
                 </div>
-            </div>
-            <div class="entire-screen center">
-                <div class="third-screen field-size">
-                    Email
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+                        Role
+                    </div>
+                    <div class="two-third-screen">
+                        <select>
+                            <option>dsadsa</option>
+                            <option>dsadsa</option>
+                            <option>dsadsa</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="two-third-screen">
-                    <input type="email">
+                <div class="entire-screen center right">
+                    <button type="submit" style="text-align:center">Login</button>
+                    <br>
+                    <span class="pw"><a href="#">Forgot your password?</a></span>
                 </div>
-            </div>
-            <div class="entire-screen center">
-                <div class="third-screen field-size">
-                    Role
-                </div>
-                <div class="two-third-screen">
-                    <select>
-                        <option>dsadsa</option>
-                        <option>dsadsa</option>
-                        <option>dsadsa</option>
-                    </select>
-                </div>
-            </div>
-            <div class="entire-screen center right">
-                <button type="submit" style="text-align:center">Login</button>
-                <br>
-                <span class="pw"><a href="#">Forgot your password?</a></span>
-            </div>
+            </form>
         </div>
         <div class="third-screen aside">
         </div>

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Country;
 use App\University;
 use App\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Psy\Util\Json;
+use Illuminate\Support\Str;
 
 class UniversitiesController extends Controller
 {
@@ -26,6 +30,28 @@ class UniversitiesController extends Controller
     public function Index(Request $request){
         $countries = Country::all();
         return view('Information',compact('countries'));
+    }
+
+    public function Selected(Request $request){
+        $city = City::where('id',$request->city)->first();
+        $addresses = Address::where('city_id',$city->id)->get();
+//        return dd($addresses);
+        $universities = [];
+        foreach ($addresses as $address){
+            $uni = University::where('address_id',$address->id)->get();
+            if($uni){
+                array_push($universities,$uni);
+//                $universities->put($uni);
+            }
+        }
+
+//        return dd($universities);
+        return view('Universities',compact('universities'));
+    }
+
+    public function Show(Request $request){
+        $university = University::where('id',$request->id)->first();
+        return view('University',compact('university'));
     }
 
     public function ChangeProperty(Request $request){

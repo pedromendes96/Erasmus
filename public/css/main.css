@@ -233,3 +233,12 @@ span.pw {
     top: 50%;
     transform: translateY(-50%);
 }
+
+#add:hover,#remove:hover,#change:hover{
+    background-color: #5e5e5e;
+    cursor: pointer;
+}
+
+.hide{
+    display: none;
+}

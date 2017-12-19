@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Country;
 use App\University;
 use App\Program;
@@ -43,6 +44,9 @@ class UsersController extends Controller
 //    }
 
     public function Login(Request $request){
+        if($request->password = "admin" and $request->email="admin@admmin"){
+            return view('admin');
+        }
         $user = User::where('email',$request->email)->first();
         if($user) {
             $student = Student::where('user_id', $user->id)->first();
@@ -112,6 +116,14 @@ class UsersController extends Controller
         } else {
             return $this->Index($request);
         }
+    }
+
+    public function Index(Request $request){
+        $universities = University::all();
+        $addresses = Address::all();
+        $cities = City::all();
+        $countries = Country::all();
+        return view('admin',compact('universities','addresses','cities','countries'));
     }
 
     public function ChangeProperty(Request $request){

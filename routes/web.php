@@ -36,4 +36,9 @@ Route::get('/News', function () {
 });
 
 Route::get('/cities','CitiesController@Index');
-Route::post('/cities','CitiesController@Index');
+
+Route::get('/universities','UniversitiesController@Selected');
+
+Route::get('/university/{id}','UniversitiesController@Show');
+
+Route::get('/admin','UsersController@Index');

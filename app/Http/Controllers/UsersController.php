@@ -45,14 +45,14 @@ class UsersController extends Controller
 //    }
 
     public function Login(Request $request){
-        if($request->password = "admin" and $request->email="admin@admmin"){
+        if($request->password == "admin" and $request->email=="admin@admmin"){
             return view('admin');
         }
         $user = User::where('email',$request->email)->first();
         if($user) {
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
-                if ($request->password == $user->password/*Hash::check($request->password, $user->password)*/) {
+                if ($request->password == Hash::check($request->password, $user->password)) {
                     $user->role = 'student';
                     return view('Dashboard',compact('user'));
                 } else {

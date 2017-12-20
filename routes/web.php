@@ -27,17 +27,13 @@ Route::post('/LogIn', 'UsersController@Login');
 
 Route::get('/Information', 'UniversitiesController@Index');
 
-Route::get('/SignUp', function () {
-    return view('register');
-});
-
 Route::get('/register', 'UsersController@IndexRegister');
 
 Route::post('/register','UsersController@Register');
 
-Route::get('/News', function () {
-    return view('News');
-});
+//Route::get('/News', function () {
+//    return view('News');
+//});
 
 Route::get('/cities','CitiesController@Index');
 

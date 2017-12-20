@@ -25,6 +25,7 @@
                         break;
                 }
             });
+
         });</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -170,6 +171,8 @@
                 <span class="pw"><a href="#">Forgot your password?</a></span>
             </div>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
+        </div>
+        <div class="third-screen aside">
         </div>
     </div>
 </form>

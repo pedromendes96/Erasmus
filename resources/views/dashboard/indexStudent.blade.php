@@ -5,7 +5,6 @@
     <div id="mainSpace"></div>
 
     <section class="optionSection">
-
         <div class="option">
             <strong onclick="window.location='{{ url("dashboard/newProcess") }}'">New process</strong>
         </div>
@@ -18,7 +17,6 @@
         <div class="option">
             <strong onclick="window.location='{{ url("dashboard/messages") }}'">My messages</strong>
         </div>
-
     </section>
 
 @endsection

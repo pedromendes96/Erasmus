@@ -15,7 +15,7 @@ class User extends Model
     }
 
     public function Student(){
-        return $this->belongsTo('App\Student');
+        return $this->belongsTo('App\Student','student_id');
     }
 
     public function Director(){

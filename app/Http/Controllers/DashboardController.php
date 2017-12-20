@@ -6,16 +6,35 @@ use App\Director;
 use App\Manager;
 use App\Process;
 use App\Student;
-use App\University;
 use Illuminate\Http\Request;
 use App\User;
 use App\Candidate;
 use App\Managers;
 use PhpParser\Node\Scalar\MagicConst\Dir;
+use Illuminate\Support\Facades\DB;
+
 
 
 class DashboardController extends Controller
 {
+    public function test() {//Esta função é so para testar pequenos codigos para verificar se funcionam individualmente.
+        /*$user = User::find(1)->first();
+        $process = Process::find(1);
+        return $process;
+        //Choose which university that he wants to go.
+        //Tell user that it's better to ask the manager the available options for erasmus on his university on his program.
+        //*/
+        DB::table('process_university')->insert([
+            'process_id' => '2',
+            'university_id' => '2',
+            'result' => '1',
+            'created_at' => DB::raw('now()'),
+            'updated_at' => DB::raw('now()')
+        ]);
+
+        return 'ok';
+    }
+
     public function index() {
 
         //get user via session
@@ -53,27 +72,32 @@ class DashboardController extends Controller
         $student = Student::where('user_id',$user->id);
         $candidate = Candidate::where('student_id',$student->id);
         //add student id to request
+
         if($candidate == null){
-            app('App\Http\Controllers\CandidatesController')->Add($request);
+            $candidate_id  = app('App\Http\Controllers\CandidatesController')->Add($student->id);
         }
         else {
-            return $candidate;
+            $candidate_id = $candidate->id;
         }
         //Add on request the candidate id
             $processCand = $request->candidate_id;
             $processCand = $candidate->id;
         //Add on request the manager id
             $processManager = $request->manager_id;
-                $allManager = $process = DB::table('processes')
+                $allManager = DB::table('processes')
                     ->select('manager_id',DB::raw('count(*) as numProcess'))
                     ->groupBy('manager_id')
                     ->orderByRaw('numProcess ASC')
                     ->get();
-            $processManager = $allManager->first()->manager_id;
+        $processAssignedManager = $allManager->first()->manager_id;
+
+        $request->candidate_id = $candidate_id;//TEST
+        $request->manager_id = $processAssignedManager;//TEST
+
         $process = app('App\Http\Controllers\ProcessController')->Add($request);
         $process = Process::find($process);
+
         //create process_university table
-        //DB::table('process_university')->insert();
 
         return view( bladeblcvtbryntgrvf,compact('user','candidate','process'));
     }
@@ -100,6 +124,8 @@ class DashboardController extends Controller
             //Student has program!!!! DATABASE
             //Find all process of the students that have the same program as the director
             $processes = Process::where('university_id',$director->university_id)->get();
+            $program = $director->program_id;
+            //join user
                 //where director->program_id == student->program_id
             return view('dashboard.showProcesses', compact('user','processes'));
         }

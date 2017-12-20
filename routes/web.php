@@ -28,5 +28,9 @@ Route::get('/index', 'ProcessesController@Index');
 
 
 
+Route::get('/test', 'DashboardController@test');
+
+
+
 
 

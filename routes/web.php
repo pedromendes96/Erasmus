@@ -23,7 +23,7 @@ Route::get('/Dashboard', function () {
     return view('Dashboard');
 });
 
-Route::post('/Dashboard', 'UsersController@Login');
+Route::post('/LogIn', 'UsersController@Login');
 
 Route::get('/Information', 'UniversitiesController@Index');
 
@@ -41,6 +41,6 @@ Route::get('/universities','UniversitiesController@Selected');
 
 Route::get('/university/{id}','UniversitiesController@Show');
 
-Route::get('/admin','UsersController@Index');
+Route::get('/admin','UsersController@Admin');
 
 Route::post('/admin','UsersController@AdminAction');

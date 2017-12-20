@@ -26,7 +26,7 @@
 <body>
 <div class="entire-screen navbar">
     <div class="third-screen center">
-        <a href="/"><img src="/img/erasmus.png" width="50%"></a>
+        <a href="/"><img src="{{$university->img}}" width="50%"></a>
     </div>
     <div class="two-third-screen right">
         <ul>

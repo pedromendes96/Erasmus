@@ -14,6 +14,7 @@ use App\Address;
 use App\Information;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\New_;
 
 class UsersController extends Controller
 {
@@ -44,53 +45,54 @@ class UsersController extends Controller
 //        return view ('login.login');
 //    }
 
+    public function Admin(Request $request){
+        $universities = University::all();
+        $addresses = Address::all();
+        $cities = City::all();
+        $countries = Country::all();
+        $news = Information::all();
+        return view('admin',compact('universities','addresses','cities','countries','news'));
+    }
+
     public function Login(Request $request){
         if($request->password == "admin" and $request->email=="admin@admin"){
-            $universities = University::all();
-            $addresses = Address::all();
-            $cities = City::all();
-            $countries = Country::all();
-            return view('admin',compact('universities','addresses','cities','countries'));
+            return redirect('admin');
         }
         $user = User::where('email',$request->email)->first();
         if($user) {
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
-                if ($request->password == $user->password/*Hash::check($request->password, $user->password)*/) {
+                if (Hash::check($request->password, $user->password)) {
                     $user->role = 'student';
-                    return view('Dashboard',compact('user'));
+                    return redirect('Dashboard')->with('user');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
-//                    return view('LogIn',compact('incorrect'));
                 }
             }
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
                     $user->role = 'manager';
-                    return view('Dashboard',compact('user'));
+                    return redirect('Dashboard')->with('user');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
-//                    return view('LogIn',compact('incorrect'));
                 }
             }
             $director = Director::where('user_id', $user->id)->first();
             if ($director) {
                 if (Hash::check($request->password, $user->password)) {
                     $user->role = 'director';
-                    return view('Dashboard',compact('user'));
+                    return redirect('Dashboard')->with('user');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
-//                    return view('LogIn',compact('incorrect'));
                 }
             }
         } else {
             $noexistence = true;
             return back()->with('noexistence',$noexistence);
-//            return view('LogIn',compact('noexistence'));
         }
     }
 
@@ -133,20 +135,114 @@ class UsersController extends Controller
     }
 
     public  function AdminAction(Request $request){
-        if($request->operation ="add"){
-
+        if($request->operation == "add"){
+            if($request->type == "country"){
+                $country = new Country;
+                $country->name = $request->name;
+                $country->description = $request->description;
+                $country->save();
+            }elseif($request->type == "city"){
+                $city = New City;
+                $city->name = $request->name;
+                $city->description = $request->description;
+                $city->country_id = $request->country;
+                $city->save();
+            }elseif($request->type == "address"){
+                $address = new Address;
+                $address->name = $request->name;
+                $address->description = $request->description;
+                $address->city_id = $request->city;
+                $address->save();
+            }elseif($request->type == "university"){
+                $university = new University;
+                $university->name = $request->name;
+                $university->description = $request->description;
+                $university->email = $request->email;
+                $path = $request->file('image')->store('img/university');
+                $university->img = $path;
+                $university->address_id = $request->address;
+                $university->save();
+            }else{
+                $information = new Information;
+                $information->title = $request->title;
+                $information->description = $request->description;
+                $information->content = $request->container;
+                $path = $request->file('image')->store('new');
+                $information->img = $path;
+                $information->save();
+            }
+        }elseif($request->operation ="change"){
+            if($request->type == "country"){
+                $item = Country::find($request->country);
+                if($request->column == "name"){
+                    $item->name = $request->name;
+                }elseif($request->column == "description"){
+                    $item->description = $request->name;
+                }
+            }elseif($request->type == "city"){
+                $item = City::find($request->city);
+                if($request->column == "name"){
+                    $item->name = $request->name;
+                }else if($request->column == "description"){
+                    $item->description = $request->name;
+                }else{
+                    $item->country_id = $request->country;
+                }
+            }elseif($request->type == "address"){
+                $item = Address::find($request->address);
+                if($request->column == "name"){
+                    $item->name = $request->name;
+                }else if($request->column == "city"){
+                    $item->city_id = $request->city;
+                }
+            }elseif($request->type == "university"){
+                $item = University::find($request->university);
+                if($request->column == "name"){
+                    $item->name = $request->name;
+                }elseif($request->column == "description"){
+                    $item->description = $request->description;
+                }elseif ($request->column == "email"){
+                    $item->email = $request->email;
+                }elseif ($request->column == "image"){
+                    $path = $request->file('image')->store('img/university');
+                    $item->img = $path;
+                }else {
+                    $item->address_id = $request->address;
+                }
+            }else{
+                $item = Information::find($request->new);
+                if($request->column == "title"){
+                    $item->title = $request->title;
+                }elseif($request->column == "description"){
+                    $item->description = $request->description;
+                }elseif($request->column == "content"){
+                    $item->content = $request->container;
+                }else{
+                    $path = $request->file('image')->store('img/new');
+                    $item->img = $path;
+                }
+            }
+            $item->save();
+        }elseif($request->operation ="remove"){
+            if($request->type == "country"){
+                $item = Country::find($request->country);
+            }elseif($request->type == "city"){
+                $item = City::find($request->city);
+            }elseif($request->type == "address"){
+                $item = Address::find($request->address);
+            }elseif($request->type == "university"){
+                $item = University::find($request->university);
+            }else{
+                $item = Information::find($request->new);
+            }
+            $item->delete();
         }
-        if($request->operation ="change"){
-
-        }
-        if($request->operation ="remove"){
-
-        }
-//        $universities = University::all();
-//        $addresses = Address::all();
-//        $cities = City::all();
-//        $countries = Country::all();
-//        return view('admin',compact('universities','addresses','cities','countries'));
+        $universities = University::all();
+        $addresses = Address::all();
+        $cities = City::all();
+        $countries = Country::all();
+        $news = Information::all();
+        return view('admin',compact('universities','addresses','cities','countries','news'));
     }
 
     public function ChangeProperty(Request $request){

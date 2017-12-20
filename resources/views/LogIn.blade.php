@@ -36,7 +36,7 @@
     <div class="seventy-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 30px 0px;background-color: #eeeeee">
         <div class="entire-screen" style="margin: 50px 0px;padding: 0px 0px !important;">
             <form style="
-            padding: 25px 25px;" method="post" action="/Dashboard">
+            padding: 25px 25px;" method="post" action="/LogIn">
                 {{csrf_field()}}
                 <div class="entire-screen">
                     <label>Email:</label><input type="email" placeholder="Your email" name="email">

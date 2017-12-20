@@ -24,6 +24,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->phone = $request->phone;
+        $user->university_id = $request->university_id;
         //Temos de verificar se N endereco existe se nao criar , caso contrario usar esse
         $user->address_id = $this->GetAddressId($request);
         $user->save();
@@ -38,7 +39,7 @@ class UsersController extends Controller
         $countries = Country::all();
         $universities = University::all();
         $programs = Program::all();
-        return view('register.register',compact('programs','countries','universities'));
+        return view('register',compact('programs','countries','universities'));
     }
 
 //    public function IndexLogin(Request $request){
@@ -109,23 +110,23 @@ class UsersController extends Controller
         $phoneExists=User::where('phone',$request->phone)->first();
         if ($password == $confpassword) {
             if($emailExists or $phoneExists){
-                return $this->Index($request);// fazer validação
+                return dd('email ou telefone ja existe');// fazer validação
             }
             $role = $request->role;
             if ($role == "student") {
                 return app('App\Http\Controllers\StudentsController')->Add($request);
             } else if ($role == "manager") {
-                app('App\Http\Controllers\ManagersController')->Add($request);
+                return app('App\Http\Controllers\ManagersController')->Add($request);
             } else if ($role == "director") {
-                app('App\Http\Controllers\DirectorsController')->Add($request);
+                return app('App\Http\Controllers\DirectorsController')->Add($request);
             }
             //return view ('home');
         } else {
-            return $this->Index($request);
+            return dd('nao foi inserido');
         }
     }
 
-    public function Index(Request $request){
+    public function IndexAdmin(Request $request){
         $universities = University::all();
         $addresses = Address::all();
         $cities = City::all();

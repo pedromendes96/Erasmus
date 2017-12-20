@@ -18,4 +18,8 @@ class User extends Model
     public function Director(){
         return $this->belongsTo('App\Director');
     }
+
+    public function University(){
+        return $this->belongsTo('App/University');
+    }
 }

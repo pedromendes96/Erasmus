@@ -15,4 +15,8 @@ class Program extends Model
     public function Course(){
         return $this->belongsToMany('App\Course');
     }
+
+    public function Student(){
+        return $this->belongsToMany('App\Student');
+    }
 }

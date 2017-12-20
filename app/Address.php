@@ -15,4 +15,12 @@ class Address extends Model
     public function City(){
         return $this->belongsTo('App\City');
     }
+
+//    public static function GetAddressById($id){
+//        return \DB::table('address')->where('id', '=', $id)->get();
+//    }
+//
+//    public static function RemoveAddressbyId($id){
+//        \DB::table('address')->where('id', '=', $id)->delete();
+//    }
 }

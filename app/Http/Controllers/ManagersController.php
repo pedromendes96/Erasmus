@@ -10,7 +10,6 @@ class ManagersController extends Controller
     public function Add(Request $request){
         $manager = new Manager;
         $manager->user_id = app('App\Http\Controllers\UsersController')->Add($request);
-        $manager->university_id = $request->university_id;
         $manager->save();
         return $manager->id;
     }

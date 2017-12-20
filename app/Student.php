@@ -15,4 +15,8 @@ class Student extends Model
     public function University(){
         return $this->belongsTo('App/University');
     }
+
+//    public static function RemoveById($id){
+//        \DB::table('students')->where('id', '=', $id)->delete();
+//    }
 }

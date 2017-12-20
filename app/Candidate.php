@@ -12,4 +12,8 @@ class Candidate extends Model
     public function Process(){
         return $this->hasMany('App\Process');
     }
+
+//    public static function RemoveById($id){
+//        \DB::table('candidates')->where('id', '=', $id)->delete();
+//    }
 }

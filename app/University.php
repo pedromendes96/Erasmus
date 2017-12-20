@@ -21,4 +21,12 @@ class University extends Model
     public function Program(){
         return $this->belongsToMany('App\Program');
     }
+
+//    public static function GetById($id){
+//        return \DB::table('universities')->where('id', '=', $id)->get();
+//    }
+//
+//    public static function RemoveById($id){
+//        \DB::table('universities')->where('id', '=', $id)->delete();
+//    }
 }

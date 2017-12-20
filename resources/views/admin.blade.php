@@ -164,8 +164,6 @@
                     <input name="type" type="hidden" value="address">
                     <label>Address Name:</label><br>
                     <input type="text" name="name"><br>
-                    <label>Description:</label><br>
-                    <input type="text" name="description"><br>
                     <label>Select the city</label><br>
                     <select name="city">
                         @foreach($cities as $city)

@@ -14,6 +14,7 @@ use App\Address;
 use App\Information;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\New_;
 
 class UsersController extends Controller
@@ -151,7 +152,6 @@ class UsersController extends Controller
             }elseif($request->type == "address"){
                 $address = new Address;
                 $address->name = $request->name;
-                $address->description = $request->description;
                 $address->city_id = $request->city;
                 $address->save();
             }elseif($request->type == "university"){
@@ -159,8 +159,9 @@ class UsersController extends Controller
                 $university->name = $request->name;
                 $university->description = $request->description;
                 $university->email = $request->email;
-                $path = $request->file('image')->store('img/university');
-                $university->img = $path;
+                $path = $request->file('image')->store('public/img/university');
+                $array = explode('/', $path, 2);
+                $university->img = $array[1];
                 $university->address_id = $request->address;
                 $university->save();
             }else{
@@ -168,8 +169,9 @@ class UsersController extends Controller
                 $information->title = $request->title;
                 $information->description = $request->description;
                 $information->content = $request->container;
-                $path = $request->file('image')->store('new');
-                $information->img = $path;
+                $path = $request->file('image')->store('public/img/new');
+                $array = explode('/', $path, 2);
+                $information->img = $array[1];
                 $information->save();
             }
         }elseif($request->operation ="change"){
@@ -205,8 +207,9 @@ class UsersController extends Controller
                 }elseif ($request->column == "email"){
                     $item->email = $request->email;
                 }elseif ($request->column == "image"){
-                    $path = $request->file('image')->store('img/university');
-                    $item->img = $path;
+                    $path = $request->file('image')->store('public/img/university');
+                    $array = explode('/', $path, 2);
+                    $item->img = $array[1];
                 }else {
                     $item->address_id = $request->address;
                 }
@@ -219,8 +222,9 @@ class UsersController extends Controller
                 }elseif($request->column == "content"){
                     $item->content = $request->container;
                 }else{
-                    $path = $request->file('image')->store('img/new');
-                    $item->img = $path;
+                    $path = $request->file('image')->store('public/img/new');
+                    $array = explode('/', $path, 2);
+                    $item->img = $array[1];
                 }
             }
             $item->save();

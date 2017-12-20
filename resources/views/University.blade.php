@@ -26,7 +26,7 @@
 <body>
 <div class="entire-screen navbar">
     <div class="third-screen center">
-        <a href="/"><img src="{{$university->img}}" width="50%"></a>
+        <a href="/"><img src="/img/erasmus.png" width="50%"></a>
     </div>
     <div class="two-third-screen right">
         <ul>
@@ -53,7 +53,7 @@
         </div>
         <div class="entire-screen">
             <div class="quart-screen"></div>
-            <div class="half-screen"><img width="100%" src="/img/university/{{$university->img}}"></div>
+            <div class="half-screen"><img width="100%" src="{{asset('storage/'.$university->img)}}"></div>
         </div>
         <div class="entire-screen">
             <h1>Description</h1>

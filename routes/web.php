@@ -42,3 +42,5 @@ Route::get('/universities','UniversitiesController@Selected');
 Route::get('/university/{id}','UniversitiesController@Show');
 
 Route::get('/admin','UsersController@Index');
+
+Route::post('/admin','UsersController@AdminAction');

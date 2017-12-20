@@ -74,7 +74,8 @@
             <div class="half-screen">
                 <div class="entire-screen">
                     {{csrf_field()}}
-                    <label>Country:</label><select name="country" onchange="showCities(this.value)">
+                    <label>Country:</label>
+                    <select name="country" onchange="showCities(this.value)">
                         <option style="display:none;" selected>Select Country</option>
                         @foreach($countries as $country)
                             <option value="{{$country->name}}" style="width: 50%;">

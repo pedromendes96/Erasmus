@@ -11,6 +11,7 @@ use App\User;
 use App\Manager;
 use App\Director;
 use App\Address;
+use App\Information;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -44,8 +45,12 @@ class UsersController extends Controller
 //    }
 
     public function Login(Request $request){
-        if($request->password = "admin" and $request->email="admin@admmin"){
-            return view('admin');
+        if($request->password == "admin" and $request->email=="admin@admin"){
+            $universities = University::all();
+            $addresses = Address::all();
+            $cities = City::all();
+            $countries = Country::all();
+            return view('admin',compact('universities','addresses','cities','countries'));
         }
         $user = User::where('email',$request->email)->first();
         if($user) {
@@ -123,7 +128,25 @@ class UsersController extends Controller
         $addresses = Address::all();
         $cities = City::all();
         $countries = Country::all();
-        return view('admin',compact('universities','addresses','cities','countries'));
+        $news = Information::all();
+        return view('admin',compact('universities','addresses','cities','countries','news'));
+    }
+
+    public  function AdminAction(Request $request){
+        if($request->operation ="add"){
+
+        }
+        if($request->operation ="change"){
+
+        }
+        if($request->operation ="remove"){
+
+        }
+//        $universities = University::all();
+//        $addresses = Address::all();
+//        $cities = City::all();
+//        $countries = Country::all();
+//        return view('admin',compact('universities','addresses','cities','countries'));
     }
 
     public function ChangeProperty(Request $request){

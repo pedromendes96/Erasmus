@@ -1,0 +1,57 @@
+html,body {
+     padding: 0;
+     margin: 0;
+ }
+body {
+    background-image: url("../img/uni.jpg");
+    background-size: cover;
+
+}
+.navigationBarSpace {
+    width:100%;
+    height: 30px;
+    background-color: #2a88bd;
+    color: whitesmoke;
+    text-align: center;
+}
+
+
+#mainSpace {
+    width: 100%;
+    height: 300px;
+}
+
+.optionSection {
+    width: 100%;
+    height: 100px;
+    background-color:rgba(152, 203, 232, 0.8);
+    text-align: center;
+}
+
+.option {
+    float: left;
+    height: 100%;
+    width: 25%;
+    color: darkslategrey;
+}
+.option:hover{
+    background-color: #1f648b;
+    color: white;
+    float: left;
+    width: 25%;
+    border: 1px;
+}
+
+.footerSpace {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #2a88bd;
+    color: whitesmoke;
+    text-align: center;
+}
+
+#footerTitle {
+}

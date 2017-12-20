@@ -18,6 +18,7 @@ class Process extends Model
         return $this->belongsToMany('App\University');
     }
 
+
 //    public static function RemoveById($id){
 //        \DB::table('processes')->where('id', '=', $id)->delete();
 //    }

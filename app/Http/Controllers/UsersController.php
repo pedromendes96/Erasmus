@@ -36,7 +36,7 @@ class UsersController extends Controller
         $countries = Country::all();
         $universities = University::all();
         $programs = Program::all();
-        return view('register.register',compact('programs','countries','universities'));
+        return view('register',compact('programs','countries','universities'));
     }
 
 //    public function IndexLogin(Request $request){
@@ -118,7 +118,7 @@ class UsersController extends Controller
         }
     }
 
-    public function Index(Request $request){
+    public function IndexAdmin(Request $request){
         $universities = University::all();
         $addresses = Address::all();
         $cities = City::all();

@@ -27,9 +27,11 @@ Route::post('/Dashboard', 'UsersController@Login');
 
 Route::get('/Information', 'UniversitiesController@Index');
 
-Route::get('/SignUp', function () {
-    return view('SignUp');
-});
+Route::get('/teste',function(){return view('teste');});
+
+Route::get('/register', 'UsersController@IndexRegister');
+
+Route::post('/register','UsersController@Register');
 
 Route::get('/News', function () {
     return view('News');
@@ -41,4 +43,4 @@ Route::get('/universities','UniversitiesController@Selected');
 
 Route::get('/university/{id}','UniversitiesController@Show');
 
-Route::get('/admin','UsersController@Index');
+Route::get('/admin','UsersController@IndexAdmin');

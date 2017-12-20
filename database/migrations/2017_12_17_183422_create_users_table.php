@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->bcrypt();
             $table->string('img')->default('mr_nobody_new.svg');
+            $table->string('phone')->unique();
             $table->rememberToken();
             $table->timestamps();
             $table->integer('address_id')->unsigned()->index();

@@ -13,10 +13,16 @@ class CreateForeignKeys extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
+            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
         });
+        Schema::table('directors',function(Blueprint $table){
+            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
         });
         Schema::table('addresses', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
@@ -34,15 +40,7 @@ class CreateForeignKeys extends Migration
             $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
             $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
         });
-        Schema::table('managers', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
-        });
 
-        Schema::table('directors', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('program_id')->references('id')->on('programs');
-        });
     }
     /**
      * Reverse the migrations.

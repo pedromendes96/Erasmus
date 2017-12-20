@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->bcrypt();
             $table->string('img')->default('mr_nobody_new.svg');
             $table->string('phone')->unique();
-            $table->rememberToken();
+            $table->integer('university_id')->unsigned()->index();
             $table->timestamps();
             $table->integer('address_id')->unsigned()->index();
         });

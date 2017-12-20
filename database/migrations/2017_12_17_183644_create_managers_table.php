@@ -15,7 +15,6 @@ class CreateManagersTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('university_id')->unsigned()->index();
         });
     }
     /**

@@ -11,8 +11,8 @@ class StudentsController extends Controller
 {
     public function Add(Request $request){
         $student = new Student;
-        $student->university_id = $request->university_id;
         $student->user_id = app('App\Http\Controllers\UsersController')->Add($request);
+        $student->program_id = $request->program_id;
         $student->save();
         return $student->id;
     }

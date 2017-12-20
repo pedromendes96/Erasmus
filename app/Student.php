@@ -12,8 +12,9 @@ class Student extends Model
     public function Candidate(){
         return $this->belongsTo('App\Student');
     }
-    public function University(){
-        return $this->belongsTo('App/University');
+
+    public function Program(){
+        return $this->hasOne('App\Program');
     }
 
 //    public static function RemoveById($id){

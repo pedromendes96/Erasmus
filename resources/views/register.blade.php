@@ -11,17 +11,17 @@
             $('#role').change(function(){
                 selection = $(this).val();
                 switch (selection){
-                    case 'studentmanager':
-                        $('#studentmanager').show();
-                        $('#director').hide();
+                    case 'directorstudent':
+                        $('#directorstudent').show();
+                        $('#manager').hide();
                         break;
-                    case 'director':
-                        $('#director').show();
-                        $('#studentmanager').hide();
+                    case 'manager':
+                        $('#manager').show();
+                        $('#directorstudent').hide();
                         break;
                     default:
-                        $('#studentmanager').show();
-                        $('#director').hide();
+                        $('#directorstudent').show();
+                        $('#manager').hide();
                         break;
                 }
             });
@@ -138,7 +138,7 @@
                     <input type="text" name="address" required>
                 </div>
             </div>
-            <div id = "studentmanager" class="entire-screen center">
+            <div class="entire-screen center">
                 <div class="third-screen field-size">
                     University
                 </div>
@@ -151,11 +151,11 @@
                     </select>
                 </div>
             </div>
-            <div id = "director" class="entire-screen center" style="display:none">
+            <div id = "directorstudent" class="entire-screen center">
                 <div class="third-screen field-size">
                     Program
                 </div>
-                <div class="two-third-screen">
+                <div id="directorstudent" class="two-third-screen">
                     <select name="program_id">
                         <option disabled selected value>--select a program--</option>
                         @foreach($programs as $program)

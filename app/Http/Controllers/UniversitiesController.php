@@ -35,14 +35,8 @@ class UniversitiesController extends Controller
     public function Selected(Request $request){
         $city = City::where('id',$request->city)->first();
         $addresses = Address::where('city_id',$city->id)->get();
-        $universities = [];
-        foreach ($addresses as $address){
-            $uni = University::where('address_id',$address->id)->get();
-            if($uni){
-                array_push($universities,$uni);
-            }
-        }
-        return view('Universities',compact('universities'));
+        $universities = University::all();
+        return view('Universities',compact('addresses','universities'));
     }
 
     public function Show(Request $request){

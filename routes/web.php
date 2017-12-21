@@ -35,6 +35,8 @@ Route::post('/register','UsersController@Register');
 //    return view('News');
 //});
 
+Route::get('/Dashboard/messages/{pag}','MessagesController@Index');
+
 Route::get('/cities','CitiesController@Index');
 
 Route::get('/universities','UniversitiesController@Selected');

@@ -34,6 +34,7 @@ Route::post('/register','UsersController@Register');
 //Route::get('/News', function () {
 //    return view('News');
 //});
+Route::get('/Dashboard/message/{msg}','MessagesController@ReadMessage');
 
 Route::get('/Dashboard/messages/{pag}','MessagesController@Index');
 

@@ -59,12 +59,36 @@
                         <label>To:</label>
                         <select name="sender">
                             <option style="display:none;" selected>Select Destinatary:</option>
-                            <option value="{{$manager->id}}">
-                                {{$manager->name}}
-                            </option>
-                            <option value="{{$director->id}}">
-                                {{$director->name}}
-                            </option>
+                            @if($role="student")
+                                <option value="{{$manager->id}}">
+                                    {{$manager->name}}
+                                </option>
+                                <option value="{{$director->id}}">
+                                    {{$director->name}}
+                                </option>
+                            @elseif($role="manager")
+                                @foreach($candidates as $candidate)
+                                    <option value="{{$candidate->id}}">
+                                        {{$candidate->name}}
+                                    </option>
+                                @endforeach
+                                @foreach($directors as $director)
+                                        <option value="{{$director->id}}">
+                                            {{$director->name}}
+                                        </option>
+                                    @endforeach
+                            @else
+                                @foreach($candidates as $candidate)
+                                    <option value="{{$candidate->id}}">
+                                        {{$candidate->name}}
+                                    </option>
+                                @endforeach
+                                @foreach($managers as $manager)
+                                        <option value="{{$manager->id}}">
+                                            {{$manager->name}}
+                                        </option>
+                                    @endforeach
+                            @endif
                         </select>
                     @endif
                 </div>

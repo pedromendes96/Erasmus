@@ -23,6 +23,8 @@ Route::get('/Dashboard', function () {
     return view('Dashboard');
 });
 
+Route::get('/teste','MessagesController@NewMessage');
+
 Route::post('/LogIn', 'UsersController@Login');
 
 Route::get('/Information', 'UniversitiesController@Index');

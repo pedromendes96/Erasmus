@@ -14,6 +14,7 @@ use App\Address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
+
 class UsersController extends Controller
 {
     public function Add(Request $request){
@@ -148,5 +149,62 @@ class UsersController extends Controller
         }else{
             return app('App\Http\Controllers\AddressesController')->Add($request);
         }
+    }
+
+    public function SettingsIndex(){
+        //adicionar edição de foto
+        $userid=session('userid');
+        $role = session('role');
+        $user = User::where('id',$userid)->first();
+        $countries= Country::all();
+        $address = Address::where('id',$user->address_id)->first();
+        $city = City::where('id',$address->city_id)->first();
+        $country = Country::where('id',$city->country_id)->first();
+        if ($role == 'student'){
+            return view ('editprofile',compact('user','role','countries','country'));
+        }
+        if ($role == 'manager'){
+            return view ('editprofile',compact('user','manager'));
+        }
+
+        else if ($role = 'director'){
+            return view('editprofile',compact('user','director'));
+        }
+    }
+
+    public function UserProfileIndex(Request $request){
+        $userid = session('userid');
+        $role = session('role');
+        $request->session()->put('userid', $userid);
+        $user = User::where('id',$userid)->first();
+        $user->role = $role;
+        $university = University::where('id',$user->university_id)->first();
+        $user->university = $university->name;
+        $address = Address::where('id',$user->address_id)->first();
+        $user->address = $address->name;
+        $city = City::where('id',$address->city_id)->first();
+        $user->city = $city->name;
+        $country = Country::where('id',$city->country_id)->first();
+        $user->country = $country->name;
+        if($role=='student'){
+            $student = Student::where('user_id',$user->id)->first();
+            $program = Program::where('id',$student->program_id)->first();
+            $user->program = $program->name;
+            return view('userprofile',compact('user'));
+        }
+        if($role='manager'){
+            return view('userprofile',compact('user'));
+        }
+        if($role='director'){
+            $director = Director::where('user_id',$user->id)->first();
+            $program = Program::where('id',$director->program_id)->first();
+            $user->program =$program->name;
+            return view('userprofile',compact('user'));
+        }
+
+    }
+    public function UserProfileEditAction(Request $request){
+        return dd(session());
+        return redirect('/dashboard/userprofile/edit');
     }
 }

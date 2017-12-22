@@ -27,7 +27,6 @@ Route::post('/Dashboard', 'UsersController@Login');
 
 Route::get('/Information', 'UniversitiesController@Index');
 
-Route::get('/teste',function(){return view('teste');});
 
 Route::get('/register', 'UsersController@IndexRegister');
 
@@ -44,3 +43,13 @@ Route::get('/universities','UniversitiesController@Selected');
 Route::get('/university/{id}','UniversitiesController@Show');
 
 Route::get('/admin','UsersController@IndexAdmin');
+
+Route::get('/dashboard/userprofile/edit','UsersController@SettingsIndex');
+
+
+Route::get('/teste',function(){return view('teste');});
+Route::post('/teste',function(){
+    return redirect('/dashboard/userprofile')->with('userid','1')->with('role','student');});
+
+Route::get('/dashboard/userprofile','UsersController@UserProfileIndex');
+Route::post('/dashboard/userprofile','UsersController@UserProfileEditAction');

@@ -1,3 +1,15 @@
+.img-circle {
+    border-radius: 50%;
+}
+#scroll{
+    overflow-y: scroll;
+    height: 570px;
+}
+
+div{
+    overflow-wrap: break-word;
+}
+
 * {
     box-sizing: border-box;
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\City;
+use App\User;
 use Illuminate\Http\Request;
 
 class AddressesController extends Controller
@@ -11,11 +12,22 @@ class AddressesController extends Controller
     public function Add(Request $request){
         $address = new Address;
         $address->name = $request->address;
-        $address->city_id = $this->GetCityId($request);
+        if ($request->city != "") {
+            $address->city_id = $this->GetCityId($request);
+        } else
+        {
+            $user = User::find($request->userid);
+            $addr = Address::where('id',$user->address_id)->first();
+            $address->city_id = $addr->city_id;
+        }
+
         //$address->city_id = $request->city_id;
         $address->save();
         return $address->id;
+
     }
+
+
 //    public function RemoveAddress(Request $request){
 //        Address::RemoveAddressbyId($request->id);
 //    }
@@ -31,11 +43,15 @@ class AddressesController extends Controller
         }
     }
     private function GetCityId(Request $request){
-        $city_result = City::where('name',$request->city)->first();
-        if($city_result){
-            return $city_result->id;
-        }else{
-            return app('App\Http\Controllers\CitiesController')->Add($request);
-        }
+
+            $city_result = City::where('name', $request->city)->first();
+
+            if ($city_result) {
+                return $city_result->id;
+            } else {
+                return app('App\Http\Controllers\CitiesController')->Add($request);
+            }
+
     }
+
 }

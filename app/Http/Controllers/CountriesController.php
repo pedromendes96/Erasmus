@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class CountriesController extends Controller
 {
     public function Add(Request $request){
+        #nunca chega aqui na edição de perfil nem no registo!!!
         $country = new Country;
         $country->name = $request->country;
         $country->description = "unknown desc"; #$request->description;

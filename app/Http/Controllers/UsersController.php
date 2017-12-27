@@ -128,68 +128,95 @@ class UsersController extends Controller
         return view('admin',compact('universities','addresses','cities','countries'));
     }
 
-    public function ChangeProperty(Request $request){
-        $property = $request->change;
-        $user = User::where('id',$request->id)->get();
-        if($property == "name"){
+    public function EditUserInfo(Request $request){
+        //n funciona mt bem na edição de addr e cidades que ja tenham sido inseridas
+        $user = User::find($request->userid);
+
+        if($request->name != ""){
             $user->name=$request->name;
-        }else if($property == "password"){
-            $user->password = bcrypt($request->password);
-        }else if($property == "email"){
-            $user->email = $request->email;
-        }else{
+        }
+        if($request->password != ""){
+            if($request->password == $request->confirmpassword) {
+                $user->password = bcrypt($request->password);
+            } else{
+                $pwNotMatch =  True;
+                return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('pwNotMatch',$pwNotMatch);
+            }
+        }
+        if($request->email != ""){
+            if(User::where('email',$request->email)->first())
+            {
+                $emailExists =  True;
+                return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('emailExists',$emailExists);
+            }
+            else {
+                $user->email = $request->email;
+            }
+        }
+        if ($request->phone != ""){
+            if (User::where('phone',$request->phone)->first())
+            { $phoneExists =  True;
+                return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('phoneExists',$phoneExists);
+            }else {
+                $user->phone = $request->phone;
+            }
+        }
+        if($request->address == "" and $request->city != ""){
+           $cityb4addr = True;
+            return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('cityb4addr',$cityb4addr);
+        } else if (($request->address != "" and $request->city != "") or ($request->address != "" and $request->city == "")) {
             $user->address_id = $this->GetAddressId($request);
         }
+
+        $user->save();
+        return redirect('/dashboard/userprofile')->with('userid',$request->userid)->with('role',$request->role);
     }
 
-    public function GetAddressId(Request $request){
-        $address_result = Address::where('name',$request->address)->first();
-        if($address_result){
-            return $address_result->id;
-        }else{
-            return app('App\Http\Controllers\AddressesController')->Add($request);
-        }
+    public function GetAddressId(Request $request)
+    {
+            $address_result = Address::where('name', $request->address)->first();
+            if ($address_result) {
+                return $address_result->id;
+            } else {
+                return app('App\Http\Controllers\AddressesController')->Add($request);
+            }
+    }
+    public function getUserInformation($userid){
+        $user = User::where('id',$userid)->first();
+        $user->address = Address::where('id',$user->address_id)->first();
+        $user->city = City::where('id',$user->address->city_id)->first();
+        $user->country = Country::where('id',$user->city->country_id)->first();
+        $user->university = University::where('id',$user->university_id)->first();
+        return $user;
     }
 
-    public function SettingsIndex(){
+    public function EditUserInfoIndex(){
         //adicionar edição de foto
         $userid=session('userid');
         $role = session('role');
-        $user = User::where('id',$userid)->first();
+        $user = $this->getUserInformation($userid);
+        $user->role = $role;
         $countries= Country::all();
-        $address = Address::where('id',$user->address_id)->first();
-        $city = City::where('id',$address->city_id)->first();
-        $country = Country::where('id',$city->country_id)->first();
         if ($role == 'student'){
-            return view ('editprofile',compact('user','role','countries','country'));
+            return view ('editprofile',compact('user','countries'));
         }
         if ($role == 'manager'){
-            return view ('editprofile',compact('user','manager'));
+            return view ('editprofile',compact('user','countries'));
         }
 
         else if ($role = 'director'){
-            return view('editprofile',compact('user','director'));
+            return view('editprofile',compact('user','countries'));
         }
     }
 
     public function UserProfileIndex(Request $request){
         $userid = session('userid');
         $role = session('role');
-        $request->session()->put('userid', $userid);
-        $user = User::where('id',$userid)->first();
+        $user=$this->getUserInformation($userid);
         $user->role = $role;
-        $university = University::where('id',$user->university_id)->first();
-        $user->university = $university->name;
-        $address = Address::where('id',$user->address_id)->first();
-        $user->address = $address->name;
-        $city = City::where('id',$address->city_id)->first();
-        $user->city = $city->name;
-        $country = Country::where('id',$city->country_id)->first();
-        $user->country = $country->name;
         if($role=='student'){
             $student = Student::where('user_id',$user->id)->first();
-            $program = Program::where('id',$student->program_id)->first();
-            $user->program = $program->name;
+            $user->program = Program::where('id',$student->program_id)->first();
             return view('userprofile',compact('user'));
         }
         if($role='manager'){
@@ -203,8 +230,9 @@ class UsersController extends Controller
         }
 
     }
+
+
     public function UserProfileEditAction(Request $request){
-        return dd(session());
-        return redirect('/dashboard/userprofile/edit');
+        return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role);
     }
 }

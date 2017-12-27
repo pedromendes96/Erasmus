@@ -21,8 +21,12 @@
     <div class="two-third-screen">
         <div class="entire-screen center">
             <br>
-            {{session('userid')}}
             <h1>Profile: {{$user->name}}</h1>
+        </div>
+        <div class="entire-screen center">
+            <div class="third-screen field-size">
+                Role: {{$user->role}}
+            </div>
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
@@ -41,33 +45,35 @@
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                University: {{$user->university}}
+                University: {{$user->university->name}}
             </div>
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                Address: {{$user->address}}
+                Address: {{$user->address->name}}
             </div>
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                City: {{$user->city}}
+                City: {{$user->city->name}}
             </div>
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                Country: {{$user->country}}
+                Country: {{$user->country->name}}
             </div>
         </div>
         @if ($user->role == "student" or $user->role == "director")
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                Program: {{$user->program}}
+                Program: {{$user->program->name}}
             </div>
         </div>
         @endif
         <form method="POST" action="/dashboard/userprofile">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="userid" value="{{session('userid')}}">
+            <input type="hidden" name="role" value="{{session('role')}}">
         <button>Edit Profile</button>
         </form>
     </div>

@@ -44,7 +44,8 @@ Route::get('/university/{id}','UniversitiesController@Show');
 
 Route::get('/admin','UsersController@IndexAdmin');
 
-Route::get('/dashboard/userprofile/edit','UsersController@SettingsIndex');
+Route::get('/dashboard/userprofile/edit','UsersController@EditUserInfoIndex');
+Route::post('/dashboard/userprofile/edit','UsersController@EditUserInfo');
 
 
 Route::get('/teste',function(){return view('teste');});

@@ -40,6 +40,10 @@ Route::get('/cities','CitiesController@Index');
 
 Route::get('/universities','UniversitiesController@Selected');
 
+Route::get('/universitiesC','UniversitiesController@SelectedbyCountry');
+
+Route::get('/programs','ProgramsController@SelectedbyUniversity');
+
 Route::get('/university/{id}','UniversitiesController@Show');
 
 Route::get('/admin','UsersController@IndexAdmin');
@@ -47,10 +51,11 @@ Route::get('/admin','UsersController@IndexAdmin');
 Route::get('/dashboard/userprofile/edit','UsersController@EditUserInfoIndex');
 Route::post('/dashboard/userprofile/edit','UsersController@EditUserInfo');
 
-
+Route::get('/resetpassword','UsersController@ResetPasswordIndex');
+Route::post('/resetpassword','UsersController@ResetPassword');
 Route::get('/teste',function(){return view('teste');});
 Route::post('/teste',function(){
-    return redirect('/dashboard/userprofile')->with('userid','1')->with('role','student');});
+    return redirect('/dashboard/userprofile')->with('userid','6')->with('role','student');});
 
 Route::get('/dashboard/userprofile','UsersController@UserProfileIndex');
 Route::post('/dashboard/userprofile','UsersController@UserProfileEditAction');

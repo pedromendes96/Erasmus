@@ -7,7 +7,21 @@
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>$(document).ready(function(){
+    <script>
+
+        function showUniversities(value) {
+
+            $.get( "http://localhost:8000/universitiesC?country="+value, function( data ) {
+                $( "#universities" ).html( data );
+            });
+        }
+        function showPrograms(value) {
+            $.get( "http://localhost:8000/programs?university="+value, function( data ) {
+                $( "#programs" ).html( data );
+            });
+        }
+
+        $(document).ready(function(){
             $('#role').change(function(){
                 selection = $(this).val();
                 switch (selection){
@@ -26,7 +40,11 @@
                 }
             });
 
-        });</script>
+
+
+        });
+
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -114,7 +132,7 @@
                     Country
                 </div>
                 <div class="two-third-screen">
-                    <select name="country" required>
+                    <select name="country" onchange="showUniversities(this.value)" required>
                         <option disabled selected value>--select a country--</option>
                         @foreach($countries as $country)
                             <option value ="{{$country->id}}">{{$country->name}}</option>
@@ -138,37 +156,48 @@
                     <input type="text" name="address" required>
                 </div>
             </div>
-            <div class="entire-screen center">
-                <div class="third-screen field-size">
-                    University
-                </div>
-                <div class="two-third-screen">
-                    <select name="university_id">
-                        <option disabled selected value>--select a university--</option>
-                        @foreach($universities as $university)
-                            <option value ="{{$university->id}}">{{$university->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div id="universities">
+
             </div>
-            <div id = "directorstudent" class="entire-screen center">
-                <div class="third-screen field-size">
-                    Program
-                </div>
-                <div id="directorstudent" class="two-third-screen">
-                    <select name="program_id">
-                        <option disabled selected value>--select a program--</option>
-                        @foreach($programs as $program)
-                            <option value ="{{$program->id}}">{{$program->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div id="programs">
+
             </div>
+            @if (session('phoneExists'))
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+
+                    </div>
+                    <div class="two-third-screen">
+                        The phone number you inserted is already in use!
+                    </div>
+                </div>
+            @endif
+            @if (session('emailExists'))
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+
+                    </div>
+                    <div class="two-third-screen">
+                        The email you inserted is already in use!
+                    </div>
+                </div>
+            @endif
+            @if (session('pwNotMatch'))
+                <div class="entire-screen center">
+                    <div class="third-screen field-size">
+
+                    </div>
+                    <div class="two-third-screen">
+                        The passwords does not match!
+                    </div>
+                </div>
+            @endif
+
 
             <div class="entire-screen center right">
                 <button type="submit" style="text-align:center">Register</button>
                 <br>
-                <span class="pw"><a href="#">Forgot your password?</a></span>
+                <span class="pw"><a href="/resetpassword">Forgot your password?</a></span>
             </div>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
         </div>

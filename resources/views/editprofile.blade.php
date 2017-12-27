@@ -140,7 +140,9 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="userid" value="{{$user->id}}">
             <input type="hidden" name="role" value="{{$user->role}}">
-            <button type="submit">Edit Information</button>
+            <div class="entire-screen center right">
+                <button type="submit" style="text-align:center">Register</button>
+            </div>
         </form>
 
     </div>

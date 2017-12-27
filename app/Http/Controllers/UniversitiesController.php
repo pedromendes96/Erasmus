@@ -49,6 +49,26 @@ class UniversitiesController extends Controller
         return view('Universities',compact('universities'));
     }
 
+    public function SelectedbyCountry(Request $request){
+        $country = Country::where('id',$request->country)->first();
+        $cities = City::where('country_id',$country->id)->get();
+        $universities = [];
+        foreach ($cities as $city){
+            $addresses = Address::where('city_id',$city->id)->get();
+            foreach($addresses as $address){
+                $university = University::where('address_id',$address->id)->get();
+                if($university->isEmpty()) {
+
+                } else {
+                    array_push($universities,$university);
+                }
+            }
+
+        }
+
+        return view('universitiesbycountry',compact('universities'));
+    }
+
     public function Show(Request $request){
         $university = University::where('id',$request->id)->first();
         return view('University',compact('university'));

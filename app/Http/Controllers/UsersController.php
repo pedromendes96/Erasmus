@@ -103,8 +103,11 @@ class UsersController extends Controller
         $emailExists=User::where('email', $request->email)->first();
         $phoneExists=User::where('phone',$request->phone)->first();
         if ($password == $confpassword) {
-            if($emailExists or $phoneExists){
-                return dd('email ou telefone ja existe');// fazer validação
+            if($emailExists ){
+               return redirect ('/register')->with('emailExists',$emailExists);
+            }
+            if ($phoneExists){
+               return redirect ('/register')->with('phoneExists',$phoneExists);
             }
             $role = $request->role;
             if ($role == "student") {
@@ -114,9 +117,9 @@ class UsersController extends Controller
             } else if ($role == "director") {
                 return app('App\Http\Controllers\DirectorsController')->Add($request);
             }
-            //return view ('home');
         } else {
-            return dd('nao foi inserido');
+            $pwNotMatch = True;
+            return redirect ('/register')->with('pwNotMatch',$pwNotMatch);
         }
     }
 
@@ -171,6 +174,29 @@ class UsersController extends Controller
         $user->save();
         return redirect('/dashboard/userprofile')->with('userid',$request->userid)->with('role',$request->role);
     }
+    public function ResetPasswordIndex(){
+        return view ('resetpassword');
+    }
+    public function ResetPassword(Request $request){
+        $user = User::where('email',$request->email)->first();
+        if ($user) {
+            if ($request->password == $request->confirmpassword) {
+
+                $user = User::find($user->id);
+                $user->password = bcrypt($request->password);
+                $user->save();
+            } else {
+                $pwNotMatch = True;
+                return redirect('/resetpassword')->with('pwNotMatch',$pwNotMatch);
+            }
+        } else {
+            $userNotExists = True;
+            return redirect('/resetpassword')->with('userNotExists',$userNotExists);
+        }
+
+        return redirect('/dashboard')->with('userid',$user->id); //falta role
+
+    }
 
     public function GetAddressId(Request $request)
     {
@@ -217,17 +243,16 @@ class UsersController extends Controller
         if($role=='student'){
             $student = Student::where('user_id',$user->id)->first();
             $user->program = Program::where('id',$student->program_id)->first();
-            return view('userprofile',compact('user'));
         }
-        if($role='manager'){
-            return view('userprofile',compact('user'));
+        if($role=='manager'){
+
         }
-        if($role='director'){
+        if($role=='director'){
             $director = Director::where('user_id',$user->id)->first();
-            $program = Program::where('id',$director->program_id)->first();
-            $user->program =$program->name;
-            return view('userprofile',compact('user'));
+            $user->program = Program::where('id',$director->program_id)->first();
+
         }
+        return view('userprofile',compact('user'));
 
     }
 

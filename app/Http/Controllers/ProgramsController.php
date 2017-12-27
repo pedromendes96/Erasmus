@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Program;
+use App\University;
 use Illuminate\Http\Request;
 
 class ProgramsController extends Controller
@@ -30,5 +31,11 @@ class ProgramsController extends Controller
         }else{
             $program->description = $request->description;
         }
+    }
+
+    public function SelectedbyUniversity(Request $request){
+        $university = University::where('id',$request->university)->first();
+        $programs = $university->Program()->get();
+        return view('programs',compact('programs'));
     }
 }

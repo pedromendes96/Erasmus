@@ -45,11 +45,6 @@
         </div>
         <div class="entire-screen center">
             <div class="third-screen field-size">
-                University: {{$user->university->name}}
-            </div>
-        </div>
-        <div class="entire-screen center">
-            <div class="third-screen field-size">
                 Address: {{$user->address->name}}
             </div>
         </div>
@@ -63,6 +58,11 @@
                 Country: {{$user->country->name}}
             </div>
         </div>
+        <div class="entire-screen center">
+            <div class="third-screen field-size">
+                University: {{$user->university->name}}
+            </div>
+        </div>
         @if ($user->role == "student" or $user->role == "director")
         <div class="entire-screen center">
             <div class="third-screen field-size">
@@ -74,7 +74,9 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="userid" value="{{session('userid')}}">
             <input type="hidden" name="role" value="{{session('role')}}">
-        <button>Edit Profile</button>
+            <div class="entire-screen center right">
+                <button type="submit" style="text-align:center">Edit Profile</button>
+            </div>
         </form>
     </div>
 </div>

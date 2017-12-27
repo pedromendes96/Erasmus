@@ -190,7 +190,7 @@ li{
 
 
 .form {
-    border:2px solid rgb(211, 210, 210);
+    border:2px solid #272981;;
     height: 100%;
     margin:5% 5%;
     padding: 12px;
@@ -201,11 +201,11 @@ input[type=text], input[type=password], input[type=email],select {
     padding: 10px 22px;
     margin: 6px 2px;
     display: inline-block;
-    border: 1px solid rgb(211, 210, 210);
+    border: 1px solid #272981;;
 }
 
 button {
-    background-color: rgb(0, 140, 255);
+    background-color: #272981;;
     color: white;
     padding: 10px 20px;
     margin: 8px 0;
@@ -213,6 +213,7 @@ button {
     cursor: pointer;
     width: 70%;
 }
+
 span.pw {
     padding-top:28px;
     padding-right:2px;

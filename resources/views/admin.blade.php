@@ -172,7 +172,6 @@
                     </select>
                     <button>Create Address</button>
                 </form>
-
             </div>
             <div class="entire-screen" style="padding: 20px 20px !important;">
                 <h1>Add University</h1>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Erasmus</title>
-    <link rel="stylesheet" href="../../public/css/main.css">
-    <link rel="stylesheet" href="../../public/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/public/font-awesome-4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,28 +34,17 @@
     </div>
     <div class="half-screen" style="border: 1px solid black;margin: 50px 0px;background-color: #eeeeee">
         <div class="entire-screen">
-            <h1>titulo</h1>
+            <h1>{{$info->title}}</h1>
         </div>
         <div class="entire-screen">
-            <h1>IMAGEM</h1>
-            <h1>IMAGEM</h1>
-            <h1>IMAGEM</h1>
-            <h1>IMAGEM</h1>
+            <img width="80%" src="{{asset('storage/'.$info->img)}}">
         </div>
         <div class="entire-screen">
             <div class="quart-screen">
 
             </div>
             <div class="half-screen">
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
-                <h1>CONTEUDO</h1>
+                {{$info->content}}
             </div>
             <div class="quart-screen">
 

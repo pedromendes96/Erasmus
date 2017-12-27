@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+//Route::get('/', function () {
+//    return view('index');
+//});
+
+Route::get('/', 'InformationsController@News' );
 
 Route::get('/LogIn', function () {
     return view('LogIn');
@@ -33,9 +35,8 @@ Route::get('/register', 'UsersController@IndexRegister');
 
 Route::post('/register','UsersController@Register');
 
-//Route::get('/News', function () {
-//    return view('News');
-//});
+Route::get('/news/{info}','InformationsController@SelectedNew');
+
 Route::get('/Dashboard/message/{msg}','MessagesController@ReadMessage');
 
 Route::get('/Dashboard/messages/{pag}','MessagesController@Index');

@@ -113,7 +113,7 @@ class DashboardController extends Controller
 
     public function showProcesses() {
         $user = User::find(1);
-        $user->role = 'student';
+        $user->role = 'manager';
     /*
         $student = Student::where('user_id',$user->id)->first();
         $manager = Manager::where('user_id',$user->id)->first();

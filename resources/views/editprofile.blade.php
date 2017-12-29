@@ -18,7 +18,7 @@
 @section('navbar')
     @section('action','Log Out')
 <div class="entire-screen" style="margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
-    <div class="two-third-screen">
+
         <div class="entire-screen center">
             <br>
             <h1>Edit Profile: {{$user->name}}</h1>
@@ -26,49 +26,49 @@
         <form method="POST" action="/dashboard/userprofile/edit">
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Name
+                    Name:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="text" name="name" placeholder="{{$user->name}}">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Email
+                    Email:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="text" name="email" placeholder="{{$user->email}}">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Phone
+                    Phone:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="text" name="phone" placeholder="{{$user->phone}}">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    New Password
+                    New Password:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="password" name="password">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Confirm Password
+                    Confirm new Password:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="password" name="confirmpassword">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Country
+                    Country:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <select name="country">
                         <option selected value="{{$user->country->id}}">{{$user->country->name}}</option>
                         @foreach($countries as $ctry)
@@ -82,17 +82,17 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    City
+                    City:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="text" name="city" placeholder="{{$user->city->name}}">
                 </div>
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Address
+                    Address:
                 </div>
-                <div class="two-third-screen">
+                <div class="two-third-screen left">
                     <input type="text" name="address" placeholder="{{$user->address->name}}">
                 </div>
             </div>
@@ -102,7 +102,7 @@
 
                 </div>
                 <div class="two-third-screen">
-                    Please insert an address if u want to edit the city!
+                    <b>Please insert an address if u want to edit the city!</b>
                 </div>
             </div>
             @endif
@@ -112,7 +112,7 @@
 
                     </div>
                     <div class="two-third-screen">
-                        The phone number you inserted is already in use!
+                        <b>The phone number you inserted is already in use!</b>
                     </div>
                 </div>
             @endif
@@ -122,7 +122,7 @@
 
                     </div>
                     <div class="two-third-screen">
-                        The email address you inserted is already in use!
+                        <b>The email address you inserted is already in use!</b>
                     </div>
                 </div>
             @endif
@@ -132,7 +132,7 @@
 
                     </div>
                     <div class="two-third-screen">
-                        The passwords you inserted doest not match!
+                        <b>The passwords you inserted doest not match!</b>
                     </div>
                 </div>
             @endif
@@ -140,12 +140,12 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="userid" value="{{$user->id}}">
             <input type="hidden" name="role" value="{{$user->role}}">
-            <div class="entire-screen center right">
-                <button type="submit" style="text-align:center">Register</button>
+            <div class="entire-screen center">
+                <button type="submit" class="main-button">Edit Profile</button>
             </div>
         </form>
 
-    </div>
+
 </div>
 
 @section('footer')

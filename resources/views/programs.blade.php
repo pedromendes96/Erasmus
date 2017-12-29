@@ -1,6 +1,6 @@
 <div id ="directorstudent" class="entire-screen center">
     <div class="third-screen field-size">
-        Program
+        Program:
     </div>
     <div class="two-third-screen">
         <select name="program_id">

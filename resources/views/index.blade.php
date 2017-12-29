@@ -21,7 +21,7 @@
                 <a href="/LogIn"><button class="main-button">Log in</button></a>
             </div>
             <div class="half-screen center">
-                <a href="/SignUp"><button class="main-button">Create a Account</button></a>
+                <a href="/register"><button class="main-button">Create a Account</button></a>
             </div>
             <div class="entire-screen center">
                 <a href="/Information"><button class="main-button">More information</button></a>

@@ -77,7 +77,7 @@
 
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Select your role
+                    Select your role:
                 </div>
                 <div class="two-third-screen">
                     <select name="role" id="role" required>
@@ -89,7 +89,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Name
+                    Name:
                 </div>
                 <div class="two-third-screen">
                     <input type="text" name="name" required>
@@ -97,7 +97,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Password
+                    Password:
                 </div>
                 <div class="two-third-screen">
                     <input type="password" name="password" required>
@@ -105,7 +105,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Confirm Password
+                    Confirm Password:
                 </div>
                 <div class="two-third-screen">
                     <input type="password" name="confirmpassword" required>
@@ -113,7 +113,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Email
+                    Email:
                 </div>
                 <div class="two-third-screen">
                     <input type="email" name="email" required>
@@ -121,7 +121,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Phone
+                    Phone:
                 </div>
                 <div class="two-third-screen">
                     <input type="text" name="phone" required>
@@ -129,7 +129,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Country
+                    Country:
                 </div>
                 <div class="two-third-screen">
                     <select name="country" onchange="showUniversities(this.value)" required>
@@ -142,7 +142,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    City
+                    City:
                 </div>
                 <div class="two-third-screen">
                     <input type="text" name="city" required>
@@ -150,7 +150,7 @@
             </div>
             <div class="entire-screen center">
                 <div class="third-screen field-size">
-                    Address
+                    Address:
                 </div>
                 <div class="two-third-screen" >
                     <input type="text" name="address" required>
@@ -193,13 +193,16 @@
                 </div>
             @endif
 
-
-            <div class="entire-screen center right">
-                <button type="submit" style="text-align:center">Register</button>
+            <div class="entire-screen center">
+                <button type="submit" style="text-align:center" class="main-button">Register</button>
                 <br>
-                <span class="pw"><a href="/resetpassword">Forgot your password?</a></span>
+                <br>
+                <span><a href="/resetpassword">Forgot your password?</a></span>
             </div>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
+        </div>
+        <div class="third-screen aside">
+
         </div>
     </div>
 </form>

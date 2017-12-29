@@ -1,6 +1,6 @@
 <div class="entire-screen center">
     <div class="third-screen field-size">
-        University
+        University:
     </div>
     <div class="two-third-screen">
         <select name="university_id" onchange="showPrograms(this.value)">

@@ -35,8 +35,7 @@
     </div>
     <div class="seventy-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 30px 0px;background-color: #eeeeee">
         <div class="entire-screen" style="margin: 50px 0px;padding: 0px 0px !important;">
-            <form style="
-            padding: 25px 25px;" method="post" action="/Dashboard">
+            <form style="padding: 25px 25px;" method="post" action="/Dashboard">
                 {{csrf_field()}}
                 <div class="entire-screen">
                     <label>Email:</label><input type="email" placeholder="Your email" name="email">
@@ -49,6 +48,11 @@
                 </div>
                 <div class="half-screen center">
                     <button type="submit" class="main-button">Log In</button>
+                    <br>
+                    <br>
+                    <span><a href="/resetpassword">Forgot your password?</a></span>
+                    <br>
+                    <span>Don't have an account? <a href="/register">register here</a></span>
                 </div>
             </form>
         </div>

@@ -35,26 +35,29 @@
     </div>
     <div class="seventy-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 30px 0px;background-color: #eeeeee">
         <div class="entire-screen" style="margin: 50px 0px;padding: 0px 0px !important;">
-            <form style="
-            padding: 25px 25px;" method="post" action="/resetpassword">
+            <form style="padding: 25px 25px;"method="post" action="/resetpassword">
                 {{csrf_field()}}
                 <div class="entire-screen center">
                     <br>
                     <h1>Account recovery:</h1>
                 </div>
                 <div class="entire-screen">
-                    <label>Enter your email:</label><input type="email" placeholder="Your email" name="email">
+                    <label>Enter your email:</label>
+                    <input type="email" placeholder="Your email" name="email">
                 </div>
                 <div class="entire-screen">
-                    <label>New password:</label><input type="password" placeholder="Your new password" name="password">
+                    <label>New password:</label>
+                    <input type="password" placeholder="Your new password" name="password">
                 </div>
                 <div class="entire-screen">
-                    <label>Confirm new password:</label><input type="password" placeholder="Confirm your new password" name="confirmpassword">
+                    <label>Confirm new password:</label>
+                    <input  type="password" placeholder="Confirm your new password" name="confirmpassword">
                 </div>
+
 
                 @if (session('pwNotMatch'))
                 <div class="entire-screen">
-                <b> Password does not match!</b>
+                <b> Passwords does not match!</b>
                 </div>
                 @endif
                 @if (session('userNotExists'))
@@ -75,7 +78,9 @@
     </div>
     <div class="fifteen-screen">
 
-</div>
+    </div>
+
+
 
 <div class="entire-screen blue-theme">
     <div class="third-screen">
@@ -94,6 +99,9 @@
     <div class="third-screen center">
         <h4>Copyright ERASMUS+</h4>
     </div>
+</div>
+
+
 </div>
 </body>
 </html>

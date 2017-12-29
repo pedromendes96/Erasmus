@@ -17,21 +17,21 @@ class ProcessesController extends Controller
         $process->candidate_id = $request->candidate_id;
         $process->manager_id = $request->manager_id;
         $process->save();
-        /*
-         *
-         */DB::table('process_university')->insert(
-            [
-                'process_id' => $process->id,
-                'university_id' => Manager::find($process->manager_id)->university_id,
-                'result' => 0
-            ]);
 
+        DB::table('process_university')->insert([
+            'process_id' => $process->id,
+            'university_id' => $request->university_id,
+            'result' => '0',
+            'created_at' => DB::raw('now()'),
+            'updated_at' => DB::raw('now()')
+        ]);
         return $process->id;
     }
 
     public function Remove(Request $request){
         Process::where('id',$request->id).delete();
     }
+
 
     public function Index(){
         return DB::table('processes')->select('manager_id',DB::raw('count(*) as numProcess'))

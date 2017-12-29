@@ -1,9 +1,18 @@
-<nav>
-
-    <div class="navigationBarSpace">
-
-        <strong id="websiteTitle">Erasmus Software</strong>
+<div class="entire-screen navbar">
+    <div class="third-screen center">
 
     </div>
-
-</nav>
+    <div class="two-third-screen right">
+        <ul>
+            <li>
+                Home
+            </li>
+            <li>
+                More Info
+            </li>
+            <li>
+                Log In
+            </li>
+        </ul>
+    </div>
+</div>

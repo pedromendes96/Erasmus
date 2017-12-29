@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <link href="/css/main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Erasmus</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-    <body>
-        @include('layouts.nav')
-        @yield('content')
-        @include('layouts.footer')
-    </body>
-
+<body>
+@include('layouts.nav')
+@yield('content')
+@include('layouts.footer')
+</body>
 </html>
+
+

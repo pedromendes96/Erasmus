@@ -47,4 +47,17 @@ class UniversitiesController extends Controller
             return app('App\Http\Controllers\AddressController')->Add($request);
         }
     }
+
+    public function Selected(Request $request){
+        $city = City::where('id',$request->city)->first();
+        $addresses = Address::where('city_id',$city->id)->get();
+        $universities = [];
+        foreach ($addresses as $address){
+            $uni = University::where('address_id',$address->id)->get();
+            if($uni){
+                array_push($universities,$uni);
+            }
+        }
+        return view('Universities',compact('universities'));
+    }
 }

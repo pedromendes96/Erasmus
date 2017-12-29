@@ -18,6 +18,16 @@ class Process extends Model
         return $this->belongsToMany('App\University');
     }
 
+/*
+    public function getActiveAttribute() {
+        if($this->attributes['active'] == 1 ) {
+            return "Active";
+        }
+        else{
+            return "Inactive";
+        }
+    }
+*/
 
 //    public static function RemoveById($id){
 //        \DB::table('processes')->where('id', '=', $id)->delete();

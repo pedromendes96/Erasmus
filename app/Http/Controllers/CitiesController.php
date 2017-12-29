@@ -24,7 +24,9 @@ class CitiesController extends Controller
     }
 
     public function Index(Request $request){
-
+        $country = Country::where('name',$request->country)->first();
+        $cities = City::where('country_id',$country->id)->get();
+        return view('Cities',compact('cities'));
     }
 
     public function ChangeProperty(Request $request){

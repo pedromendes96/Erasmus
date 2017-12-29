@@ -1,6 +1,6 @@
-<footer>
-    <div class="footerSpace">
-        <strong id="footerTitle">Application ACR</strong>
-    </div>
 
+<footer class="entire-screen blue-theme">
+    <div class="center">
+        <h4>Copyright ERASMUS+</h4>
+    </div>
 </footer>

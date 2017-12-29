@@ -40,8 +40,8 @@ class DashboardController extends Controller
 
     public function index() {
         //get user via session
-        $user = User::find(1);
-        $user->role = 'student';//example to continue code
+        $user = User::find(2);
+        $user->role = 'manager';//example to continue code
         $active = false;//If true, the user is student and can create a new process. If not, user is manager or director.
 
         if($user->role == 'student') {
@@ -112,7 +112,7 @@ class DashboardController extends Controller
     }
 
     public function showProcesses() {
-        $user = User::find(1);
+        $user = User::find(2);
         $user->role = 'manager';
     /*
         $student = Student::where('user_id',$user->id)->first();
@@ -131,9 +131,9 @@ class DashboardController extends Controller
             return view('Process.showProcesses', compact('user','processes','university'));
         }
         else if($user->role == 'manager') {
-            //show all processes from his university
-            //$processes = Process::where('university_id',$manager->university_id)->get();
-            $processes = Process::all();
+            //show all processes from his university that was assigned to this manager.
+            $manager = Manager::where('user_id',$user->id)->first();
+            $processes = Process::where('manager_id',$manager->id)->get();
             return view('Process.showProcesses', compact('user','processes'));
         }
         else if($user->role == 'director') {
@@ -153,7 +153,7 @@ class DashboardController extends Controller
     }
 
     public function showProcess(Request $request) {
-        $user = User::find(1);
+        $user = User::find(2);
         $user->role = 'manager';
 
         $getURL = $request->url();
@@ -170,7 +170,7 @@ class DashboardController extends Controller
         else if($user->role == 'manager') {
             //show all processes from his university
             $process = Process::find($processId);
-            $manager =  User::find(Manager::find($process->manager_id)->user_id)->first();
+            $manager =  $user;//Since the user is the manager! Just to leave compact() function identical below.
             return view('Process.showProcess',compact('user','process','manager'));
         }
         else if($user->role == 'director') {

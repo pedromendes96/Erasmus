@@ -12,6 +12,7 @@ use App\Manager;
 use App\Director;
 use App\Address;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 
@@ -162,6 +163,18 @@ class UsersController extends Controller
                 return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('phoneExists',$phoneExists);
             }else {
                 $user->phone = $request->phone;
+            }
+        }
+        if ($request->image != ""){
+            $file=$request->file('image');
+            $type = "/image/";
+            if(preg_match($type,$file->getMimeType())) {
+                $path = $file->store('public/img/user');
+                $array = explode('/', $path, 2);
+                $user->img = $array[1];
+            } else {
+                $notImg =  True;
+                return redirect('/dashboard/userprofile/edit')->with('userid',$request->userid)->with('role',$request->role)->with('notImg',$notImg);
             }
         }
         if($request->address == "" and $request->city != ""){

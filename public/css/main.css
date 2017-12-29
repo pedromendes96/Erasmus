@@ -153,6 +153,12 @@ li{
     top: 0;
     width: 100%;
 }
+.profile {
+    width:250px;
+}
+.thumbnail {
+    width:75px;
+}
 
 .navbar a {
     float: left;

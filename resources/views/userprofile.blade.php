@@ -41,7 +41,10 @@
         <div class="entire-screen" style="margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
                 <div class="entire-screen center">
                     <br>
-                    <h1>User profile: {{$user->name}}</h1>
+                    <h1>My profile: {{$user->name}}</h1>
+                </div>
+                <div class="entire-screen center">
+                <img class="profile" width="100%" src="{{asset('storage/'.$user->img)}}">
                 </div>
                 <div class="entire-screen center">
                     <div class="third-screen field-size">

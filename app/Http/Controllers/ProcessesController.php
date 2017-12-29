@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Process;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProcessesController extends Controller
@@ -22,6 +23,7 @@ class ProcessesController extends Controller
     }
 
     public function Index(Request $request){
+
     }
 
     public function ChangeProperty(Request $request){

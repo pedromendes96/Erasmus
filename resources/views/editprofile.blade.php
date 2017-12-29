@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Erasmus teste</title>
+    <title>Edit Profile</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
@@ -12,18 +12,32 @@
 <body>
 <html>
 
+<div class="entire-screen navbar">
+    <div class="third-screen center">
+        <a href="/"><img src="/img/erasmus.png" width="50%"></a>
+    </div>
+    <div class="two-third-screen right">
+        <ul>
+            <li>
+                Home
+            </li>
+            <li>
+                More Info
+            </li>
+            <li>
+                Log In
+            </li>
+        </ul>
+    </div>
+</div>
 
-@extends('layouts.app')
-
-@section('navbar')
-    @section('action','Log Out')
 <div class="entire-screen" style="margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
 
         <div class="entire-screen center">
             <br>
             <h1>Edit Profile: {{$user->name}}</h1>
         </div>
-        <form method="POST" action="/dashboard/userprofile/edit">
+        <form method="POST" action="/dashboard/userprofile/edit" enctype="multipart/form-data">
             <div class="entire-screen center">
                 <div class="third-screen field-size">
                     Name:
@@ -96,6 +110,15 @@
                     <input type="text" name="address" placeholder="{{$user->address->name}}">
                 </div>
             </div>
+            <div class="entire-screen center">
+                <div class="third-screen field-size">
+                    Change profile image:
+                </div>
+
+                <div class="two-third-screen left">
+                    <input class="left" style="display: inline-block;padding-top:15px;" type="file" name="image">
+                </div>
+            </div>
             @if (session('cityb4addr'))
             <div class="entire-screen center">
                 <div class="third-screen field-size">
@@ -106,34 +129,24 @@
                 </div>
             </div>
             @endif
+            @if (session('notImg'))
+                <div class="entire-screen center">
+                        <b>The file you inserted is not an image type!</b>
+                </div>
+            @endif
             @if (session('phoneExists'))
                 <div class="entire-screen center">
-                    <div class="third-screen field-size">
-
-                    </div>
-                    <div class="two-third-screen">
                         <b>The phone number you inserted is already in use!</b>
-                    </div>
                 </div>
             @endif
             @if (session('emailExists'))
                 <div class="entire-screen center">
-                    <div class="third-screen field-size">
-
-                    </div>
-                    <div class="two-third-screen">
                         <b>The email address you inserted is already in use!</b>
-                    </div>
                 </div>
             @endif
             @if (session('pwNotMatch'))
                 <div class="entire-screen center">
-                    <div class="third-screen field-size">
-
-                    </div>
-                    <div class="two-third-screen">
-                        <b>The passwords you inserted doest not match!</b>
-                    </div>
+                        <b>The passwords you inserted does not match!</b>
                 </div>
             @endif
 
@@ -146,7 +159,27 @@
         </form>
 
 
-</div>
 
-@section('footer')
+
+<div class="entire-screen blue-theme">
+    <div class="third-screen">
+        <h5></h5>
+    </div>
+    <div class="third-screen center">
+        <ul>
+            <li>
+                <a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="third-screen center">
+        <h4>Copyright ERASMUS+</h4>
+    </div>
+</div>
+</div>
+</html>
+</body>
 

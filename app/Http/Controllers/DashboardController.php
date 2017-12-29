@@ -40,8 +40,8 @@ class DashboardController extends Controller
 
     public function index() {
         //get user via session
-        $user = User::find(2);
-        $user->role = 'manager';//example to continue code
+        $user = User::find(1);
+        $user->role = 'student';//example to continue code
         $active = false;//If true, the user is student and can create a new process. If not, user is manager or director.
 
         if($user->role == 'student') {
@@ -125,25 +125,31 @@ class DashboardController extends Controller
             //$processes = DB::table('processes')->orderBy('updated_at', 'desc')->get();
             $student = Student::where('user_id',$user->id)->first();
             $candidate = Candidate::where('student_id',$student->id)->first();
+            if(!$processes = Process::where('candidate_id',$candidate->id)->orderBy('active', 'desc')->first()) {
+                return "You don't have any processes yet. Create a new process";
+            }
+            $processes = Process::where('candidate_id',$candidate->id)->orderBy('active', 'desc')->get();
             $university = University::find($student->id)->first();
-            $processes = Process::where('candidate_id',$candidate->id)->orderBy('updated_at', 'desc')->get();
             //return view('dashboard.showProcesses',compact('processes'));
             return view('Process.showProcesses', compact('user','processes','university'));
         }
         else if($user->role == 'manager') {
             //show all processes from his university that was assigned to this manager.
             $manager = Manager::where('user_id',$user->id)->first();
+            if(!$processes = Process::where('manager_id',$manager->id)->first()) {
+                return "You don't have any processes assigned to you yet";
+            }
             $processes = Process::where('manager_id',$manager->id)->get();
             return view('Process.showProcesses', compact('user','processes'));
         }
         else if($user->role == 'director') {
-            //show all processes only from his university and from his program course(Students needs program on database to know how to choose director)
+            //show all processes from his university with his program course.
             //Student has program!!!! DATABASE
             //Find all process of the students that have the same program as the director
             //$processes = Process::where('university_id',$director->university_id)->get();
             //$program = $director->program_id;
             //join user
-                //where director->program_id == student->program_id
+            ////where director->program_id == student->program_id
             $processes = Process::all();
             return view('Process.showProcesses', compact('user','processes'));
         }
@@ -153,8 +159,8 @@ class DashboardController extends Controller
     }
 
     public function showProcess(Request $request) {
-        $user = User::find(2);
-        $user->role = 'manager';
+        $user = User::find(1);
+        $user->role = 'student';
 
         $getURL = $request->url();
         $countEndURL = strrpos($getURL,"/")+1;

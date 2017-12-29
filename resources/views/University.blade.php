@@ -15,7 +15,6 @@
         }
 
         function showUniversities(value) {
-            alert("O diogo e puta");
             $.get( "http://localhost:8000/universities?city="+value, function( data ) {
                 $( "#universities" ).html( data );
             });

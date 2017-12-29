@@ -64,8 +64,8 @@ The view will change depending by the roll(student,manager or director) of the u
                     <label for="semester" >Select your desired Erasmus semester:</label>
                     <select name="semester">
                         <option value="">---</option>
-                        <option value="1ºsemester">1ºSemester(Winter)</option>
-                        <option value="2ºsemester">2ºSemester(Summer)</option>
+                        <option value="1">1ºSemester(Winter)</option>
+                        <option value="2">2ºSemester(Summer)</option>
                     </select>
                     <br>
                     <br>

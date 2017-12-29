@@ -31,6 +31,9 @@ class DashboardController extends Controller
         $getEndURL = substr($getURL,$countEndURL);
         return decrypt($getEndURL);
 */
+
+        return $assignedManagerId;
+
     }
 
     public function index() {
@@ -87,23 +90,21 @@ class DashboardController extends Controller
             $candidate  = app('App\Http\Controllers\CandidatesController')->Add($student->id);
             $candidate = Candidate::where('student_id',$student->id)->first();
         }
-        $managers = Manager::where('university_id',$student->university_id)->get();
-        $assignedManagerId = "";
+        $managers = Manager::where('university_id',1)->get();
+        $assignedManagerId = '';
         for ($i = 0; $i < $managers->count();$i++ ){
-            $managersId[$i]= $managers[$i]->id;
-            $managersProcess[$i] = $managerProcesses = Process::where('manager_id',$managers[$i]->id)->count();
             if(!$assignedManagerId){
                 $assignedManagerId = $managers[$i]->id;
             }
             else{
-                if(Process::where('manager_id',$assignedManagerId)->count() < Process::where('manager_id',$managers[$i]->id)->count()){
+                if(Process::where('manager_id',$assignedManagerId)->count() > Process::where('manager_id',$managers[$i]->id)->count()){
                     $assignedManagerId=$managers[$i]->id;
                 }
             }
         }
             $request->candidate_id = $candidate->id;
             $request->manager_id = $assignedManagerId;
-            $request->description = $request->semester." - ".University::find($request->university)->name." - ".Country::find($request->country)->name;
+            $request->description = $request->semester." Semester - ".University::find($request->university)->name." - ".Country::find($request->country)->name;
             $request->university_id = $request->university;//UNIVERSIDADE DE DESTINO
             $process = app('App\Http\Controllers\ProcessesController')->Add($request);
     }

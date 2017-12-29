@@ -10,22 +10,18 @@ function showUniversities(value) {
     });
 }
 
-
 $(document).ready(function(){
-
     $(".newProcessButton").click(function(){
-        //onclick="window.location='{{ url("dashboard/newProcess") }}'"
         $(".dashboardButtons").slideUp("slow");
         $(".backButton").slideDown("slow");
         $("#newProcess").slideDown("slow");
     });
-
     $(".backButton").click(function(){
-        alert("back MF");
         $(".backButton").slideUp("slow");
         $("#newProcess").slideUp("slow");
         $(".dashboardButtons").slideDown("slow");
     });
+
 
     $("#editDestinationButton").click(function(){
         $("#editDestinationOptions").slideToggle("slow");
@@ -45,5 +41,4 @@ $(document).ready(function(){
     }, function(){
         $(this).css("background-color", "pink");
     });
-
 });

@@ -32,13 +32,29 @@ $(document).ready(function(){
     $("#downloadButton").click(function(){
         $("#downloadOptions").slideToggle("slow");
     });
-
-
-
-
-    $("p").hover(function(){
-        $(this).css("background-color", "yellow");
-    }, function(){
-        $(this).css("background-color", "pink");
+    $("#approveResultButton").click(function(){
+        $("#approveResultOptions").slideToggle("slow");
     });
+    $("#approveResultNo").click(function(){
+        $("#approveResultOptions").slideToggle("slow");
+    });
+    $("#approveResultYes").click(function(){
+        $("#approveResultOptions").slideToggle("slow");
+        $("#approvedResult").slideToggle("slow");
+    });
+
+
+
+    $('.fileEvent').hover(
+        function () {
+            $(this).css({"background-color":"pink"});
+        },
+        function () {
+            $(this).css({"background-color":"white"});
+        }
+    );
+
+
+
+
 });

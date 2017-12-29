@@ -31,8 +31,10 @@ class DashboardController extends Controller
         $getEndURL = substr($getURL,$countEndURL);
         return decrypt($getEndURL);
 */
-
-        return $assignedManagerId;
+        $user = User::find(1);
+        //return $user;
+        $student = $user->Address()->first();
+        return $student;
 
     }
 
@@ -152,7 +154,7 @@ class DashboardController extends Controller
 
     public function showProcess(Request $request) {
         $user = User::find(1);
-        $user->role = 'student';
+        $user->role = 'manager';
 
         $getURL = $request->url();
         $countEndURL = strrpos($getURL,"/")+1;
@@ -168,7 +170,7 @@ class DashboardController extends Controller
         else if($user->role == 'manager') {
             //show all processes from his university
             $process = Process::find($processId);
-            $manager =  User::find(Manager::find($process->manager_id)->user_id)->name;
+            $manager =  User::find(Manager::find($process->manager_id)->user_id)->first();
             return view('Process.showProcess',compact('user','process','manager'));
         }
         else if($user->role == 'director') {

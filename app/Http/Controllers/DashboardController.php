@@ -34,12 +34,13 @@ class DashboardController extends Controller
     return "done";
     }
 
-    public function index() {
-        //get user via session
-        $user = User::find(1);
-        $user->role = 'student';//example to continue code
+    public function index(Request $request) {
 
-        $active = false;//If true, the user is student and can create a new process. If not, user is manager or director.
+        //$request->session()->flush();
+
+        $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
+        $user->role = session('role');//Don't change. it uses this variable name in index.
+        $active = false;//If true, the user is a student and can create a new process. If not, the user is a manager or a director.
 
         if($user->role == 'student') {
             //The button "create new process" only appears if the last process created was done more than 6months ago OR if all processes are inactive.
@@ -55,18 +56,19 @@ class DashboardController extends Controller
                     $process = Process::where('candidate_id',$candidate->id)->orderBy('active', 'desc')->first();
                     if($process){//if process exists
                         if($process->active == 1){
-                            $active = false;
+                            $active = false;//candidate exists and student has an active process.
+
                         }
                         else {
-                            $active = true;
+                            $active = true;//candidate exists and student doesn't have an active process.
                         }
                     }
                     else {
-                        $active = true;
+                        $active = true;//There are no processes in general created
                     }
                 }
                 else{
-                    $active = true;
+                    $active = true;//candidate doesn't exists
                 }
             return view('dashboard.index',compact('user','countries','universities','cities','active'));
         }
@@ -82,7 +84,8 @@ class DashboardController extends Controller
     }
 
     public function createProcess(Request $request) {
-        $user = User::find(1);
+        $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
+
         $student = Student::where('user_id',$user->id)->first();
         $candidate = Candidate::where('student_id',$student->id)->first();
         if($candidate == null){
@@ -116,13 +119,12 @@ class DashboardController extends Controller
             $request->university_id = $request->university;//UNIVERSIDADE DE DESTINO
             $process = app('App\Http\Controllers\ProcessesController')->Add($request);
         //return "Process created. Redirect to view";
-        return "Process created. Redirect to view";
-
+        return redirect('/dashboard');
     }
 
     public function showProcesses() {
-        $user = User::find(1);
-        $user->role = 'student';
+        $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
+        $user->role = session('role');//Don't change. it uses this variable name in index.
 
         if($user->role == 'student') {
             //show only his processes
@@ -179,8 +181,8 @@ class DashboardController extends Controller
     }
 
     public function showProcess(Request $request) {
-        $user = User::find(1);
-        $user->role = 'student';
+        $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
+        $user->role = session('role');//Don't change. it uses this variable name in index.
 
         $getURL = $request->url();
         $countEndURL = strrpos($getURL,"/")+1;

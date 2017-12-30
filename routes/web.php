@@ -15,10 +15,6 @@
 //});
 Route::get('/', 'InformationsController@News' );
 
-Route::get('/LogIn', function () {
-    return view('LogIn');
-});
-
 
 
 Route::get('/teste','MessagesController@NewMessage');

@@ -61,12 +61,13 @@ class UsersController extends Controller
             return redirect('admin');
         }
         $user = User::where('email',$request->email)->first();
+        session(['userID' => $user->id]);
         if($user) {
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'student';
-                    return redirect('Dashboard')->with('user');
+                    session(['role' => "student"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
@@ -75,8 +76,9 @@ class UsersController extends Controller
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'manager';
-                    return redirect('Dashboard')->with('user');
+                    return "dff";
+                    session(['role' => "manager"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
@@ -85,8 +87,8 @@ class UsersController extends Controller
             $director = Director::where('user_id', $user->id)->first();
             if ($director) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'director';
-                    return redirect('Dashboard')->with('user');
+                    session(['role' => "director"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);

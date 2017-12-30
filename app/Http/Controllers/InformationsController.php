@@ -29,4 +29,5 @@ class InformationsController extends Controller
         $info = Information::find($request->info);
         return view('news', compact('info'));
     }
+    //
 }

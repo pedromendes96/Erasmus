@@ -48,7 +48,13 @@ class ProcessesController extends Controller
     {
         $process = Process::find(1);
         if ($request->file1 or $request->file2 or $request->file3 or $request->file4 or $request->file5 or $request->file6) {
-            $dir = 'public/files/process_' . $process->id;
+            $dir='public/files';
+            if (Storage::disk('local')->exists($dir)){
+            }
+            else {
+                Storage::makeDirectory($dir);
+            }
+            $dir = $dir.'/process_' . $process->id;
             if (Storage::disk('local')->exists($dir)) {
             } else {
                 Storage::makeDirectory($dir);

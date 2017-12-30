@@ -43,12 +43,14 @@ class CreateDataTables extends Migration
         }
 
         $names = "Rua-";
+        $w = 0;
         for($z = 0; $z < 8 ; $z ++){
             for($i = 0; $i < 10 ; $i++){
                 for($j = 0; $j <2 ; $j++){
+                    $w++;
                     DB::table('addresses')->insert(
                         array(
-                            'name' => $names.($i * 2 + $j + 1),
+                            'name' => $names.($w),
                             'created_at' => Carbon\Carbon::now(),
                             'updated_at' => Carbon\Carbon::now(),
                             'city_id' => ($i + 1)
@@ -64,9 +66,9 @@ class CreateDataTables extends Migration
             $rand = rand(0,9);
             DB::table('universities')->insert(
                 array(
-                    'name' => $names[$rand]."-University",
-                    'description' => $description[$rand]."-University",
-                    'email' => $names[$rand]."@gmail.com",
+                    'name' => $names[$rand].$i."-University",
+                    'description' => $description[$rand].$i."-University",
+                    'email' => $names[$rand].$i."@gmail.com",
                     'img' => "img/new/1f674b304e56c4b979f4b85331a1f396.jpeg",
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now(),
@@ -83,8 +85,7 @@ class CreateDataTables extends Migration
                 array(
                     'name' => $names[$temp]." ".$apelidos[rand(0,6)],
                     'email' => $names[$temp].$i."@gmail.com",
-                    'password' => "wewqew",
-                    'img' => "img/new/1f674b304e56c4b979f4b85331a1f396.jpeg",
+                    'password' => bcrypt('1234'),
                     'phone' => "".$i."",
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now(),
@@ -240,7 +241,7 @@ class CreateDataTables extends Migration
                     'result' => $variable,
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now(),
-                    'process_id' => rand(1,50),
+                    'process_id' => $i + 1,
                     'university_id' => rand(1,40),
                 )
             );

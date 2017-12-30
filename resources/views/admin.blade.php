@@ -77,13 +77,13 @@
 
         function ChangeNew(valor){
             if(valor === "title"){
-                $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
+                $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\" required><button>Change Name</button>");
             }else if(valor ==="description"){
-                $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
+                $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\" required><button>Change Description</button>");
             }else if(valor==="content") {
-                $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\"><button>Change Content</button>");
+                $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\" required><button>Change Content</button>");
             }else{
-                $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
+                $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\" required><br><button>Change Image</button>");
             }
         }
     </script>
@@ -130,10 +130,10 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="country">
                     <label>Country Name:</label>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label>
                     <br>
-                    <input type="text" name="description">
+                    <input type="text" name="description" required>
                     <button>Create Country</button>
                 </form>
 
@@ -144,11 +144,11 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="city">
                     <label>City Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>Select the country</label>
-                    <select name="country">
+                    <select name="country" required>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}">{{$country->name}}</option>
                         @endforeach
@@ -163,9 +163,9 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="address">
                     <label>Address Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Select the city</label><br>
-                    <select name="city">
+                    <select name="city" required>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
                         @endforeach
@@ -179,15 +179,15 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="university">
                     <label>University Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>University email:</label><br>
-                    <input type="email" name="email"><br>
+                    <input type="email" name="email" required><br>
                     <label>University image</label><br>
-                    <input type="file" name="image"><br><br>
+                    <input type="file" name="image" required><br><br>
                     <label>Select the address</label>
-                    <select name="address">
+                    <select name="address" required>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">{{$address->name}}</option>
                         @endforeach
@@ -201,13 +201,13 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="new">
                     <label>New title:</label><br>
-                    <input type="text" name="title"><br>
+                    <input type="text" name="title" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>Content:</label><br>
-                    <input type="text" name="container"><br>
+                    <input type="text" name="container" required><br>
                     <label>new image</label><br>
-                    <input type="file" name="image"><br><br>
+                    <input type="file" name="image" required><br><br>
                     <button>Create New</button>
                 </form>
             </div>
@@ -219,7 +219,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="country">
-                    <select name="country">
+                    <select name="country" required>
                         <option style="display:none;" selected>Select Country</option>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}">
@@ -227,7 +227,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeCountry(this.value)">
+                    <select name="column" onchange="ChangeCountry(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
@@ -242,7 +242,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="city">
-                    <select name="country">
+                    <select name="country" required>
                         <option style="display:none;" selected>Select City</option>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">
@@ -250,7 +250,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeCity(this.value)">
+                    <select name="column" onchange="ChangeCity(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
@@ -261,7 +261,7 @@
 
                         </div>
                         <div class="hide" id="countries">
-                            <select name="country">
+                            <select name="country" required>
                                 <option style="display:none;" selected>Select Country</option>
                                 @foreach($countries as $country)
                                     <option value="{{$country->id}}">
@@ -279,7 +279,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="address">
-                    <select name="address">
+                    <select name="address" required>
                         <option style="display:none;" selected>Select Address</option>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">
@@ -287,7 +287,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeAddress(this.value)">
+                    <select name="column" onchange="ChangeAddress(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="city">City</option>
@@ -297,7 +297,7 @@
 
                         </div>
                         <div class="hide" id="cities">
-                            <select name="city">
+                            <select name="city" required>
                                 <option style="display:none;" selected>Select City</option>
                                 @foreach($cities as $city)
                                     <option value="{{$city->id}}">
@@ -315,7 +315,7 @@
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="university">
-                    <select name="universities">
+                    <select name="universities" required>
                         <option style="display:none;" selected>Select University</option>
                         @foreach($universities as $university)
                             <option value="{{$university->id}}">
@@ -323,7 +323,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeUniversity(this.value)">
+                    <select name="column" onchange="ChangeUniversity(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
@@ -336,7 +336,7 @@
 
                         </div>
                         <div class="hide" id="adresses">
-                            <select name="address">
+                            <select name="address" required>
                                 <option style="display:none;" selected>Select Address</option>
                                 @foreach($addresses as $address)
                                     <option value="{{$address->id}}">
@@ -354,15 +354,15 @@
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="new">
-                    <select name="news">
+                    <select name="news" required>
                         <option style="display:none;" selected>Select New</option>
                         @foreach($news as $new)
                             <option value="{{$new->id}}">
-                                {{$new->name}}
+                                {{$new->id}}-{{$new->title}}
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeNew(this.value)">
+                    <select name="column" onchange="ChangeNew(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="title">Title</option>
                         <option value="description">Description</option>
@@ -385,7 +385,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="country">
                     <label>Select Country</label><br>
-                    <select name="country">
+                    <select name="country" required>
                         @foreach($countries as $country)
                         <option value="{{$country->id}}">
                             {{$country->name}}
@@ -401,7 +401,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="city">
                     <label>Select City</label><br>
-                    <select name="city">
+                    <select name="city" required>
                         @foreach($cities as $city)
                         <option value="{{$city->id}}">
                             {{$city->name}}
@@ -417,7 +417,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="address">
                     <label>Select Address</label><br>
-                    <select name="address">
+                    <select name="address" required>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">
                                 {{$address->name}}
@@ -433,7 +433,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="university">
                     <label>Select University</label>
-                    <select name="university">
+                    <select name="university" required>
                         @foreach($universities as $university)
                             <option value="{{$university->id}}">
                                 {{$university->name}}
@@ -450,7 +450,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="new">
                     <label>Select New</label>
-                    <select name="new">
+                    <select name="new" required>
                         @foreach($news as $new)
                             <option value="{{$new->id}}">
                                 {{$new->title}}

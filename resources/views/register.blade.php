@@ -172,8 +172,6 @@
             </div>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
         </div>
-        <div class="third-screen aside">
-        </div>
     </div>
 </form>
 

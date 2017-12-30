@@ -139,8 +139,7 @@ class DashboardController extends Controller
                 return "You don't have any processes yet. Create a new process";
             }
             $processes = Process::where('candidate_id',$candidate->id)->orderBy('active', 'desc')->get();
-            $university = University::find($student->id)->first();
-            //return view('dashboard.showProcesses',compact('processes'));
+            $university = University::find($user->id);
             return view('Process.showProcesses', compact('user','processes','university'));
         }
         else if($user->role == 'manager') {

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    public function Person(){
-        return $this->hasOne('App\Person');
+    public function User(){
+        return $this->hasOne('App\User');
     }
     public function Candidate(){
         return $this->belongsTo('App\Student');

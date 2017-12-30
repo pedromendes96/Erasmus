@@ -48,4 +48,14 @@ class ProcessesController extends Controller
             $process->active = $request->active;
         }
     }
+
+    public function approveResult(Request $request){
+        DB::table('process_university')->update([
+            'process_id' => $request->id,
+            'result' => 1,
+            'updated_at' => DB::raw('now()')
+        ]);
+        return "Student process approved. Redirect to view.";
+    }
+
 }

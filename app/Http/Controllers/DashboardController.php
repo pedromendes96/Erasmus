@@ -38,6 +38,7 @@ class DashboardController extends Controller
         //get user via session
         $user = User::find(1);
         $user->role = 'student';//example to continue code
+
         $active = false;//If true, the user is student and can create a new process. If not, user is manager or director.
 
         if($user->role == 'student') {
@@ -114,9 +115,9 @@ class DashboardController extends Controller
             $request->description = $request->semester." Semester - ".University::find($request->university)->name." - ".Country::find($request->country)->name;
             $request->university_id = $request->university;//UNIVERSIDADE DE DESTINO
             $process = app('App\Http\Controllers\ProcessesController')->Add($request);
+        //return "Process created. Redirect to view";
+        return "Process created. Redirect to view";
 
-
-        return "maybe";
     }
 
     public function showProcesses() {
@@ -157,7 +158,15 @@ class DashboardController extends Controller
             //$program = $director->program_id;
             //join user
             ////where director->program_id == student->program_id
-            $director = Director::where('user_id',$user->id)->get();
+            $allUsersFromUniversity = User::where('university_id',$user->university_id)->get();
+            $managers = [];
+            $y=0;
+            for($i=0;$i<$allUsersFromUniversity->count();$i++) {
+                if(Manager::where('user_id',$allUsersFromUniversity[$i]->id)->first()) {
+                    $managers[$y] = Manager::where('user_id',$allUsersFromUniversity[$i]->id)->first();
+                    $y++;
+                }
+            }
 
             $processes = Process::whereIn('manager_id', [1, 2])->get();
             return $processes;
@@ -181,14 +190,14 @@ class DashboardController extends Controller
         if($user->role == 'student') {
             //show his processes
             $process = Process::find($processId);
-            $manager =  User::find(Manager::find($process->manager_id)->user_id)->name;
+            $manager =  User::find( Manager::find($process->manager_id)->user_id );
             return view('Process.showProcess',compact('user','process','manager'));
         }
         else if($user->role == 'manager') {
             //show all processes from his university
             $process = Process::find($processId);
             $manager =  $user;//Since the user is the manager and will only see his processes! Just to leave compact() function identical below.
-            return view('Process.showProcess',compact('user','process','manager'));
+            return view('Process.showProcess',compact('user','process','manager',''));
         }
         else if($user->role == 'director') {
             //show all processes only from his university and from his program course(Students needs program on database to know how to choose director)
@@ -201,4 +210,7 @@ class DashboardController extends Controller
         }
     }
 
+    public function updateFiles(Request $request) {
+        return "update Files.";
+    }
 }

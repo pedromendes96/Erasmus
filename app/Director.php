@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Director extends Model
 {
-    public function Person(){
-        return $this->hasOne('App\Person');
+    public function User(){
+        return $this->hasOne('App\User');
     }
     public function Program(){
         return $this->belongsTo('App\Program');

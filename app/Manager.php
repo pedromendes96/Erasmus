@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manager extends Model
 {
-    public function Person(){
-        return $this->hasOne('App\Person');
+    public function User(){
+        return $this->hasOne('App\User');
     }
 
     public function Process(){

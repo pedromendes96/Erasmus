@@ -17,10 +17,10 @@ class Process extends Model
     }
 
 //    public static function RemoveById($id){
-//        \DB::table('processes')->where('id', '=', $id)->delete();
+//        \DB::table('files')->where('id', '=', $id)->delete();
 //    }
 //
 //    public static function GetById($id){
-//        return \DB::table('processes')->where('id', '=', $id)->get();
+//        return \DB::table('files')->where('id', '=', $id)->get();
 //    }
 }

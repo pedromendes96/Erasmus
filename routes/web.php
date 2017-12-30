@@ -59,3 +59,6 @@ Route::post('/teste',function(){
 
 Route::get('/dashboard/userprofile','UsersController@UserProfileIndex');
 Route::post('/dashboard/userprofile','UsersController@UserProfileEditAction');
+
+Route::get('/uploadfiles',function(){return view('uploadfiles');});
+Route::post('/uploadfiles','ProcessesController@uploadFiles');

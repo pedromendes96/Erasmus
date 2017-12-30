@@ -14,7 +14,10 @@ use App\User;
 use App\Candidate;
 use App\Managers;
 use App\City;
+use DB;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Scalar\MagicConst\Dir;
+use Symfony\Component\Translation\Dumper\PoFileDumper;
 
 
 class DashboardController extends Controller
@@ -116,9 +119,8 @@ class DashboardController extends Controller
             $request->candidate_id = $candidate->id;
             $request->manager_id = $assignedManagerId;
             $request->description = $request->semester." Semester - ".University::find($request->university)->name." - ".Country::find($request->country)->name;
-            $request->university_id = $request->university;//UNIVERSIDADE DE DESTINO
+            $request->university_id = $request->university;//GUARDA A UNIVERSIDADE DE DESTINO
             $process = app('App\Http\Controllers\ProcessesController')->Add($request);
-        //return "Process created. Redirect to view";
         return redirect('/dashboard');
     }
 
@@ -152,27 +154,20 @@ class DashboardController extends Controller
             return view('Process.showProcesses', compact('user','processes'));
         }
         else if($user->role == 'director') {
-            //show all processes from his university with his program course.
-            //Student has program!!!! DATABASE
-            //Find all process of the students that have the same program as the director
-            //$processes = Process::where('university_id',$director->university_id)->get();
-            //$program = $director->program_id;
-            //join user
-            ////where director->program_id == student->program_id
-            $allUsersFromUniversity = User::where('university_id',$user->university_id)->get();
-            $managers = [];
-            $y=0;
-            for($i=0;$i<$allUsersFromUniversity->count();$i++) {
-                if(Manager::where('user_id',$allUsersFromUniversity[$i]->id)->first()) {
-                    $managers[$y] = Manager::where('user_id',$allUsersFromUniversity[$i]->id)->first();
-                    $y++;
-                }
-            }
+            $directorProgramID = Director::where('user_id',$user->id)->first()->program_id;
+                $getProcessesProgramID = DB::table('processes')
+                    ->join('candidates', 'candidates.id', '=', 'processes.candidate_id')
+                    ->join('students', 'students.id', '=', 'candidates.student_id')
+                    ->join('users', 'users.id', '=', 'students.user_id')
+                    ->select('processes.id')
+                    ->where('students.program_id',$directorProgramID)
+                    ->get();
+            $teste=json_decode($getProcessesProgramID, true);
+           // $processes = Process::where('id',$teste)->get();
+           // $processes = Process::find($teste)->get();
+            $processes = Process::whereIn('id',$teste)->orderBy('active','desc')->get();
 
-            $processes = Process::whereIn('manager_id', [1, 2])->get();
-            return $processes;
             return view('Process.showProcesses', compact('user','processes'));
-            return "There's no role in this user or other problem.";
         }
         else{
             return "Maybe there's no processes on this user.";
@@ -191,7 +186,7 @@ class DashboardController extends Controller
         if($user->role == 'student') {
             //show his processes
             $process = Process::find($processId);
-            $manager =  User::find( Manager::find($process->manager_id)->user_id );
+            $manager =  User::find( Manager::find($process->manager_id)->user_id);
             return view('Process.showProcess',compact('user','process','manager'));
         }
         else if($user->role == 'manager') {
@@ -203,7 +198,7 @@ class DashboardController extends Controller
         else if($user->role == 'director') {
             //show all processes only from his university and from his program course(Students needs program on database to know how to choose director)
             $process = Process::find($processId);
-            $manager =  User::find(Manager::find($process->manager_id)->user_id)->name;
+            $manager =  User::find(Manager::find($process->manager_id)->user_id);
             return view('Process.showProcess',compact('user','process','manager'));
         }
         else {

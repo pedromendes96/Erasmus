@@ -14,7 +14,7 @@
                 <br>
                 <br>
                 <br>
-                <h1 style="float: left">Select Process: {{ucfirst($user->role)}}: {{$user->name}}</h1>
+                <h1 style="float: left">Select Process: {{ucfirst($user->role)}}</h1>
             </div>
             <div class="half-screen">
 

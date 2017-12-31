@@ -73,7 +73,6 @@ class UsersController extends Controller
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
-                    return "dff";
                     session(['role' => "manager"]);
                     return redirect('/dashboard');
                 } else {

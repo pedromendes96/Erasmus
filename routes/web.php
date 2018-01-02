@@ -55,10 +55,12 @@ Route::get('/resetpassword','UsersController@ResetPasswordIndex');
 Route::post('/resetpassword','UsersController@ResetPassword');
 Route::get('/teste',function(){return view('teste');});
 Route::post('/teste',function(){
-    return redirect('/dashboard/userprofile')->with('userid','6')->with('role','student');});
+    return redirect('/dashboard/userprofile')->with('userid','2')->with('role','student');});
 
 Route::get('/dashboard/userprofile','UsersController@UserProfileIndex');
 Route::post('/dashboard/userprofile','UsersController@UserProfileEditAction');
 
 Route::get('/uploadfiles',function(){return view('uploadfiles');});
 Route::post('/uploadfiles','ProcessesController@uploadFiles');
+
+Route::get('/downloadfiles','ProcessesController@downloadFile');

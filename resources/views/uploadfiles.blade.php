@@ -21,6 +21,11 @@
     file5<input type="file" name="file5">
     <br>
     file6<input type="file" name="file6">
+    <br>
+    @if (session('notPDF'))
+    <b>Please submit only pdf type files!</b>
+        <br>
+    @endif
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="submit">
 </form>

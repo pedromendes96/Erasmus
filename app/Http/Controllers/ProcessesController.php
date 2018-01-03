@@ -66,10 +66,10 @@ class ProcessesController extends Controller
             } else {
                 Storage::makeDirectory($dir);
             }
-            $files = $process->file; #VERIFICAR
+            $files = $process->file;
             $filesindb = explode('"-"', $files);
 
-            }
+
             if ($request->file1) {
                 $file[0] = $this->addFiles($request, '1', $dir, $process);
             }
@@ -108,22 +108,26 @@ class ProcessesController extends Controller
                     array_push($fileaux, $fa);
                 }
             }
+
+            sort($fileaux);
             $files = "";
             foreach ($fileaux as $file) {
                 if ($files == "") {
                     $files = $file;
                 } else {
                     if($file != null) {
-                        $files = $file . '"-"' . $files;
+                        $files = $files . '"-"' . $file;
                     } else {
                         $files = $files;
                     }
                 }
 
             }
+
             $process->file = $files;
             $process->save();
             return $files;
+        }
 
 
     }
@@ -141,7 +145,7 @@ class ProcessesController extends Controller
         $process = Process::find(1);
         $files = $process->file;
         $filesarr = explode('"-"', $files);
-        //'storage/files/process_1/file6.pdf'
+
 
         $var = '/public\//';
         $files = array();
@@ -150,15 +154,8 @@ class ProcessesController extends Controller
                 array_push($files,preg_replace($var,'storage/',$file));
             }
         }
-        $var = '/storage\/files\/process_1\/file/';
-        $values = array();
-        foreach ($files as $fil){
-            if (preg_match($var, $fil)){
-                $value = preg_replace('/.pdf/','',preg_replace($var,'',$fil));
-                array_push($values,$value);
-            }
-        }
-        return dd($values);
+        sort($files);
+
 
         return view('downloadfiles',compact('files'));
     }

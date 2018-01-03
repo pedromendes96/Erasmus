@@ -166,10 +166,16 @@ class UsersController extends Controller
             }
         }
         if ($request->image != ""){
+            $dir='public/img/user';
+            if (Storage::disk('local')->exists($dir)){
+            }
+            else {
+                Storage::makeDirectory($dir);
+            }
             $file=$request->file('image');
             $type = "/image/";
             if(preg_match($type,$file->getMimeType())) {
-                $path = $file->store('public/img/user');
+                $path = $file->store($dir);
                 $array = explode('/', $path, 2);
                 $user->img = $array[1];
             } else {

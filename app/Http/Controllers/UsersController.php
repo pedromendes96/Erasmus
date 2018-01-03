@@ -57,16 +57,14 @@ class UsersController extends Controller
     }
 
     public function Login(Request $request){
-        if($request->password == "admin" and $request->email=="admin@admin"){
-            return redirect('admin');
-        }
         $user = User::where('email',$request->email)->first();
+        session(['userID' => $user->id]);
         if($user) {
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'student';
-                    return redirect('Dashboard')->with('user');
+                    session(['role' => "student"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
@@ -75,8 +73,8 @@ class UsersController extends Controller
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'manager';
-                    return redirect('Dashboard')->with('user');
+                    session(['role' => "manager"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
@@ -85,12 +83,15 @@ class UsersController extends Controller
             $director = Director::where('user_id', $user->id)->first();
             if ($director) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->role = 'director';
-                    return redirect('Dashboard')->with('user');
+                    session(['role' => "director"]);
+                    return redirect('/dashboard');
                 } else {
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
                 }
+            }
+            if($request->password == "admin" and $request->email=="admin@admin"){
+                return redirect('admin');
             }
         } else {
             $noexistence = true;
@@ -115,11 +116,14 @@ class UsersController extends Controller
             }
             $role = $request->role;
             if ($role == "student") {
-                return app('App\Http\Controllers\StudentsController')->Add($request);
+                app('App\Http\Controllers\StudentsController')->Add($request);
+                return redirect('/LogIn');
             } else if ($role == "manager") {
-                return app('App\Http\Controllers\ManagersController')->Add($request);
+                app('App\Http\Controllers\ManagersController')->Add($request);
+                return redirect('/LogIn');
             } else if ($role == "director") {
-                return app('App\Http\Controllers\DirectorsController')->Add($request);
+                app('App\Http\Controllers\DirectorsController')->Add($request);
+                return redirect('/LogIn');
             }
             //return view ('home');
         } else {

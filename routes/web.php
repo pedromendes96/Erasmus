@@ -50,3 +50,16 @@ Route::get('/university/{id}','UniversitiesController@Show');
 Route::get('/admin','UsersController@Admin');
 
 Route::post('/admin','UsersController@AdminAction');
+
+
+
+
+
+Route::get('/dashboard', 'DashboardController@index');
+Route::post('/dashboard/newProcess', 'DashboardController@createProcess');
+Route::get('/dashboard/process', 'DashboardController@showProcesses');
+Route::get('/dashboard/process/{id}', 'DashboardController@showProcess');
+Route::post('/dashboard/process/approve', 'ProcessesController@approveResult');
+Route::post('/dashboard/process/upload', 'DashboardController@updateFiles');
+
+Route::get('/test', 'DashboardController@test');

@@ -1,12 +1,5 @@
 @extends('layouts.master')
 
-
-/*
-Change the BR into padding on the media queries on CSS.
-
-This index is the dashboard of the software that will show up after you login.
-The view will change depending by the roll(student,manager or director) of the user.
-*/
 @section ('content')
     <div class="entire-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 50px 0px;background-color: #eeeeee">
         <br>
@@ -19,6 +12,7 @@ The view will change depending by the roll(student,manager or director) of the u
             @if($user->role == "student" && $active)
                 <button class="dashboardButtons newProcessButton">Create New Process</button>
             @endif
+
             <button class="dashboardButtons" onclick="window.location='{{ url("dashboard/process") }}'" >My Processes</button>
             <button class="dashboardButtons" onclick="window.location='{{ url("dashboard/messages") }}'" >My Messages</button>
             <button class="dashboardButtons" onclick="window.location='{{ url("dashboard/settings") }}'" >My Settings</button>

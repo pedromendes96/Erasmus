@@ -98,8 +98,9 @@
                     <div class="entire-screen">
                         <button id="uploadButton"><h5>Upload Files</h5></button><br><br>
                             <div class="entire-screen" id="uploadOptions" class="half-screen" hidden>
-                                <form method="post" action="/dashboard/process/upload">
+                                <form method="post" action="/dashboard/process/upload" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="process_id" value="{{$process->id}}">
                                 <input type="file" name="file1" id="uploadOption1" class="fileEvent" style="color: dimgrey;">  <strong>|-> Upload Learning Agreement</strong></input><br><br>
                                 @if($user->role == 'student'/*If role is student, then can upload anything.*/)
                                         <input type="file" name="file2" id="uploadOption2" class="fileEvent" style="color: dimgrey;">  <strong>|-> Upload Transcript Records</strong></input><br><br>
@@ -117,18 +118,25 @@
                     <div  class="entire-screen">
                         <button id="downloadButton"><h5>Download Files</h5></button><br><br>
                         <div id="downloadOptions" class="half-screen" hidden>
-                            <form method="post" action="/dashboard/process/upload">
-                            <a href="cdfvgbn" name="down1" id="downloadOption1" class="fileEvent" style="color: dimgrey;"><strong>|-> Download Learning Agreement</strong></a><br><br>
-                            @if($user->role != 'director'/*If role is manager or student, then can download anything.*/)
-                            <a href="cdfvgbn" name="down2" id="downloadOption2" class="fileEvent" style="color: dimgrey;">  <strong>|-> Download Transcript Records</strong></a><br><br>
-                            <a href="cdfvgbn" name="down3" id="downloadOption3" class="fileEvent" style="color: dimgrey;">  <strong>|-> Download English Certificate</strong></a><br><br>
-                            <a href="cdfvgbn" name="down4" id="downloadOption4" class="fileEvent" style="color: dimgrey;">  <strong>|-> Download Profile Photo</strong></a><br><br>
-                            <a href="cdfvgbn" name="down5" id="downloadOption5" class="fileEvent" style="color: dimgrey;">  <strong>|-> Download ID Card</strong></a><br><br>
-                            <a href="cdfvgbn" name="down6" id="downloadOption6" class="fileEvent" style="color: dimgrey;">  <strong>|-> Download NIB declaration</strong></a><br><br>
-                            @endif()
-                            </form>
+                                @foreach ($files as $key => $file)
+                                    @if($key == 0)
+                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong>|-> Download Learning Agreement </strong></a>
+                                    @endif()
+                                    @if($key != 0 && $user->role != 'director'/*If role is manager or student, then can download anything.*/)
+                                    <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
+                                        <strong>
+                                            @if($key == 1) |-> Upload Transcript Records
+                                            @elseif($key == 2)|-> Upload English Certificate
+                                            @elseif($key == 3)|-> Upload Profile Photo
+                                            @elseif($key == 4)|-> Upload ID Card
+                                            @endif
+                                        </strong>
+                                    </a><br>
+                                        @endif
+                                @endforeach
                         </div>
                     </div>
             </div>
         </div>
+
 @endsection

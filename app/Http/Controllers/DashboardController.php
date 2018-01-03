@@ -185,7 +185,19 @@ class DashboardController extends Controller
             $process = Process::find($processId);
             $manager =  User::find( Manager::find($process->manager_id)->user_id);
             $student = $user;
-            return view('Process.showProcess',compact('user','process','manager','student'));
+
+            $files = $process->file;
+            $filesarr = explode('"-"', $files);
+            $var = '/public\//';
+            $files = array();
+            foreach ($filesarr as $file) {
+                if(preg_match($var,$file)){
+                    array_push($files,preg_replace($var,'storage/',$file));
+                }
+            }
+            sort($files);
+
+            return view('Process.showProcess',compact('user','process','manager','student','files'));
         }
         else if($user->role == 'manager') {
             //show all processes from his university
@@ -193,14 +205,34 @@ class DashboardController extends Controller
             $manager =  $user;//Since the user is the manager and will only see his processes! Just to leave compact() function identical below.
             $student = User::find(Student::find(Candidate::find($process->candidate_id)->student_id)->user_id);
             $studentUser = User::find(Student::find(Candidate::find($process->candidate_id)->student_id)->user_id);
-            return view('Process.showProcess',compact('user','process','manager','student'));
+            $files = $process->file;
+            $filesarr = explode('"-"', $files);
+            $var = '/public\//';
+            $files = array();
+            foreach ($filesarr as $file) {
+                if(preg_match($var,$file)){
+                    array_push($files,preg_replace($var,'storage/',$file));
+                }
+            }
+            sort($files);
+            return view('Process.showProcess',compact('user','process','manager','student','files'));
         }
         else if($user->role == 'director') {
             //show all processes only from his university and from his program course(Students needs program on database to know how to choose director)
             $process = Process::find($processId);
             $manager =  User::find(Manager::find($process->manager_id)->user_id);
             $student = User::find(Student::find(Candidate::find($process->candidate_id)->student_id)->user_id);
-            return view('Process.showProcess',compact('user','process','manager','student'));
+            $files = $process->file;
+            $filesarr = explode('"-"', $files);
+            $var = '/public\//';
+            $files = array();
+            foreach ($filesarr as $file) {
+                if(preg_match($var,$file)){
+                    array_push($files,preg_replace($var,'storage/',$file));
+                }
+            }
+            sort($files);
+            return view('Process.showProcess',compact('user','process','manager','student','files'));
         }
         else {
             return "There's no role in this user or other problem.";

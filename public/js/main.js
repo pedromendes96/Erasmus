@@ -1,3 +1,9 @@
+var x = 'sdfgbhmj';
+
+function getX() {
+    return x;
+}
+
 function showCities(value) {
     $.get( "http://localhost:8000/cities?country="+value, function( data ) {
         $( "#cities" ).html( data );

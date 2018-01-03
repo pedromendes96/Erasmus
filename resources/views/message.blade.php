@@ -51,19 +51,27 @@
             <h1>Message</h1>
         </div>
         <div>
-            From:{{$sender->name}}
+            @if($id != $sender->id)
+                <h2>From: {{$sender->name}}</h2>
+            @else
+                <h2>From: You</h2>
+            @endif
             <input type="hidden" name="sender" value="{{$sender->id}}">
         </div>
         <div class="entire-screen">
+            <div class="center"><h2>Subject:</h2></div>
             <h3>{{$message->subject}}</h3>
         </div>
-        <div class="entire-screen">
-            <textarea>{{$message->content}}</textarea>
+        <div class="entire-screen" style="padding: 20px 20px;">
+            <div class="center"><h2>Content:</h2></div>
+            <h4>{{$message->content}}</h4>
         </div>
-        <div class="entire-screen">
-            <div class="quart-screen"></div>
-            <div class="half-screen"><a href="newMessage">Reply Message</a></div>
-        </div>
+        @if($id != $sender->id)
+            <div class="entire-screen">
+                <div class="quart-screen"></div>
+                <div class="half-screen"><a href="/dashboard/replymessage/{{$msg}}">Reply Message</a></div>
+            </div>
+        @endif
     </div>
     <div class="fifteen-screen">
 

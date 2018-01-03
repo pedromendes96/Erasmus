@@ -49,6 +49,8 @@
                 </div>
                 <div class="half-screen center">
                     <button type="submit" class="main-button">Log In</button>
+                    <br>
+                    <span>Don't have an account? <a href="/register">register here</a></span>
                 </div>
             </form>
         </div>
@@ -57,7 +59,8 @@
                 <div class="quart-screen"></div>
                 <div class="half-screen" style="background-color: red;padding: 15px 15px;">
                     @if(session('incorrect')==1)
-                        <span>Os valores inseridos nao estao corretos.</span>
+                        <span>Os valores inseridos nao estao corretos.</span><br>
+                        <span><a href="/resetpassword">Forgot your password?</a></span>
                     @else
                         <span>Nao existe um utilizador com esse email.</span>
                     @endif

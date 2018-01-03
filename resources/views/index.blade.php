@@ -55,7 +55,9 @@
                 <a href="/register"><button class="main-button">Create a Account</button></a>
             </div>
             <div class="entire-screen center">
-                <a href="/Information"><button class="main-button">More information</button></a>
+                <a href="/information">
+                    <button class="main-button">More information</button>
+                </a>
             </div>
         </div>
     </div>

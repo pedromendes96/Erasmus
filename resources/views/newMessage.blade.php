@@ -48,9 +48,10 @@
             </div>
         </div>
         <div>
-            <form method="post" action="/Dashboard/newMessage">
+            <form method="post" action="/dashboard/Newmessages/">
+                {{csrf_field()}}
                 <div class="entire-screen">
-                    @if($action = "reply")
+                    @if($action == "reply")
                         <label>To:</label>
                         <select name="sender">
                             <option value="{{$receiver->id}}">{{$receiver->name}}</option>
@@ -93,14 +94,14 @@
                     @endif
                 </div>
                 <div class="entire-screen">
-                    @if($action = "reply")
+                    @if($action == "reply")
                         <label>Subject: </label>{{$subject}}<input name="subject" type="hidden" value="{{$subject}}">
                     @else
                         <label>Subject:</label><input type="text" name="subject">
                     @endif
                 </div>
                 <div class="entire-screen">
-                    <label>Content:</label><textarea name="answer" rows="4" cols="50"></textarea>
+                    <label>Content:</label><textarea name="answer" rows="12" cols="150"></textarea>
                 </div>
                 <div class="entire-screen">
                     <div class="quart-screen"></div>

@@ -4,7 +4,9 @@
         @foreach($universities as $university)
             @foreach($addresses as $address)
                 @if($address->id == $university->address_id)
-                    <li class="normal-list"><i class="fa fa-university" aria-hidden="true"></i><a style="text-decoration: underline;color: black;" href="university/{{$university->id}}">{{$university->name}}</a></li>
+                    <li class="normal-list"><i class="fa fa-university" aria-hidden="true"></i><a
+                                style="text-decoration: underline;color: black;" target="_blank"
+                                href="/university/{{$university->id}}">{{$university->name}}</a></li>
                 @endif
             @endforeach
         @endforeach

@@ -39,6 +39,14 @@ class UniversitiesController extends Controller
         return view('Universities',compact('addresses','universities'));
     }
 
+    public function SelectedRadio(Request $request)
+    {
+        $city = City::where('id', $request->city)->first();
+        $addresses = Address::where('city_id', $city->id)->get();
+        $universities = University::all();
+        return view('radioUniversities', compact('addresses', 'universities'));
+    }
+
     public function Show(Request $request){
         $university = University::where('id',$request->id)->first();
         return view('University',compact('university'));
@@ -56,6 +64,27 @@ class UniversitiesController extends Controller
         }else{
             $university->address_id = $this->GetAddressId($request);
         }
+    }
+
+    public function SelectedbyCountry(Request $request)
+    {
+        $country = Country::where('id', $request->country)->first();
+        $cities = City::where('country_id', $country->id)->get();
+        $universities = [];
+        foreach ($cities as $city) {
+            $addresses = Address::where('city_id', $city->id)->get();
+            foreach ($addresses as $address) {
+                $university = University::where('address_id', $address->id)->get();
+                if ($university->isEmpty()) {
+
+                } else {
+                    array_push($universities, $university);
+                }
+            }
+
+        }
+
+        return view('universitiesbycountry', compact('universities'));
     }
 
     private function GetAddressId(Request $request){

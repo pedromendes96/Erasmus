@@ -57,6 +57,9 @@ class UsersController extends Controller
     }
 
     public function Login(Request $request){
+        if($request->password == "admin" and $request->email=="admin@admin"){
+            return redirect('admin');
+        }
         $user = User::where('email',$request->email)->first();
         session(['userID' => $user->id]);
         if($user) {
@@ -89,9 +92,6 @@ class UsersController extends Controller
                     $incorrect = true;
                     return back()->with('incorrect',$incorrect);
                 }
-            }
-            if($request->password == "admin" and $request->email=="admin@admin"){
-                return redirect('admin');
             }
         } else {
             $noexistence = true;

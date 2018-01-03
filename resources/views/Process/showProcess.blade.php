@@ -120,15 +120,16 @@
                         <div id="downloadOptions" class="half-screen" hidden>
                                 @foreach ($files as $key => $file)
                                     @if($key == 0)
-                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong>|-> Download Learning Agreement </strong></a>
+                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong> {{$key}}|-> Download Learning Agreement </strong></a>
                                     @endif()
                                     @if($key != 0 && $user->role != 'director'/*If role is manager or student, then can download anything.*/)
                                     <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
                                         <strong>
-                                            @if($key == 1) |-> Upload Transcript Records
-                                            @elseif($key == 2)|-> Upload English Certificate
-                                            @elseif($key == 3)|-> Upload Profile Photo
-                                            @elseif($key == 4)|-> Upload ID Card
+                                            @if($file[strrpos($file, ".")-1] == 2) |-> Upload Transcript Records
+                                            @elseif($file[strrpos($file, ".")-1] == 3)|-> Upload English Certificate
+                                            @elseif($file[strrpos($file, ".")-1] == 4)|-> Upload Profile Photo
+                                            @elseif($file[strrpos($file, ".")-1] == 5)|-> Upload ID Card
+                                            @elseif($file[strrpos($file, ".")-1] == 6)|-> Upload NIB declaration
                                             @endif
                                         </strong>
                                     </a><br>

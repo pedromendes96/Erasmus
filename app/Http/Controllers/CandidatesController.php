@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class CandidatesController extends Controller
 {
-    public function Add(Request $request){
+    public function Add($student_id){
         $candidate = new Candidate;
-        $candidate->student_id = $request->student_id;
+        $candidate->student_id = $student_id;
         $candidate->save();
         return $candidate->id;
     }

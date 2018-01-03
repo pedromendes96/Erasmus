@@ -120,7 +120,7 @@
                         <div id="downloadOptions" class="half-screen" hidden>
                                 @foreach ($files as $key => $file)
                                     @if($key == 0)
-                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong> {{$key}}|-> Download Learning Agreement </strong></a>
+                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong> |-> Download Learning Agreement </strong></a>
                                     @endif()
                                     @if($key != 0 && $user->role != 'director'/*If role is manager or student, then can download anything.*/)
                                     <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">

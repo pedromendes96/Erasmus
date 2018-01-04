@@ -1,112 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Erasmus</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-        $(document).ready(function() {
-            $('#add').click(function () {
-                $('#changeSection').addClass('hide');
-                $('#removeSection').addClass('hide');
-                $('#addSection').removeClass('hide');
-            });
-            $('#change').click(function () {
-                $('#removeSection').addClass('hide');
-                $('#addSection').addClass('hide');
-                $('#changeSection').removeClass('hide');
-            });
-            $('#remove').click(function () {
-                $('#changeSection').addClass('hide');
-                $('#addSection').addClass('hide');
-                $('#removeSection').removeClass('hide');
-            });
-        });
-        function ChangeCountry(valor){
-            if(valor === "name"){
-                $("#ChangeCountrySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else{
-                $("#ChangeCountrySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-            }
-        }
-        function ChangeCity(valor){
-            if(valor === "name"){
-                $("#countries").addClass("hide");
-                $("#ChangeCitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else if(valor === "description"){
-                $("#countries").addClass("hide");
-                $("#ChangeCitySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-            }else{
-                $("#ChangeCitySection").html("");
-                $("#countries").removeClass("hide");
-            }
-        }
+@extends('layouts.master')
+@section('title','Erasmus - Admnistrator')
 
-        function ChangeAddress(valor){
-            if(valor === "name"){
-                $("#cities").addClass("hide");
-                $("#ChangeAddressSection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else{
-                $("#ChangeAddressSection").html("");
-                $("#cities").removeClass("hide");
-            }
-        }
-
-        function ChangeUniversity(valor){
-            if(valor === "name"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else if(valor ==="description"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
-            }else if(valor==="email") {
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Email</label><br><input type=\"email\" name=\"email\"><button>Change Email</button>");
-            }else if(valor==="image"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
-            }else{
-                $("#ChangeUniversitySection").html("");
-                $("#adresses").removeClass("hide");
-            }
-        }
-
-        function ChangeNew(valor){
-            if(valor === "title"){
-                $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\" required><button>Change Name</button>");
-            }else if(valor ==="description"){
-                $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\" required><button>Change Description</button>");
-            }else if(valor==="content") {
-                $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\" required><button>Change Content</button>");
-            }else{
-                $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\" required><br><button>Change Image</button>");
-            }
-        }
-    </script>
-</head>
-<body>
-<div class="entire-screen navbar">
-    <div class="third-screen center">
-        <a href="/"><img src="/img/erasmus.png" width="50%"></a>
-    </div>
-    <div class="two-third-screen right">
-        <ul>
-            <li>
-                Home
-            </li>
-            <li>
-                More Info
-            </li>
-            <li>
-                Log Out
-            </li>
-        </ul>
-    </div>
-</div>
+@section('content')
 <div class="entire-screen center" style="background-image: url(/img/pexels-photo-288477.jpeg);background-repeat: no-repeat;background-size:cover;margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
     <div class="fifteen-screen">
 
@@ -184,6 +79,13 @@
                     <input type="text" name="description" required><br>
                     <label>University email:</label><br>
                     <input type="email" name="email" required><br>
+                    <label>Latitude:</label>
+                    <br>
+                    <input type="text" name="x">
+                    <br>
+                    <label>Longitude:</label>
+                    <br>
+                    <input type="text" name="y"><br>
                     <label>University image</label><br>
                     <input type="file" name="image" required><br><br>
                     <label>Select the address</label>
@@ -330,6 +232,8 @@
                         <option value="email">Email</option>
                         <option value="image">Image</option>
                         <option value="address">Address</option>
+                        <option value="x">Latitude</option>
+                        <option value="y">Longitude</option>
                     </select>
                     <div>
                         <div id="ChangeUniversitySection">
@@ -467,23 +371,4 @@
     </div>
 </div>
 
-<div class="entire-screen blue-theme">
-    <div class="third-screen">
-        <h5></h5>
-    </div>
-    <div class="third-screen center">
-        <ul>
-            <li>
-                <a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-            </li>
-        </ul>
-    </div>
-    <div class="third-screen center">
-        <h4>Copyright ERASMUS+</h4>
-    </div>
-</div>
-</body>
-</html>
+@endsection

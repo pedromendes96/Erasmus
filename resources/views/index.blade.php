@@ -9,37 +9,7 @@
     <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-        var n = 0;
-        function ChangeNews() {
-            if($("#third").length){
-                if( n === 0 ){
-                    $('#first').fadeOut("slow");
-                    $('#second').fadeIn("slow");
-                    n++;
-                }else if( n === 1 ){
-                    $('#second').fadeOut("slow");
-                    $('#third').fadeIn("slow");
-                    n++;
-                }else{
-                    $('#third').fadeOut("slow");
-                    $('#first').fadeIn("slow");
-                    n = 0;
-                }
-            }else if($("#second").length){
-                if( n === 0 ){
-                    $('#first').fadeOut("slow");
-                    $('#second').fadeIn("slow");
-                    n++;
-                }else{
-                    $('#second').fadeOut("slow");
-                    $('#first').fadeIn("slow");
-                    n = 0;
-                }
-            }
-        }
-        setInterval(ChangeNews,7000);
-    </script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <div style="background: url(/img/fundo.jpg);background-repeat: no-repeat;height: 620px;" class="entire-screen flex-container">
@@ -49,10 +19,26 @@
 
         <div class="entire-screen">
             <div class="half-screen center">
-                <a href="/LogIn"><button class="main-button">Log in</button></a>
+                @if (session('userID'))
+                    <a href="/dashboard">
+                        <button class="main-button">Dashboard</button>
+                    </a>
+                @else
+                    <a href="/LogIn">
+                        <button class="main-button">Log in</button>
+                    </a>
+                @endif
             </div>
             <div class="half-screen center">
-                <a href="/register"><button class="main-button">Create a Account</button></a>
+                @if(!session('userID'))
+                    <a href="/register">
+                        <button class="main-button">Create a Account</button>
+                    </a>
+                @else
+                    <a href="/logout">
+                        <button class="main-button">Log Out</button>
+                    </a>
+                @endif
             </div>
             <div class="entire-screen center">
                 <a href="/information">
@@ -115,23 +101,4 @@
             </div>
         @endif
     </div>
-    <div class="entire-screen blue-theme">
-        <div class="third-screen">
-            <h5></h5>
-        </div>
-        <div class="third-screen center">
-            <ul>
-                <li>
-                    <a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-                </li>
-            </ul>
-        </div>
-        <div class="third-screen center">
-            <h4>Copyright ERASMUS+</h4>
-        </div>
-    </div>
-</body>
-</html>
+@extends('layouts.footer')

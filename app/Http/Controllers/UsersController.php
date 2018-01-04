@@ -36,15 +36,24 @@ class UsersController extends Controller
     }
 
     public function IndexRegister(Request $request){
-        $countries = Country::all();
-        $universities = University::all();
-        $programs = Program::all();
-        return view('register',compact('programs','countries','universities'));
+        if (session('userID')) {
+            return redirect('/');
+        } else {
+            $countries = Country::all();
+            $universities = University::all();
+            $programs = Program::all();
+            return view('register', compact('programs', 'countries', 'universities'));
+        }
     }
 
-//    public function IndexLogin(Request $request){
-//        return view ('login.login');
-//    }
+    public function IndexLogin(Request $request)
+    {
+        if (session('userID')) {
+            return redirect('/');
+        } else {
+            return view('LogIn');
+        }
+    }
 
     public function Admin(Request $request){
         $universities = University::all();
@@ -61,10 +70,10 @@ class UsersController extends Controller
             return redirect('admin');
         }
         if($user) {
-            session(['userID' => $user->id]);
             $student = Student::where('user_id', $user->id)->first();
             if ($student) {
                 if (Hash::check($request->password, $user->password)) {
+                    session(['userID' => $user->id]);
                     session(['role' => "student"]);
                     return redirect('/dashboard');
                 } else {
@@ -75,6 +84,7 @@ class UsersController extends Controller
             $manager = Manager::where('user_id', $user->id)->first();
             if ($manager) {
                 if (Hash::check($request->password, $user->password)) {
+                    session(['userID' => $user->id]);
                     session(['role' => "manager"]);
                     return redirect('/dashboard');
                 } else {
@@ -85,6 +95,7 @@ class UsersController extends Controller
             $director = Director::where('user_id', $user->id)->first();
             if ($director) {
                 if (Hash::check($request->password, $user->password)) {
+                    session(['userID' => $user->id]);
                     session(['role' => "director"]);
                     return redirect('/dashboard');
                 } else {
@@ -96,6 +107,13 @@ class UsersController extends Controller
             $noexistence = true;
             return back()->with('noexistence',$noexistence);
         }
+    }
+
+    public function Logout(Request $request)
+    {
+        $request->session()->forget('userID');
+        return redirect('/');
+
     }
 
     public function IndexDashboard(){
@@ -168,6 +186,12 @@ class UsersController extends Controller
                 $university->email = $request->email;
                 $path = $request->file('image')->store('public/img/university');
                 $array = explode('/', $path, 2);
+                if ($request->x == "" or $request->x == "") {
+                    // nada
+                } else {
+                    $university->lat = $request->x;
+                    $university->long = $request->y;
+                }
                 $university->img = $array[1];
                 $university->address_id = $request->address;
                 $university->save();
@@ -206,7 +230,7 @@ class UsersController extends Controller
                     $item->city_id = $request->city;
                 }
             }elseif($request->type == "university"){
-                $item = University::find($request->university);
+                $item = University::find($request->universities);
                 if($request->column == "name"){
                     $item->name = $request->name;
                 }elseif($request->column == "description"){
@@ -217,8 +241,12 @@ class UsersController extends Controller
                     $path = $request->file('image')->store('public/img/university');
                     $array = explode('/', $path, 2);
                     $item->img = $array[1];
-                }else {
+                } elseif ($request->column == "address") {
                     $item->address_id = $request->address;
+                } else if ($request->column == "x") {
+                    $item->lat = $request->x;
+                } else {
+                    $item->long = $request->y;
                 }
             }else{
                 $item = Information::find($request->new);
@@ -341,7 +369,11 @@ class UsersController extends Controller
 
     public function ResetPasswordIndex()
     {
-        return view('resetpassword');
+        if (session('userID')) {
+            return redirect('/');
+        } else {
+            return view('resetpassword');
+        }
     }
 
     public function ResetPassword(Request $request)
@@ -426,7 +458,6 @@ class UsersController extends Controller
         return view('userprofile', compact('user'));
 
     }
-
 
     public function UserProfileEditAction(Request $request)
     {

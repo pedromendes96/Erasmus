@@ -5,14 +5,21 @@
     <div class="two-third-screen right">
         <ul>
             <li>
-                Home
+                @if (session('userID'))
+                    <a href="/logout">Log Out</a>
+                @else
+                    <a href="/LogIn">Log In</a>
+                @endif
             </li>
             <li>
-                More Info
+                <a href="/information">More Info</a>
             </li>
             <li>
-
-                @yield('action')
+                @if (session('userID'))
+                    <a href="/dashboard">Dashboard</a>
+                @else
+                    <a href="/">Home</a>
+                @endif
             </li>
         </ul>
     </div>

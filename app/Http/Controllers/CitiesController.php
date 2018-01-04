@@ -29,6 +29,13 @@ class CitiesController extends Controller
         return view('Cities',compact('cities'));
     }
 
+    public function IndexR(Request $request)
+    {
+        $country = Country::where('name', $request->country)->first();
+        $cities = City::where('country_id', $country->id)->get();
+        return view('CitiesR', compact('cities'));
+    }
+
     public function ChangeProperty(Request $request){
         $property = $request->property;
         $city = City::where('id',$request->id)->get();

@@ -17,13 +17,7 @@
 
 Route::get('/', 'InformationsController@News' );
 
-Route::get('/LogIn', function () {
-    return view('LogIn');
-});
-
-Route::get('/Dashboard', function () {
-    return view('Dashboard');
-});
+Route::get('/LogIn', 'UsersController@IndexLogin');
 
 Route::get('/teste','MessagesController@NewMessage');
 
@@ -65,6 +59,8 @@ Route::post('/dashboard/settings/edit', 'UsersController@EditUserInfo');
 
 Route::get('/cities','CitiesController@Index');
 
+Route::get('/citiesR', 'CitiesController@IndexR');
+
 Route::get('/universities','UniversitiesController@Selected');
 
 Route::get('/radiouniversities', 'UniversitiesController@SelectedRadio');
@@ -79,12 +75,14 @@ Route::get('/dashboard', 'DashboardController@index');
 
 Route::post('/dashboard/newProcess', 'DashboardController@createProcess');
 
-Route::get('/dashboard/process', 'DashboardController@showProcesses');
+Route::get('/dashboard/process/', 'DashboardController@showProcesses');
 
 Route::get('/dashboard/process/{id}', 'DashboardController@showProcess');
 
 Route::post('/dashboard/process/approve', 'ProcessesController@approveResult');
 
-Route::post('/dashboard/process/upload', 'DashboardController@updateFiles');
+Route::post('/dashboard/process/upload', 'ProcessesController@uploadFiles');
 
-Route::get('/test', 'DashboardController@test');
+Route::get('/indexprocess', 'DashboardController@ProcessesDisplay');
+
+Route::get('/logout', 'UsersController@Logout');

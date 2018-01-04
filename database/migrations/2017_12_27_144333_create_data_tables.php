@@ -70,6 +70,8 @@ class CreateDataTables extends Migration
                     'description' => $description[$rand].$i."-University",
                     'email' => $names[$rand].$i."@gmail.com",
                     'img' => "img/new/1f674b304e56c4b979f4b85331a1f396.jpeg",
+                    'lat' => rand(1, 100) + "" + rand(0, 99),
+                    'long' => rand(1, 100) + "" + rand(0, 99),
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now(),
                     'address_id' => ceil(($i+1)/2)

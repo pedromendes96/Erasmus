@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 class MessagesController extends Controller
 {
     public function Index(Request $request){
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $id = session('userID');
         $result = session('result');
         $messages = Message::where('user_id', $id)->orWhere('sender_id', $id)->orderBy('updated_at', 'desc')->get();
@@ -30,6 +33,9 @@ class MessagesController extends Controller
     }
 
     public function ReadMessage(Request $request){
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $msg = $request->msg;
         $id = session('userID');
         $message = Message::find($request->msg);
@@ -38,6 +44,11 @@ class MessagesController extends Controller
     }
 
     public function NewMessage(Request $request){
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
+        $number = null;
+        $director = null;
         $role = session('role');
         $id = session('userID');
         $user = User::find($id);
@@ -45,26 +56,42 @@ class MessagesController extends Controller
         if($role=="student"){
             $student = Student::where('user_id', '=', $user->id)->first();
             $candidate = Candidate::where('student_id', '=', $student->id)->first();
-            $process = Process::where('candidate_id', '=', $candidate->id)->orderBy('created_at', 'desc')->first();
-            $manager = Manager::find($process->manager_id);
-            $manager = User::find($manager->user_id);
+            $processes = Process::where('candidate_id', '=', $candidate->id)->orderBy('created_at', 'desc')->get();
+            $managers = [];
+            foreach ($processes as $process) {
+                $manager = Manager::find($process->manager_id);
+                $manager = User::find($manager->user_id);
+                $aux = false;
+                foreach ($managers as $temp) {
+                    if ($temp->id == $manager->id) {
+                        $aux = true;
+                    }
+                }
+                if (!$aux) {
+                    array_push($managers, $manager);
+                }
+            }
             $program = Program::where('id','=',$student->program_id)->first();
             $director = Director::where('program_id', '=', $program->id)->first();
             $director = User::find($director->user_id);
-            return view('newMessage', compact('director', 'manager', 'role', 'action'));
+            $number = count($managers);
+            return view('newMessage', compact('director', 'managers', 'role', 'action', 'number'));
         }elseif ($role == "manager"){
             $university = University::find($user->university_id);
             $programs = $university->Program();
-            $manager = Manager::find($user->id);
-            $processes = Process::where([['manager_id','=',$manager->id],['active','=','true']])->get();
+
+            $manager = Manager::where('user_id', $user->id)->first();
+            $processes = Process::where('manager_id', '=', $manager->id)->get();
             $studentsID = array();
+            // PROBLEMA QUE ISTO DEVOLVE UM CANDIDATO, NAO EXISTE STUDENT.
             foreach ($processes as $process){
-                array_push($studentsID,$process->student_id);
+                array_push($studentsID, $process);
             }
+            return dd($studentsID);
             $candidates=array();
             for ($i=0;$i<count($studentsID);$i++){
                 $user = User::find($studentsID[$i]);
-                array_push($students,$user);
+                array_push($candidates, $user);
             }
             $directorsID = array();
             foreach ($programs as $program){
@@ -75,7 +102,7 @@ class MessagesController extends Controller
                 $user = User::find($directorsID[$i]);
                 array_push($directors,$user);
             }
-            return view('newMessage', compact('directors', 'candidates', 'role', 'action'));
+            return view('newMessage', compact('directors', 'candidates', 'role', 'action', 'number', 'director'));
         }else{
             $university = University::find($user->university_id);
             $users = User::where('university_id','=',$university->id)->get();
@@ -88,11 +115,19 @@ class MessagesController extends Controller
             }
             $candidates = array();
             for ($i=0;$i<count($managers);$i++){
-                $processes = Process::where([['manager_id','=',$managers[$i]->id],['active','=','true']])->get();
+                $processes = Process::where('manager_id', '=', $managers[$i]->id)->get();
                 for ($i = 0;$i<count($processes);$i){
                     $candidate = Candidate::where('user_id','=',$processes[$i]->user_id)->get();
                     $user = User::find($candidate->user_id);
-                    array_push($candidates,$user);
+                    $aux = false;
+                    foreach ($candidates as $c) {
+                        if ($c->id == $user->id) {
+                            $aux = true;
+                        }
+                    }
+                    if (!$aux) {
+                        array_push($candidates, $user);
+                    }
                 }
             }
             return view('newMessage', compact('managers', 'candidates', 'action'));
@@ -100,6 +135,9 @@ class MessagesController extends Controller
     }
 
     public function PrepareReplyMessage(Request $request){
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $message = Message::find($request->msg);
         $receiver = User::find($message->user_id);
         $subject = $message->subject;
@@ -108,6 +146,9 @@ class MessagesController extends Controller
     }
 
     public function SendMessage(Request $request){
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $message = new Message;
         $message->subject = $request->subject;
         $message->content = $request->answer;

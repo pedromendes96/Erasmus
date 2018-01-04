@@ -42,7 +42,9 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         //$request->session()->flush();
         $user = app('App\Http\Controllers\UsersController')->getUserInformation(session('userID'));
         $user->role = session('role');//Don't change. it uses this variable name in index.
@@ -100,6 +102,9 @@ class DashboardController extends Controller
 
     public function createProcess(Request $request)
     {
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
 
         $student = Student::where('user_id', $user->id)->first();
@@ -138,6 +143,9 @@ class DashboardController extends Controller
 
     public function showProcesses()
     {
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
         $user->role = session('role');//Don't change. it uses this variable name in index.
         $managers = null;
@@ -266,7 +274,6 @@ class DashboardController extends Controller
             $name = $user->name;
 
             $result = $processUni->result;
-
             return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files', 'origin', 'destiny', 'img', 'name', 'result'));
         } else if ($user->role == 'manager') {
             //show all processes from his university
@@ -315,6 +322,9 @@ class DashboardController extends Controller
 
     public function ProcessesDisplay(Request $request)
     {
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $id = $request->id;
         $user = User::find($id);
         $user->role = $request->role;

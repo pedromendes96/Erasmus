@@ -76,7 +76,7 @@
                         <br>
                     </div>
                 <!-- UPLOAD FILES -->
-                    @if($user->role != "manager")
+                    @if($user->role != "manager" && $process->active != 0 )
                         <div class="entire-screen">
                             <button id="uploadButton"><h5>Upload Files</h5></button>
                             <br><br>
@@ -121,24 +121,24 @@
                         <button id="downloadButton"><h5>Download Files</h5></button>
                         <br><br>
                         <div id="downloadOptions" class="entire-screen center" hidden>
-                            @foreach ($files as $key => $file)
-                                @if($key == 0)
-                                    <a href="{{asset($file)}}" target="_blank" class="fileEvent"
-                                       style="color: dimgrey;"><strong>Download Learning Agreement </strong></a><br>
-                                @endif()
-                                @if($key != 0 && $user->role != 'director'/*If role is manager or student, then can download anything.*/)
-                                    <a href="{{asset($file)}}" target="_blank" class="fileEvent"
-                                       style="color: dimgrey;">
-                                        <strong>
-                                            @if($key == 1)Download Transcript Records<br>
-                                            @elseif($key == 2)Download English Certificate<br>
-                                            @elseif($key == 3)Download Profile Photo<br>
-                                            @elseif($key == 4)Download ID Card<br>
-                                            @elseif($key == 5)Download NIB declaration<br>
-                                            @endif
-                                        </strong>
-                                    </a>
-                                @endif
+                            @foreach ($files as $file)
+                                <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
+                                    <strong>
+                                        @if($file[strrpos($file, ".")-1] == 1 and $user->role != "director" )|->
+                                        Download Learning Agreement
+                                        @elseif($file[strrpos($file, ".")-1] == 2 and $user->role != "director")|->
+                                        Download Transcript Records
+                                        @elseif($file[strrpos($file, ".")-1] == 3 and $user->role != "director")|->
+                                        Download English Certificate
+                                        @elseif($file[strrpos($file, ".")-1] == 4 and $user->role != "director")|->
+                                        Download Profile Photo
+                                        @elseif($file[strrpos($file, ".")-1] == 5 and $user->role != "director")|->
+                                        Download ID Card
+                                        @elseif($file[strrpos($file, ".")-1] == 6 and $user->role != "director")|->
+                                        Download NIB declaration
+                                        @endif
+                                    </strong>
+                                </a><br>
                             @endforeach
                         </div>
                     </div>

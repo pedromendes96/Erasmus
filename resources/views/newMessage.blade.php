@@ -25,12 +25,17 @@
                         <select name="sender">
                             <option style="display:none;" selected>Select Destinatary:</option>
                             @if($role="student")
-                                <option value="{{$manager->id}}">
-                                    {{$manager->name}} - Manager
-                                </option>
-                                <option value="{{$director->id}}">
-                                    {{$director->name}} - Director
-                                </option>
+                                @for($i = 0; $i < $number; $i++)
+                                    <option value="{{$managers[$i]->id}}">
+                                        {{$managers[$i]->name}} - Manager
+                                    </option>
+                                @endfor
+                                @if($director)
+                                    <option value="{{$director->id}}">
+                                        {{$director->name}} - Director
+                                    </option>
+                                @endif
+
                             @elseif($role="manager")
                                 @foreach($candidates as $candidate)
                                     <option value="{{$candidate->id}}">

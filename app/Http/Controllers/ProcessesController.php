@@ -35,6 +35,9 @@ class ProcessesController extends Controller
 
     public function uploadFiles(Request $request)
     {
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         $process = Process::find($request->process_id);
 
         if ($request->file1 or $request->file2 or $request->file3 or $request->file4 or $request->file5 or $request->file6) {
@@ -155,6 +158,9 @@ class ProcessesController extends Controller
 
     public function approveResult(Request $request)
     {
+        if (session('userID') == "admin") {
+            return redirect('/admin');
+        }
         if ($request->result == "refuse") {
             DB::table('process_university')
                 ->where('process_id', $request->id)

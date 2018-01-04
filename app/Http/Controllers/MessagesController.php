@@ -78,29 +78,36 @@ class MessagesController extends Controller
             return view('newMessage', compact('director', 'managers', 'role', 'action', 'number'));
         }elseif ($role == "manager"){
             $university = University::find($user->university_id);
-            $programs = $university->Program();
+            $programs = $university->Program;
 
-            $manager = Manager::where('user_id', $user->id)->first();
-            $processes = Process::where('manager_id', '=', $manager->id)->get();
-            $studentsID = array();
-            // PROBLEMA QUE ISTO DEVOLVE UM CANDIDATO, NAO EXISTE STUDENT.
-            foreach ($processes as $process){
-                array_push($studentsID, $process);
-            }
-            return dd($studentsID);
-            $candidates=array();
-            for ($i=0;$i<count($studentsID);$i++){
-                $user = User::find($studentsID[$i]);
-                array_push($candidates, $user);
-            }
-            $directorsID = array();
+            $director = [];
+
             foreach ($programs as $program){
-                array_push($directorsID,$program->director_id);
+                $directors = Director::where('program_id', $program->id)->first();
+                $directors = User::where('id', $directors->user_id)->first();
+                array_push($director, $directors);
             }
-            $directors = array();
-            for ($i=0;$i<count($directorsID);$i++){
-                $user = User::find($directorsID[$i]);
-                array_push($directors,$user);
+            //tenho os diretores agora preciso dos candidatos
+            $manager = Manager::where('user_id', $id)->first();
+            $processes = Process::where('manager_id', $manager->id)->get();
+            $candidates = [];
+            foreach ($processes as $process) {
+                $aux = false;
+                $candidate = Candidate::find($process->candidate_id);
+                $student = Student::find($candidate->student_id);
+                $user = User::find($student->user_id);
+                if (sizeof($candidates) == 0) {
+                    array_push($candidates, $user);
+                } else {
+                    foreach ($candidates as $cand) {
+                        if ($cand->id == $user->id) {
+                            $aux = true;
+                        }
+                    }
+                    if ($aux) {
+                        array_push($candidates, $user);
+                    }
+                }
             }
             return view('newMessage', compact('directors', 'candidates', 'role', 'action', 'number', 'director'));
         }else{
@@ -108,25 +115,33 @@ class MessagesController extends Controller
             $users = User::where('university_id','=',$university->id)->get();
             $managers = array();
             foreach ($users as $user){
-                $manager = Manager::where('user_id','=',$user->id)->get();
+                $manager = Manager::where('user_id', $user->id)->get();
+                return dd($manager);
+                $user = User::find($manager->user_id);
                 if($manager){
-                    array_push($managers,$manager);
+                    array_push($managers, $user);
                 }
             }
-            $candidates = array();
+            $candidates = [];
             for ($i=0;$i<count($managers);$i++){
-                $processes = Process::where('manager_id', '=', $managers[$i]->id)->get();
-                for ($i = 0;$i<count($processes);$i){
-                    $candidate = Candidate::where('user_id','=',$processes[$i]->user_id)->get();
-                    $user = User::find($candidate->user_id);
+                $candidates = [];
+                $processes = Process::where('manager_id', $managers[$i]->id)->get();
+                foreach ($processes as $process) {
                     $aux = false;
-                    foreach ($candidates as $c) {
-                        if ($c->id == $user->id) {
-                            $aux = true;
-                        }
-                    }
-                    if (!$aux) {
+                    $candidate = Candidate::find($process->candidate_id);
+                    $student = Student::find($candidate->student_id);
+                    $user = User::find($student->user_id);
+                    if (sizeof($candidates) == 0) {
                         array_push($candidates, $user);
+                    } else {
+                        foreach ($candidates as $cand) {
+                            if ($cand->id == $user->id) {
+                                $aux = true;
+                            }
+                        }
+                        if ($aux) {
+                            array_push($candidates, $user);
+                        }
                     }
                 }
             }

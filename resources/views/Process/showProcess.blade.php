@@ -118,23 +118,19 @@
                     <div  class="entire-screen">
                         <button id="downloadButton"><h5>Download Files</h5></button><br><br>
                         <div id="downloadOptions" class="half-screen" hidden>
-                                @foreach ($files as $key => $file)
-                                    @if($key == 0)
-                                        <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;"><strong> |-> Download Learning Agreement </strong></a>
-                                    @endif()
-                                    @if($key != 0 && $user->role != 'director'/*If role is manager or student, then can download anything.*/)
-                                    <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
-                                        <strong>
-                                            @if($file[strrpos($file, ".")-1] == 2) |-> Upload Transcript Records
-                                            @elseif($file[strrpos($file, ".")-1] == 3)|-> Upload English Certificate
-                                            @elseif($file[strrpos($file, ".")-1] == 4)|-> Upload Profile Photo
-                                            @elseif($file[strrpos($file, ".")-1] == 5)|-> Upload ID Card
-                                            @elseif($file[strrpos($file, ".")-1] == 6)|-> Upload NIB declaration
-                                            @endif
-                                        </strong>
-                                    </a><br>
+                            @foreach ($files as $file)
+                                <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
+                                    <strong>
+                                        @if($file[strrpos($file, ".")-1] == 1)|-> Download Learning Agreement
+                                        @elseif($file[strrpos($file, ".")-1] == 2 && $user->role != 'director')|-> Upload Transcript Records
+                                        @elseif($file[strrpos($file, ".")-1] == 3 && $user->role != 'director')|-> Upload English Certificate
+                                        @elseif($file[strrpos($file, ".")-1] == 4 && $user->role != 'director')|-> Upload Profile Photo
+                                        @elseif($file[strrpos($file, ".")-1] == 5 && $user->role != 'director')|-> Upload ID Card
+                                        @elseif($file[strrpos($file, ".")-1] == 6 && $user->role != 'director')|-> Upload NIB declaration
                                         @endif
-                                @endforeach
+                                    </strong>
+                                </a><br>
+                            @endforeach
                         </div>
                     </div>
             </div>

@@ -22,24 +22,7 @@ use Symfony\Component\Translation\Dumper\PoFileDumper;
 
 class DashboardController extends Controller
 {
-
-    public function test() {//Esta função é so para testar pequenos codigos para verificar se funcionam individualmente.
-        //Choose which university that he wants to go.
-        //Tell user that it's better to ask the manager the available options for erasmus on his university on his program.
-        //$processes = Process::all()->orderByRaw('updated_at DESC')->get();
-        //$processes = Process::all()->orderBy('updated_at', 'ASC');
-/*
-        $getURL = $request->url();
-        $countEndURL = strrpos($getURL,"/")+1;
-        $getEndURL = substr($getURL,$countEndURL);
-        return decrypt($getEndURL);
-*/
-    return "done";
-    }
-
     public function index(Request $request) {
-
-        //$request->session()->flush();
 
         $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
         $user->role = session('role');//Don't change. it uses this variable name in index.
@@ -196,7 +179,6 @@ class DashboardController extends Controller
                 }
             }
             sort($files);
-
             return view('Process.showProcess',compact('user','process','manager','student','files'));
         }
         else if($user->role == 'manager') {

@@ -122,11 +122,13 @@
                                 <a href="{{asset($file)}}" target="_blank" class="fileEvent" style="color: dimgrey;">
                                     <strong>
                                         @if($file[strrpos($file, ".")-1] == 1)|-> Download Learning Agreement
-                                        @elseif($file[strrpos($file, ".")-1] == 2 && $user->role != 'director')|-> Upload Transcript Records
-                                        @elseif($file[strrpos($file, ".")-1] == 3 && $user->role != 'director')|-> Upload English Certificate
-                                        @elseif($file[strrpos($file, ".")-1] == 4 && $user->role != 'director')|-> Upload Profile Photo
-                                        @elseif($file[strrpos($file, ".")-1] == 5 && $user->role != 'director')|-> Upload ID Card
-                                        @elseif($file[strrpos($file, ".")-1] == 6 && $user->role != 'director')|-> Upload NIB declaration
+                                            @if($user->role != 'director')
+                                                @elseif($file[strrpos($file, ".")-1] == 2)|-> Upload Transcript Records
+                                                @elseif($file[strrpos($file, ".")-1] == 3)|-> Upload English Certificate
+                                                @elseif($file[strrpos($file, ".")-1] == 4)|-> Upload Profile Photo
+                                                @elseif($file[strrpos($file, ".")-1] == 5)|-> Upload ID Card
+                                                @elseif($file[strrpos($file, ".")-1] == 6)|-> Upload NIB declaration
+                                            @endif
                                         @endif
                                     </strong>
                                 </a><br>

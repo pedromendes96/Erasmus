@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Erasmus - Log In')
+@section('title','Erasmus - New Messages')
 
 
 @section ('content')
@@ -9,18 +9,7 @@
     </div>
     <div class="seventy-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 50px 0px;background-color: #eeeeee">
         <div class="entire-screen" style="padding: 0px 0px !important;">
-            <div class="quart-screen dashboard-option">
-                <h1>Opcao</h1>
-            </div>
-            <div class="quart-screen dashboard-option">
-                <h1>Opcao</h1>
-            </div>
-            <div class="quart-screen dashboard-option">
-                <h1>Opcao</h1>
-            </div>
-            <div class="quart-screen dashboard-option">
-                <h1>Opcao</h1>
-            </div>
+            <h1>New Message</h1>
         </div>
         <div>
             <form method="post" action="/dashboard/Newmessages/">
@@ -37,31 +26,31 @@
                             <option style="display:none;" selected>Select Destinatary:</option>
                             @if($role="student")
                                 <option value="{{$manager->id}}">
-                                    {{$manager->name}}
+                                    {{$manager->name}} - Manager
                                 </option>
                                 <option value="{{$director->id}}">
-                                    {{$director->name}}
+                                    {{$director->name}} - Director
                                 </option>
                             @elseif($role="manager")
                                 @foreach($candidates as $candidate)
                                     <option value="{{$candidate->id}}">
-                                        {{$candidate->name}}
+                                        {{$candidate->name}} - Candidato
                                     </option>
                                 @endforeach
                                 @foreach($directors as $director)
                                         <option value="{{$director->id}}">
-                                            {{$director->name}}
+                                            {{$director->name}} - Director
                                         </option>
                                     @endforeach
                             @else
                                 @foreach($candidates as $candidate)
                                     <option value="{{$candidate->id}}">
-                                        {{$candidate->name}}
+                                        {{$candidate->name}} - Candidato
                                     </option>
                                 @endforeach
                                 @foreach($managers as $manager)
                                         <option value="{{$manager->id}}">
-                                            {{$manager->name}}
+                                            {{$manager->name}} - Manager
                                         </option>
                                     @endforeach
                             @endif

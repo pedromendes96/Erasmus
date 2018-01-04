@@ -98,6 +98,24 @@
                 </form>
             </div>
             <div class="entire-screen" style="padding: 20px 20px !important;">
+                <h1>Add Program</h1>
+                <form method="post" action="/admin/">{{csrf_field()}}
+                    <input name="operation" type="hidden" value="add">
+                    <input name="type" type="hidden" value="program">
+                    <label>Program Name:</label><br>
+                    <input type="text" name="name" required><br>
+                    <label>Description:</label><br>
+                    <input type="text" name="description" required><br>
+                    <label>Select the university</label><br>
+                    <select name="university" required>
+                        @foreach($universities as $university)
+                            <option value="{{$university->id}}">{{$university->name}}</option>
+                        @endforeach
+                    </select>
+                    <button>Create Program</button>
+                </form>
+            </div>
+            <div class="entire-screen" style="padding: 20px 20px !important;">
                 <h1>Add New</h1>
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="add">

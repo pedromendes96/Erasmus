@@ -13,32 +13,43 @@
                 <h1>Dashboard</h1>
             </div>
             <div class="entire-screen center">
-                <h1>Select Process: {{ucfirst($user->role)}}: {{$user->name}}</h1>
+                <h1>Select Process: {{ucfirst($user->role)}} - {{$user->name}}</h1>
             </div>
             <div class="entire-screen center">
                 <div class="quart-screen"></div>
                 <div id="processes" class="half-screen">
-                    @foreach($processes as $process)
+                    @for($i = 0; $i < $processes->count(); $i++)
                         <div>
                             <h3 style="float: left">Process
-                                {{$process->updated_at->day."/".$process->updated_at->month."/".$process->updated_at->year}}
+                                {{$processes[$i]->updated_at->day."/".$processes[$i]->updated_at->month."/".$processes[$i]->updated_at->year}}
                                 :
-                                <strong @if($process->active==1)style="color: green"
-                                        @else style="color: indianred"@endif >@if($process->active==1)Active @else
+                                <strong @if($processes[$i]->active==1)style="color: green"
+                                        @else style="color: indianred"@endif >@if($processes[$i]->active==1)Active @else
                                         Inactive @endif</strong>
                             </h3>
+
                         </div>
                         <br>
                         <br>
                         <div style="border: 2px solid #272981;text-align: center">
                             <br>
                             <br>
-                            <a @if($user->role == 'manager' || $process->active==1)href="/dashboard/process/{{encrypt($process->id)}}" @endif><strong>{{$process->description}}</strong></a>
+                            <a href="/dashboard/process/{{encrypt($processes[$i]->id)}}"><strong>{{$processes[$i]->description}}@if($managers)
+                                        <br> {{$managers[$i]->name}}-{{$managers[$i]->email}}@endif @if($candidatos)
+                                        <br> {{$candidatos[$i]->name}}-{{$candidatos[$i]->email}}@endif</strong></a>
                             <br>
                             <br>
+                            <h1>@if($processes[$i]->active == 1)
+                                    To be evaluate
+                                @else
+                                    @if($results[$i] == 0)
+                                        Refused
+                                    @else Approved
+                                    @endif
+                                @endif</h1>
                         </div>
                         <br>
-                    @endforeach
+                    @endfor
                 </div>
             </div>
             <div class="entire-screen">

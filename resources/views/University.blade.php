@@ -27,12 +27,12 @@
 
 
         <div class="entire-screen" id="map" style="width: 100%;height: 300px;z-index: 1211321321;">
-            <input type="hidden" id="x" value="{{$university->x}}">
-            <input type="hidden" id="y" value="{{$university->y}}">
+            <input type="hidden" id="x" value="{{$university->lat}}">
+            <input type="hidden" id="y" value="{{$university->long}}">
             <button style="margin-top: 150px;" onclick="showMap()">SHOW LOCATION</button>
         </div>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPMZeM6yVcAmBKtLy0IyQBOG6nMFX1NjM&callback=myMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPMZeM6yVcAmBKtLy0IyQBOG6nMFX1NjM"></script>
     </div>
     <div class="fifteen-screen">
 

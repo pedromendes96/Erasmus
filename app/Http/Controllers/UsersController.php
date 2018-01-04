@@ -15,6 +15,8 @@ use App\Information;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -56,17 +58,21 @@ class UsersController extends Controller
     }
 
     public function Admin(Request $request){
-        $universities = University::all();
-        $addresses = Address::all();
-        $cities = City::all();
-        $countries = Country::all();
-        $news = Information::all();
-        return view('admin',compact('universities','addresses','cities','countries','news'));
+        if (session('userID') == 'admin') {
+            $universities = University::all();
+            $addresses = Address::all();
+            $cities = City::all();
+            $countries = Country::all();
+            $news = Information::all();
+            return view('admin', compact('universities', 'addresses', 'cities', 'countries', 'news'));
+        }
+        return redirect('/');
     }
 
     public function Login(Request $request){
         $user = User::where('email', $request->email)->first();
         if($request->password == "admin" and $request->email=="admin@admin"){
+            session(['userID' => 'admin']);
             return redirect('admin');
         }
         if($user) {
@@ -195,7 +201,19 @@ class UsersController extends Controller
                 $university->img = $array[1];
                 $university->address_id = $request->address;
                 $university->save();
-            }else{
+            } elseif ($request->type == "program") {
+                $program = Program::where('name', $request->name)->first();
+                if (!$program) {
+                    $program = new Program;
+                    $program->name = $request->name;
+                    $program->description = $request->description;
+                    $program->save();
+                }
+                $university = $request->university;
+                DB::table('program_university')->insert(
+                    ['program_id' => $program->id, 'university_id' => $university, 'created_at' => Carbon::now()->toDateTimeString(), 'updated_at' => Carbon::now()->toDateTimeString()]
+                );
+            } else {
                 $information = new Information;
                 $information->title = $request->title;
                 $information->description = $request->description;

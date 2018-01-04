@@ -8,6 +8,7 @@ use App\Director;
 use App\Manager;
 use App\Process;
 use App\Processes;
+use App\Program;
 use App\Student;
 use App\University;
 use Illuminate\Http\Request;
@@ -80,9 +81,17 @@ class DashboardController extends Controller
             $process = $process->count();
             return view('dashboard.index', compact('user', 'active', 'process'));
         } else if ($user->role == 'director') {
-            $director = Manager::where('user_id', $user->id)->first();
-            $process = Director::where('director_id', $director->id)->get();
-            $process = $process->count();
+            $directorProgramID = Director::where('user_id', $user->id)->first()->program_id;
+            $getProcessesProgramID = DB::table('processes')
+                ->join('candidates', 'candidates.id', '=', 'processes.candidate_id')
+                ->join('students', 'students.id', '=', 'candidates.student_id')
+                ->join('users', 'users.id', '=', 'students.user_id')
+                ->select('processes.id')
+                ->where('students.program_id', $directorProgramID)
+                ->get();
+            $decodeProcesses = json_decode($getProcessesProgramID, true);
+            $processes = Process::whereIn('id', $decodeProcesses)->orderBy('active', 'desc')->get();
+            $process = $processes->count();
             return view('dashboard.index', compact('user', 'active', 'process'));
         } else {
             return "Something wrong with user's id or with the user's role. Or both.";
@@ -131,7 +140,8 @@ class DashboardController extends Controller
     {
         $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
         $user->role = session('role');//Don't change. it uses this variable name in index.
-
+        $managers = null;
+        $results = null;
         if ($user->role == 'student') {
             //show only his processes
             //$processes = DB::table('processes')->orderBy('updated_at', 'desc')->get();
@@ -149,7 +159,19 @@ class DashboardController extends Controller
             $number = $processes->count();
             $pags = ceil($number / 10);
             $pags = $pags == 0 ? 1 : $pags;
-            return view('Process.showProcesses', compact('user', 'processes', 'university', 'pags'));
+            $candidatos = null;
+            $managers = [];
+            foreach ($processes as $process) {
+                $manager = Manager::find($process->manager_id);
+                $temp = User::find($manager->user_id);
+                array_push($managers, $temp);
+            }
+            $results = [];
+            foreach ($processes as $process) {
+                $processUni = DB::table('process_university')->where('process_id', $process->id)->first();
+                array_push($results, $processUni->result);
+            }
+            return view('Process.showProcesses', compact('user', 'processes', 'university', 'pags', 'candidatos', 'managers', 'results'));
         } else if ($user->role == 'manager') {
             //show all processes from his university that was assigned to this manager.
             $manager = Manager::where('user_id', $user->id)->first();
@@ -157,10 +179,22 @@ class DashboardController extends Controller
                 return "You don't have any processes assigned to you yet";
             }
             $processes = Process::where('manager_id', $manager->id)->orderBy('active', 'desc')->get();
+            $candidatos = [];
+            foreach ($processes as $process) {
+                $candidate = Candidate::find($process->candidate_id);
+                $student = Student::find($candidate->student_id);
+                $temp = User::find($student->user_id);
+                array_push($candidatos, $temp);
+            }
             $number = $processes->count();
             $pags = ceil($number / 10);
             $pags = $pags == 0 ? 1 : $pags;
-            return view('Process.showProcesses', compact('user', 'processes', 'pags'));
+            $results = [];
+            foreach ($processes as $process) {
+                $processUni = DB::table('process_university')->where('process_id', $process->id)->first();
+                array_push($results, $processUni->result);
+            }
+            return view('Process.showProcesses', compact('user', 'processes', 'pags', 'candidatos', 'managers', 'results'));
         } else if ($user->role == 'director') {
             $directorProgramID = Director::where('user_id', $user->id)->first()->program_id;
             $getProcessesProgramID = DB::table('processes')
@@ -172,10 +206,22 @@ class DashboardController extends Controller
                 ->get();
             $decodeProcesses = json_decode($getProcessesProgramID, true);
             $processes = Process::whereIn('id', $decodeProcesses)->orderBy('active', 'desc')->get();
+            $candidatos = [];
+            foreach ($processes as $process) {
+                $candidate = Candidate::find($process->candidate_id);
+                $student = Student::find($candidate->student_id);
+                $temp = User::find($student->user_id);
+                array_push($candidatos, $temp);
+            }
             $number = $processes->count();
             $pags = ceil($number / 10);
             $pags = $pags == 0 ? 1 : $pags;
-            return view('Process.showProcesses', compact('user', 'processes', 'pags'));
+            $results = [];
+            foreach ($processes as $process) {
+                $processUni = DB::table('process_university')->where('process_id', $process->id)->first();
+                array_push($results, $processUni->result);
+            }
+            return view('Process.showProcesses', compact('user', 'processes', 'pags', 'candidatos', 'managers', 'results'));
         } else {
             return "Maybe there's no processes on this user.";
         }
@@ -185,7 +231,7 @@ class DashboardController extends Controller
     {
         $user = User::find(session('userID'));//Don't change. it uses this variable name in index.
         $user->role = session('role');//Don't change. it uses this variable name in index.
-
+        $result = null;
         $getURL = $request->url();
         $countEndURL = strrpos($getURL, "/") + 1;
         $getEndURL = substr($getURL, $countEndURL);
@@ -207,9 +253,6 @@ class DashboardController extends Controller
                 }
             }
             sort($files);
-            /*
-             * Tenho de arranjar mandeira de conseguir o destino,origem, image e o nome da pessoa
-             */
             $address = Address::find($user->address_id);
             $city = City::find($address->city_id);
             $origin = Country::find($city->country_id)->name;
@@ -222,7 +265,9 @@ class DashboardController extends Controller
             $img = $user->img;
             $name = $user->name;
 
-            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files', 'origin', 'destiny', 'img', 'name'));
+            $result = $processUni->result;
+
+            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files', 'origin', 'destiny', 'img', 'name', 'result'));
         } else if ($user->role == 'manager') {
             //show all processes from his university
             $process = Process::find($processId);
@@ -240,7 +285,7 @@ class DashboardController extends Controller
             }
             sort($files);
 
-            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files'));
+            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files', 'result'));
         } else if ($user->role == 'director') {
             //show all processes only from his university and from his program course(Students needs program on database to know how to choose director)
             $process = Process::find($processId);
@@ -257,7 +302,7 @@ class DashboardController extends Controller
             }
             sort($files);
 
-            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files'));
+            return view('Process.showProcess', compact('user', 'process', 'manager', 'student', 'files', 'result'));
         } else {
             return "There's no role in this user or other problem.";
         }
@@ -312,7 +357,20 @@ class DashboardController extends Controller
             } else {
                 $max = $min + 10;
             }
-            return view('Process.ajaxProcesses', compact('user', 'processes', 'min', 'max', 'index', 'role'));
+            $processes = Process::whereIn('id', $decodeProcesses)->orderBy('active', 'desc')->get();
+            $candidatos = [];
+            foreach ($processes as $process) {
+                $candidate = Candidate::find($process->candidate_id);
+                $student = Student::find($candidate->student_id);
+                $temp = User::find($student->user_id);
+                array_push($candidatos, $temp);
+            }
+            $results = [];
+            foreach ($processes as $process) {
+                $processUni = DB::table('process_university')->where('process_id', $process->id)->first();
+                array_push($results, $processUni->result);
+            }
+            return view('Process.ajaxProcesses', compact('user', 'processes', 'min', 'max', 'index', 'role', 'candidatos', 'results'));
         }
         redirect('/dashboard');
     }

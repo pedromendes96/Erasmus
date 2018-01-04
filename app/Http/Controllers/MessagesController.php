@@ -45,7 +45,7 @@ class MessagesController extends Controller
         if($role=="student"){
             $student = Student::where('user_id', '=', $user->id)->first();
             $candidate = Candidate::where('student_id', '=', $student->id)->first();
-            $process = Process::where([['candidate_id', '=', $candidate->id], ['active', '=', true]])->first();
+            $process = Process::where('candidate_id', '=', $candidate->id)->orderBy('created_at', 'desc')->first();
             $manager = Manager::find($process->manager_id);
             $manager = User::find($manager->user_id);
             $program = Program::where('id','=',$student->program_id)->first();

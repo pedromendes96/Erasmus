@@ -155,12 +155,25 @@ class ProcessesController extends Controller
 
     public function approveResult(Request $request)
     {
-        DB::table('process_university')->update([
-            'process_id' => $request->id,
-            'result' => 1,
-            'updated_at' => DB::raw('now()')
-        ]);
-        return "Student process approved. Redirect to view.";
+        if ($request->result == "refuse") {
+            DB::table('process_university')
+                ->where('process_id', $request->id)
+                ->update(['result' => 0]);
+            DB::table('processes')->where('id', $request->id)->update([
+                'active' => 0,
+                'updated_at' => DB::raw('now()')
+            ]);
+        } else {
+            DB::table('process_university')
+                ->where('process_id', $request->id)
+                ->update(['result' => 1]);
+
+            DB::table('processes')->where('id', $request->id)->update([
+                'active' => 0,
+                'updated_at' => DB::raw('now()')
+            ]);
+        }
+        return redirect('dashboard/process/');
     }
 
 }

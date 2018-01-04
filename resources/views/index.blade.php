@@ -20,9 +20,15 @@
         <div class="entire-screen">
             <div class="half-screen center">
                 @if (session('userID'))
-                    <a href="/dashboard">
-                        <button class="main-button">Dashboard</button>
-                    </a>
+                    @if(session('userID')=="admin")
+                        <a href="/admin">
+                            <button class="main-button">Admin</button>
+                        </a>
+                    @else
+                        <a href="/dashboard">
+                            <button class="main-button">Dashboard</button>
+                        </a>
+                    @endif
                 @else
                     <a href="/LogIn">
                         <button class="main-button">Log in</button>
@@ -49,7 +55,7 @@
     </div>
     <div class="entire-screen">
         <div class="entire-screen center">
-            <h1>Noticias</h1>
+            <h1>News</h1>
         </div>
         <div id="first">
             @for($i=0;$i<2;$i++)

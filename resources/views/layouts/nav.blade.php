@@ -15,7 +15,7 @@
                 <a href="/information">More Info</a>
             </li>
             <li>
-                @if (session('userID'))
+                @if (session('userID') != "admin")
                     <a href="/dashboard">Dashboard</a>
                 @else
                     <a href="/">Home</a>

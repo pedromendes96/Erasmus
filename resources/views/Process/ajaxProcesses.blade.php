@@ -13,7 +13,8 @@
     <div style="border: 2px solid #272981;text-align: center">
         <br>
         <br>
-        <a @if($user->role == 'manager' || $processes[$i]->active==1)href="/dashboard/process/{{encrypt($processes[$i]->id)}}" @endif><strong>{{$processes[$i]->description}}</strong></a>
+        <h1>@if($processes[$i]->active == 1) To be evaluated @else @if($results[$i] == 0) Refused @else
+                Approved @endif  @endif</h1>
         <br>
         <br>
     </div>

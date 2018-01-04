@@ -6,7 +6,8 @@
     <div class="fifteen-screen">
 
     </div>
-    <div class="seventy-screen" style="padding: 0px 0px !important;border: 1px solid black;margin: 50px 0px;background-color: #eeeeee">
+    <div class="seventy-screen"
+         style="margin-bottom:10px;padding: 0px 0px !important;border: 1px solid black;margin: 80px 0px;background-color: #eeeeee">
         <div class="entire-screen center" style="border-bottom:1px solid black;padding: 0px 0px !important;">
             <h1>Messages</h1>
         </div>
@@ -56,7 +57,7 @@
             <div class="entire-screen" style="padding: 250px 150px;"><h1>Nao possui mensagens</h1><br><a
                         href="/dashboard/Newmessages/">New message</a></div>
         @endif
-</div>
+    </div>
     @if($result == "success")
         <div class="entire-screen">
             <div class="quart-screen"></div>

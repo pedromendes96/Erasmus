@@ -5,10 +5,12 @@
     <div class="third-screen center">
         <ul>
             <li>
-                <a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/EUErasmusPlusProgramme/"><i class="fa fa-facebook fa-2x"
+                                                                              aria-hidden="true"></i></a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/explore/tags/erasmus/"><i class="fa fa-instagram fa-2x"
+                                                                             aria-hidden="true"></i></a>
             </li>
         </ul>
     </div>

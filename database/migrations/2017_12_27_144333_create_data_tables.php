@@ -70,8 +70,8 @@ class CreateDataTables extends Migration
                     'description' => $description[$rand].$i."-University",
                     'email' => $names[$rand].$i."@gmail.com",
                     'img' => "img/new/1f674b304e56c4b979f4b85331a1f396.jpeg",
-                    'lat' => rand(1, 100) + "" + rand(0, 99),
-                    'long' => rand(1, 100) + "" + rand(0, 99),
+                    'lat' => rand(1, 50) . "." . rand(0, 99),
+                    'long' => rand(1, 50) . "." . rand(0, 99),
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now(),
                     'address_id' => ceil(($i+1)/2)
@@ -167,28 +167,28 @@ class CreateDataTables extends Migration
             );
         }
 
-        for ($i = 0;$i < 120 ; $i++){
-            DB::table('messages')->insert(
-                array(
-                    'subject' => "Subject",
-                    'content' => "Content",
-                    'sender_id' => rand(1,80),
-                    'created_at' => Carbon\Carbon::now(),
-                    'updated_at' => Carbon\Carbon::now(),
-                    'user_id' => rand(1,80)
-                )
-            );
-        }
+//        for ($i = 0;$i < 120 ; $i++){
+//            DB::table('messages')->insert(
+//                array(
+//                    'subject' => "Subject",
+//                    'content' => "Content",
+//                    'sender_id' => rand(1,80),
+//                    'created_at' => Carbon\Carbon::now(),
+//                    'updated_at' => Carbon\Carbon::now(),
+//                    'user_id' => rand(1,80)
+//                )
+//            );
+//        }
 
-        for ($i = 0;$i < 25 ; $i++){
-            DB::table('candidates')->insert(
-                array(
-                    'created_at' => Carbon\Carbon::now(),
-                    'updated_at' => Carbon\Carbon::now(),
-                    'student_id' => $i+1
-                )
-            );
-        }
+//        for ($i = 0;$i < 25 ; $i++){
+//            DB::table('candidates')->insert(
+//                array(
+//                    'created_at' => Carbon\Carbon::now(),
+//                    'updated_at' => Carbon\Carbon::now(),
+//                    'student_id' => $i+1
+//                )
+//            );
+//        }
 
         for($i = 0; $i < 40; $i++){
             for($j = 0; $j < 10; $j++){
@@ -203,51 +203,51 @@ class CreateDataTables extends Migration
             }
         }
 
-        for($i = 0; $i < 10; $i++){
-            for($j = 0; $j < 80; $j++){
-                DB::table('course_program')->insert(
-                    array(
-                        'course_id' => $j+1,
-                        'program_id' => $i+1,
-                        'created_at' => Carbon\Carbon::now(),
-                        'updated_at' => Carbon\Carbon::now()
-                    )
-                );
-            }
-        }
+//        for($i = 0; $i < 10; $i++){
+//            for($j = 0; $j < 80; $j++){
+//                DB::table('course_program')->insert(
+//                    array(
+//                        'course_id' => $j+1,
+//                        'program_id' => $i+1,
+//                        'created_at' => Carbon\Carbon::now(),
+//                        'updated_at' => Carbon\Carbon::now()
+//                    )
+//                );
+//            }
+//        }
 
-        for($i = 0; $i < 50;$i++){
-            $variable = false;
-            if($i%2 == 0){
-                $variable = true;
-            }
-            DB::table('processes')->insert(
-                array(
-                    'description' => "description",
-                    'active' => $variable,
-                    'created_at' => Carbon\Carbon::now(),
-                    'updated_at' => Carbon\Carbon::now(),
-                    'candidate_id' => rand(1,25),
-                    'manager_id' => rand(1,20),
-                )
-            );
-        }
+//        for($i = 0; $i < 50;$i++){
+//            $variable = false;
+//            if($i%2 == 0){
+//                $variable = true;
+//            }
+//            DB::table('processes')->insert(
+//                array(
+//                    'description' => "description",
+//                    'active' => $variable,
+//                    'created_at' => Carbon\Carbon::now(),
+//                    'updated_at' => Carbon\Carbon::now(),
+//                    'candidate_id' => rand(1,25),
+//                    'manager_id' => rand(1,20),
+//                )
+//            );
+//        }
 
-        for($i = 0; $i < 50;$i++){
-            $variable = false;
-            if($i%2 == 0){
-                $variable = true;
-            }
-            DB::table('process_university')->insert(
-                array(
-                    'result' => $variable,
-                    'created_at' => Carbon\Carbon::now(),
-                    'updated_at' => Carbon\Carbon::now(),
-                    'process_id' => $i + 1,
-                    'university_id' => rand(1,40),
-                )
-            );
-        }
+//        for($i = 0; $i < 50;$i++){
+//            $variable = false;
+//            if($i%2 == 0){
+//                $variable = true;
+//            }
+//            DB::table('process_university')->insert(
+//                array(
+//                    'result' => $variable,
+//                    'created_at' => Carbon\Carbon::now(),
+//                    'updated_at' => Carbon\Carbon::now(),
+//                    'process_id' => $i + 1,
+//                    'university_id' => rand(1,40),
+//                )
+//            );
+//        }
 
     }
 

@@ -1,3 +1,71 @@
+function ChangeCountry(valor) {
+    if (valor === "name") {
+        $("#ChangeCountrySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
+    } else {
+        $("#ChangeCountrySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
+    }
+}
+
+function ChangeCity(valor) {
+    if (valor === "name") {
+        $("#countries").addClass("hide");
+        $("#ChangeCitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
+    } else if (valor === "description") {
+        $("#countries").addClass("hide");
+        $("#ChangeCitySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
+    } else {
+        $("#ChangeCitySection").html("");
+        $("#countries").removeClass("hide");
+    }
+}
+
+function ChangeAddress(valor) {
+    if (valor === "name") {
+        $("#cities").addClass("hide");
+        $("#ChangeAddressSection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
+    } else {
+        $("#ChangeAddressSection").html("");
+        $("#cities").removeClass("hide");
+    }
+}
+
+function ChangeUniversity(valor) {
+    if (valor === "name") {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
+    } else if (valor === "description") {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
+    } else if (valor === "email") {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Email</label><br><input type=\"email\" name=\"email\"><button>Change Email</button>");
+    } else if (valor === "image") {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
+    } else if (valor === "address") {
+        $("#ChangeUniversitySection").html("");
+        $("#adresses").removeClass("hide");
+    } else if (valor === "x") {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Latitude</label><br><input type=\"text\" name=\"x\"><br><button>Change Latitude</button>");
+    } else {
+        $("#adresses").addClass("hide");
+        $("#ChangeUniversitySection").html("<label>New Longitude</label><br><input type=\"text\" name=\"y\"><br><button>Change Longitude</button>");
+    }
+}
+
+function ChangeNew(valor) {
+    if (valor === "title") {
+        $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\" required><button>Change Name</button>");
+    } else if (valor === "description") {
+        $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\" required><button>Change Description</button>");
+    } else if (valor === "content") {
+        $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\" required><button>Change Content</button>");
+    } else {
+        $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\" required><br><button>Change Image</button>");
+    }
+}
+
 function showCitiesRadio(value) {
     $.get("http://localhost:8000/citiesR?country=" + value, function (data) {
         $("#cities").html(data);
@@ -116,74 +184,6 @@ $(document).ready(function () {
                 break;
         }
     });
-
-    function ChangeCountry(valor) {
-        if (valor === "name") {
-            $("#ChangeCountrySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-        } else {
-            $("#ChangeCountrySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-        }
-    }
-
-    function ChangeCity(valor) {
-        if (valor === "name") {
-            $("#countries").addClass("hide");
-            $("#ChangeCitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-        } else if (valor === "description") {
-            $("#countries").addClass("hide");
-            $("#ChangeCitySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-        } else {
-            $("#ChangeCitySection").html("");
-            $("#countries").removeClass("hide");
-        }
-    }
-
-    function ChangeAddress(valor) {
-        if (valor === "name") {
-            $("#cities").addClass("hide");
-            $("#ChangeAddressSection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-        } else {
-            $("#ChangeAddressSection").html("");
-            $("#cities").removeClass("hide");
-        }
-    }
-
-    function ChangeUniversity(valor) {
-        if (valor === "name") {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-        } else if (valor === "description") {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
-        } else if (valor === "email") {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Email</label><br><input type=\"email\" name=\"email\"><button>Change Email</button>");
-        } else if (valor === "image") {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
-        } else if (valor === "address") {
-            $("#ChangeUniversitySection").html("");
-            $("#adresses").removeClass("hide");
-        } else if (valor === "x") {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Latitude</label><br><input type=\"text\" name=\"x\"><br><button>Change Latitude</button>");
-        } else {
-            $("#adresses").addClass("hide");
-            $("#ChangeUniversitySection").html("<label>New Longitude</label><br><input type=\"text\" name=\"y\"><br><button>Change Longitude</button>");
-        }
-    }
-
-    function ChangeNew(valor) {
-        if (valor === "title") {
-            $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\" required><button>Change Name</button>");
-        } else if (valor === "description") {
-            $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\" required><button>Change Description</button>");
-        } else if (valor === "content") {
-            $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\" required><button>Change Content</button>");
-        } else {
-            $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\" required><br><button>Change Image</button>");
-        }
-    }
 
     $('#add').click(function () {
         $('#changeSection').addClass('hide');

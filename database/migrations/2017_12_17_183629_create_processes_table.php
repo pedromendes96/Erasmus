@@ -16,6 +16,7 @@ class CreateProcessesTable extends Migration
             $table->string('description');
             $table->boolean('active');
             $table->timestamps();
+            $table->text('file')->nullable();
             $table->integer('candidate_id')->unsigned()->index();
             $table->integer('manager_id')->unsigned()->index();
         });

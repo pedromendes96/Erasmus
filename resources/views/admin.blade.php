@@ -1,112 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Erasmus</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-        $(document).ready(function() {
-            $('#add').click(function () {
-                $('#changeSection').addClass('hide');
-                $('#removeSection').addClass('hide');
-                $('#addSection').removeClass('hide');
-            });
-            $('#change').click(function () {
-                $('#removeSection').addClass('hide');
-                $('#addSection').addClass('hide');
-                $('#changeSection').removeClass('hide');
-            });
-            $('#remove').click(function () {
-                $('#changeSection').addClass('hide');
-                $('#addSection').addClass('hide');
-                $('#removeSection').removeClass('hide');
-            });
-        });
-        function ChangeCountry(valor){
-            if(valor === "name"){
-                $("#ChangeCountrySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else{
-                $("#ChangeCountrySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-            }
-        }
-        function ChangeCity(valor){
-            if(valor === "name"){
-                $("#countries").addClass("hide");
-                $("#ChangeCitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else if(valor === "description"){
-                $("#countries").addClass("hide");
-                $("#ChangeCitySection").html("<label>New Description</label><br><input type=\"text\" name=\"descritpion\"><button>Change Description</button>");
-            }else{
-                $("#ChangeCitySection").html("");
-                $("#countries").removeClass("hide");
-            }
-        }
+@extends('layouts.master')
+@section('title','Erasmus - Admnistrator')
 
-        function ChangeAddress(valor){
-            if(valor === "name"){
-                $("#cities").addClass("hide");
-                $("#ChangeAddressSection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else{
-                $("#ChangeAddressSection").html("");
-                $("#cities").removeClass("hide");
-            }
-        }
-
-        function ChangeUniversity(valor){
-            if(valor === "name"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Name</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else if(valor ==="description"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
-            }else if(valor==="email") {
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Email</label><br><input type=\"email\" name=\"email\"><button>Change Email</button>");
-            }else if(valor==="image"){
-                $("#adresses").addClass("hide");
-                $("#ChangeUniversitySection").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
-            }else{
-                $("#ChangeUniversitySection").html("");
-                $("#adresses").removeClass("hide");
-            }
-        }
-
-        function ChangeNew(valor){
-            if(valor === "title"){
-                $("#news").html("<label>New Title</label><br><input type=\"text\" name=\"name\"><button>Change Name</button>");
-            }else if(valor ==="description"){
-                $("#news").html("<label>New Description</label><br><input type=\"text\" name=\"description\"><button>Change Description</button>");
-            }else if(valor==="content") {
-                $("#news").html("<label>New Content</label><br><input type=\"text\" name=\"content\"><button>Change Content</button>");
-            }else{
-                $("#news").html("<label>New Image</label><br><input type=\"file\" name=\"image\"><br><button>Change Image</button>");
-            }
-        }
-    </script>
-</head>
-<body>
-<div class="entire-screen navbar">
-    <div class="third-screen center">
-        <a href="/"><img src="/img/erasmus.png" width="50%"></a>
-    </div>
-    <div class="two-third-screen right">
-        <ul>
-            <li>
-                Home
-            </li>
-            <li>
-                More Info
-            </li>
-            <li>
-                Log Out
-            </li>
-        </ul>
-    </div>
-</div>
+@section('content')
 <div class="entire-screen center" style="background-image: url(/img/pexels-photo-288477.jpeg);background-repeat: no-repeat;background-size:cover;margin-top: 83px;padding-right: 0px !important;padding-bottom: 0px !important;">
     <div class="fifteen-screen">
 
@@ -130,10 +25,10 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="country">
                     <label>Country Name:</label>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label>
                     <br>
-                    <input type="text" name="description">
+                    <input type="text" name="description" required>
                     <button>Create Country</button>
                 </form>
 
@@ -144,11 +39,11 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="city">
                     <label>City Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>Select the country</label>
-                    <select name="country">
+                    <select name="country" required>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}">{{$country->name}}</option>
                         @endforeach
@@ -163,16 +58,15 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="address">
                     <label>Address Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Select the city</label><br>
-                    <select name="city">
+                    <select name="city" required>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
                         @endforeach
                     </select>
                     <button>Create Address</button>
                 </form>
-
             </div>
             <div class="entire-screen" style="padding: 20px 20px !important;">
                 <h1>Add University</h1>
@@ -180,15 +74,22 @@
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="university">
                     <label>University Name:</label><br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>University email:</label><br>
-                    <input type="email" name="email"><br>
+                    <input type="email" name="email" required><br>
+                    <label>Latitude:</label>
+                    <br>
+                    <input type="text" name="x">
+                    <br>
+                    <label>Longitude:</label>
+                    <br>
+                    <input type="text" name="y"><br>
                     <label>University image</label><br>
-                    <input type="file" name="image"><br><br>
+                    <input type="file" name="image" required><br><br>
                     <label>Select the address</label>
-                    <select name="address">
+                    <select name="address" required>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">{{$address->name}}</option>
                         @endforeach
@@ -197,18 +98,36 @@
                 </form>
             </div>
             <div class="entire-screen" style="padding: 20px 20px !important;">
+                <h1>Add Program</h1>
+                <form method="post" action="/admin/">{{csrf_field()}}
+                    <input name="operation" type="hidden" value="add">
+                    <input name="type" type="hidden" value="program">
+                    <label>Program Name:</label><br>
+                    <input type="text" name="name" required><br>
+                    <label>Description:</label><br>
+                    <input type="text" name="description" required><br>
+                    <label>Select the university</label><br>
+                    <select name="university" required>
+                        @foreach($universities as $university)
+                            <option value="{{$university->id}}">{{$university->name}}</option>
+                        @endforeach
+                    </select>
+                    <button>Create Program</button>
+                </form>
+            </div>
+            <div class="entire-screen" style="padding: 20px 20px !important;">
                 <h1>Add New</h1>
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="add">
                     <input name="type" type="hidden" value="new">
                     <label>New title:</label><br>
-                    <input type="text" name="title"><br>
+                    <input type="text" name="title" required><br>
                     <label>Description:</label><br>
-                    <input type="text" name="description"><br>
+                    <input type="text" name="description" required><br>
                     <label>Content:</label><br>
-                    <input type="text" name="container"><br>
+                    <input type="text" name="container" required><br>
                     <label>new image</label><br>
-                    <input type="file" name="image"><br><br>
+                    <input type="file" name="image" required><br><br>
                     <button>Create New</button>
                 </form>
             </div>
@@ -220,7 +139,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="country">
-                    <select name="country">
+                    <select name="country" required>
                         <option style="display:none;" selected>Select Country</option>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}">
@@ -228,7 +147,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeCountry(this.value)">
+                    <select name="column" onchange="ChangeCountry(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
@@ -243,7 +162,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="city">
-                    <select name="country">
+                    <select name="country" required>
                         <option style="display:none;" selected>Select City</option>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">
@@ -251,7 +170,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeCity(this.value)">
+                    <select name="column" onchange="ChangeCity(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
@@ -262,7 +181,7 @@
 
                         </div>
                         <div class="hide" id="countries">
-                            <select name="country">
+                            <select name="country" required>
                                 <option style="display:none;" selected>Select Country</option>
                                 @foreach($countries as $country)
                                     <option value="{{$country->id}}">
@@ -280,7 +199,7 @@
                 <form method="post" action="/admin/">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="address">
-                    <select name="address">
+                    <select name="address" required>
                         <option style="display:none;" selected>Select Address</option>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">
@@ -288,7 +207,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeAddress(this.value)">
+                    <select name="column" onchange="ChangeAddress(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="city">City</option>
@@ -298,7 +217,7 @@
 
                         </div>
                         <div class="hide" id="cities">
-                            <select name="city">
+                            <select name="city" required>
                                 <option style="display:none;" selected>Select City</option>
                                 @foreach($cities as $city)
                                     <option value="{{$city->id}}">
@@ -316,7 +235,7 @@
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="university">
-                    <select name="universities">
+                    <select name="universities" required>
                         <option style="display:none;" selected>Select University</option>
                         @foreach($universities as $university)
                             <option value="{{$university->id}}">
@@ -324,20 +243,22 @@
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeUniversity(this.value)">
+                    <select name="column" onchange="ChangeUniversity(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="name">Name</option>
                         <option value="description">Description</option>
                         <option value="email">Email</option>
                         <option value="image">Image</option>
                         <option value="address">Address</option>
+                        <option value="x">Latitude</option>
+                        <option value="y">Longitude</option>
                     </select>
                     <div>
                         <div id="ChangeUniversitySection">
 
                         </div>
                         <div class="hide" id="adresses">
-                            <select name="address">
+                            <select name="address" required>
                                 <option style="display:none;" selected>Select Address</option>
                                 @foreach($addresses as $address)
                                     <option value="{{$address->id}}">
@@ -355,15 +276,15 @@
                 <form method="post" action="/admin/" enctype="multipart/form-data">{{csrf_field()}}
                     <input name="operation" type="hidden" value="change">
                     <input name="type" type="hidden" value="new">
-                    <select name="news">
+                    <select name="news" required>
                         <option style="display:none;" selected>Select New</option>
                         @foreach($news as $new)
                             <option value="{{$new->id}}">
-                                {{$new->name}}
+                                {{$new->id}}-{{$new->title}}
                             </option>
                         @endforeach
                     </select>
-                    <select name="column" onchange="ChangeNew(this.value)">
+                    <select name="column" onchange="ChangeNew(this.value)" required>
                         <option style="display:none;" selected>Select Column</option>
                         <option value="title">Title</option>
                         <option value="description">Description</option>
@@ -386,7 +307,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="country">
                     <label>Select Country</label><br>
-                    <select name="country">
+                    <select name="country" required>
                         @foreach($countries as $country)
                         <option value="{{$country->id}}">
                             {{$country->name}}
@@ -402,7 +323,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="city">
                     <label>Select City</label><br>
-                    <select name="city">
+                    <select name="city" required>
                         @foreach($cities as $city)
                         <option value="{{$city->id}}">
                             {{$city->name}}
@@ -418,7 +339,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="address">
                     <label>Select Address</label><br>
-                    <select name="address">
+                    <select name="address" required>
                         @foreach($addresses as $address)
                             <option value="{{$address->id}}">
                                 {{$address->name}}
@@ -434,7 +355,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="university">
                     <label>Select University</label>
-                    <select name="university">
+                    <select name="university" required>
                         @foreach($universities as $university)
                             <option value="{{$university->id}}">
                                 {{$university->name}}
@@ -451,7 +372,7 @@
                     <input name="operation" type="hidden" value="delete">
                     <input name="type" type="hidden" value="new">
                     <label>Select New</label>
-                    <select name="new">
+                    <select name="new" required>
                         @foreach($news as $new)
                             <option value="{{$new->id}}">
                                 {{$new->title}}
@@ -468,23 +389,4 @@
     </div>
 </div>
 
-<div class="entire-screen blue-theme">
-    <div class="third-screen">
-        <h5></h5>
-    </div>
-    <div class="third-screen center">
-        <ul>
-            <li>
-                <a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
-            </li>
-        </ul>
-    </div>
-    <div class="third-screen center">
-        <h4>Copyright ERASMUS+</h4>
-    </div>
-</div>
-</body>
-</html>
+@endsection

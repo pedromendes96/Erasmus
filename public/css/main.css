@@ -1,3 +1,15 @@
+.img-circle {
+    border-radius: 50%;
+}
+#scroll{
+    overflow-y: scroll;
+    height: 570px;
+}
+
+div{
+    overflow-wrap: break-word;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -155,21 +167,17 @@ li{
 }
 
 .navbar a {
-    float: left;
+    float: right;
     display: block;
-    color: #f2f2f2;
+    color: #272981;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 18px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1em;
 }
 
 .right{
-   text-align: right;
-}
-
-.left{
-    text-align: left;
+    text-align: right;
 }
 
 .right li{
@@ -190,7 +198,7 @@ li{
 
 
 .form {
-    border:2px solid rgb(211, 210, 210);
+    border:2px solid #272981;;
     height: 100%;
     margin:5% 5%;
     padding: 12px;
@@ -201,11 +209,11 @@ input[type=text], input[type=password], input[type=email],select {
     padding: 10px 22px;
     margin: 6px 2px;
     display: inline-block;
-    border: 1px solid rgb(211, 210, 210);
+    border: 1px solid #272981;;
 }
 
 button {
-    background-color: rgb(0, 140, 255);
+    background-color: #272981;;
     color: white;
     padding: 10px 20px;
     margin: 8px 0;
@@ -213,6 +221,7 @@ button {
     cursor: pointer;
     width: 70%;
 }
+
 span.pw {
     padding-top:28px;
     padding-right:2px;
@@ -224,10 +233,14 @@ span.pw {
 }
 
 .field-size {
-    height: 71px;
+    height: 10px;
     padding: 20px;
     text-align: right;
     font-size: 24px;
+}
+
+.left {
+    text-align: left;
 }
 
 .center-vertically{

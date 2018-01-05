@@ -35,14 +35,16 @@ class UniversitiesController extends Controller
     public function Selected(Request $request){
         $city = City::where('id',$request->city)->first();
         $addresses = Address::where('city_id',$city->id)->get();
-        $universities = [];
-        foreach ($addresses as $address){
-            $uni = University::where('address_id',$address->id)->get();
-            if($uni){
-                array_push($universities,$uni);
-            }
-        }
-        return view('Universities',compact('universities'));
+        $universities = University::all();
+        return view('Universities',compact('addresses','universities'));
+    }
+
+    public function SelectedRadio(Request $request)
+    {
+        $city = City::where('id', $request->city)->first();
+        $addresses = Address::where('city_id', $city->id)->get();
+        $universities = University::all();
+        return view('radioUniversities', compact('addresses', 'universities'));
     }
 
     public function Show(Request $request){
@@ -62,6 +64,27 @@ class UniversitiesController extends Controller
         }else{
             $university->address_id = $this->GetAddressId($request);
         }
+    }
+
+    public function SelectedbyCountry(Request $request)
+    {
+        $country = Country::where('id', $request->country)->first();
+        $cities = City::where('country_id', $country->id)->get();
+        $universities = [];
+        foreach ($cities as $city) {
+            $addresses = Address::where('city_id', $city->id)->get();
+            foreach ($addresses as $address) {
+                $university = University::where('address_id', $address->id)->get();
+                if ($university->isEmpty()) {
+
+                } else {
+                    array_push($universities, $university);
+                }
+            }
+
+        }
+
+        return view('universitiesbycountry', compact('universities'));
     }
 
     private function GetAddressId(Request $request){

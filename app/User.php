@@ -15,6 +15,9 @@ class User extends Model
     public function Student(){
         return $this->belongsTo('App\Student');
     }
+    public function Message(){
+        return $this->belongsTo('App\Message');
+    }
     public function Director(){
         return $this->belongsTo('App\Director');
     }

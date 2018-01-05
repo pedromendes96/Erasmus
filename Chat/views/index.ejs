@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>Erasmus Chat</title>
+    <link type="text/css" rel="stylesheet" href='css/main.css'>
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function () {
+            var socket = io();
+            var room = "<%= chatName %>";
+            var person = "<%= personName %>";
+            var img = "<%= img %>";
+
+            socket.emit('room', {id: socket.id, chatName: room, personName: person, img: img});
+
+            socket.on('update', function (data) {
+                $('#scroll').append("<div class='entire-screen'><div class='two-third-screen'><b>" + data.name + "</b><br/>" + data.msg + "</div><div class='third-screen center'><img style='width: 164px; height: 164px;' class='img-circle' src='http://localhost:8000/storage/" + data.img + "' width='50%'></div></div>");
+            });
+
+            $("#send").click(function () {
+                var data = $("#text").val();
+                if ($.trim(data).length > 0) {
+                    socket.emit('send', {data: data, img: socket.img, name: socket.personName});
+                    $("#text").val('');
+                }
+            });
+        });
+    </script>
+</head>
+<body style="background-image: url('../background.jpg');background-repeat: no-repeat; background-size: cover;">
+<div class="entire-screen">
+    <div class="quart-screen"></div>
+    <div class="half-screen" style="background-color: whitesmoke;height: 95vh;border-radius: 25px;">
+        <div id="scroll">
+
+        </div>
+        <div class="entire-screen"
+             style="border-radius: 25px;padding: 0px 20px;position:absolute;top:88vh;left:25vw;width:50%;">
+            <div class="ninetyfive-screen"
+                 style="background-color: white;border-radius: 25px;padding: 0px 0px !important;">
+                <textarea id="text" style="border:none;resize: none;" cols="100" rows="2"></textarea>
+            </div>
+            <div id="send" class="five-screen"
+                 style="cursor: pointer;margin: 0;position: absolute;top: 50%;left: 95%;transform: translate(-50%, -50%);">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

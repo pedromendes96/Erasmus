@@ -16,6 +16,8 @@ class CreateUniversitiesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('email');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->string('img');
             $table->timestamps();
             $table->integer('address_id')->unsigned()->index();
